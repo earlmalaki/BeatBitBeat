@@ -7,15 +7,21 @@
 #### Made using Slick2D Library for Java
 
 #### Members:
-#### Albores, Allyssa
-#### Bedio, Aiden Justin
-#### Malaki, Earl Timothy
-#### Paler, Timothy River 
+Albores, Allyssa
+
+Bedio, Aiden Justin
+
+Malaki, Earl Timothy
+
+Paler, Timothy River 
 
 
 #### Professor in Charge:
-#### Nico Martin Eñego
+Nico Martin Eñego
 
+####
+University of the Philippines - Cebu
+Lahug, Cebu City, Cebu
 
 
 ## Game Overview
