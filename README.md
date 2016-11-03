@@ -1,5 +1,24 @@
 # BeatBitBeat
 
+###
+
+A Final Project in CMSC22 - Object Oriented Programming
+Made using Slick2D Library for Java
+
+Members:
+Albores, Allyssa
+Bedio, Aiden Justin
+Malaki, Earl Timothy
+Paler, Timothy River 
+
+Professor in Charge:
+Nico Martin Eñego
+
+
+
+
+
+
 ## Game Overview
 
 Beat Bit Beat ® is an addictive PvP music game that fuses the rush of a rhythm oriented and the challenge of an action oriented game, feeding the adrenaline junkies with their much needed adrenaline. This game got its inspiration from the movie “Scott Pilgrim vs The World (2010)”.
