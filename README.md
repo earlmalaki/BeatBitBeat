@@ -3,8 +3,10 @@
 ###
 
 #### A Final Project in CMSC22 - Object Oriented Programming
-
 #### Made using Slick2D Library for Java
+#### Project is still in its early stages
+#### Currently may contain limited functionality, and bugs
+#### Functionality will be added and bugs be fixed as development progresses
 
 #### Members:
 Albores, Allyssa
