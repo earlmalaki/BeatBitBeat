@@ -3,13 +3,19 @@
 ###
 
 A Final Project in CMSC22 - Object Oriented Programming
+
 Made using Slick2D Library for Java
 
 Members:
+
 Albores, Allyssa
+
 Bedio, Aiden Justin
+
 Malaki, Earl Timothy
+
 Paler, Timothy River 
+
 
 Professor in Charge:
 Nico Martin Eñego
