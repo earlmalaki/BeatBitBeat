@@ -1,12 +1,12 @@
 # BeatBitBeat
+###### Project is still in its early stages -- 2 out of 10
+###### Currently may contain various bugs and may have limited functionality
+###### Functionality will be added and bugs be fixed as development progresses
 
-###
+##
 
 #### A Final Project in CMSC22 - Object Oriented Programming
 #### Made using Slick2D Library for Java
-###### Project is still in its early stages
-###### Currently may contain limited functionality, and bugs
-###### Functionality will be added and bugs be fixed as development progresses
 
 #### Members:
 Albores, Allyssa
