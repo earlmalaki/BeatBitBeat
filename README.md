@@ -22,53 +22,35 @@ The envisioned Game is a combination Rhythm and Action/Fighting genre. It combin
 
 #### Rhythm Mechanics:
 	
-##### Note System: The Timing of the drop of the notes with respect to the music, and the track to which vertical line the note will spawn.
-
+Note System: The Timing of the drop of the notes with respect to the music, and the track to which vertical line the note will spawn.
 
 BarTime System: The Timing of the keys pressed by the player when the notes      dropped reach the bar line to hit the key.
 
-
 Resource System: The counter to the resources(notes) acquired by the player to be used in relation to Action/Fighting Mechanics.
-
 
 Time System: The time that would determine the length of the round. To be used in relation to the action/fighting mechanics.
 
 
-
-
-Action/Fighting Mechanics:
-
+#### Action/Fighting Mechanics:
 
 Resource System: The resources(notes) collected on the rhythm mechanics will be used as energy the character can use to attack the opponent.
 
-
 Attack System: The different attack/skills a unique character can use when the required resource/energy is met.
 
-
 Health System: The amount of health a character can sustain till defeated. End of round. Also serves as gauge as to whoever has more health left when the time runs out.
-
 
 Time System: Works in relation with the rhythm mechanics. Serves as the length of the round.
 
 
+## Overview of Gameplay
 
-
-Overview of Gameplay
-
-
-Selection Screen:
-
+### Selection Screen:
 
 The game is to be played by two players. At the start of the game, both players would need to choose the character they want to play. Each Character has his own unique skills but balanced relative to each other. After choosing their respective characters, they would need to agree on what music to play.
 
-
-
-
-Battle Screen:
-
+### Battle Screen:
 
 Here is where the competition starts. There would be a countdown to three then the music would start. Horizontal bars (bit notes) slide down in sync with the chosen music. The players would need to time and hit the notes. If the player becomes successful in hitting the note, the note becomes converted to a resource/energy the monster can use to attack.     
-
 
 Victory is awarded to whoever Beat his opponent first using the bit notes in sync with the beat. When the two players still have HP left after the song has finished, victory will be awarded to the player who has more HP.
 
