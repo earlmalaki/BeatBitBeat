@@ -86,6 +86,5 @@ Victory is awarded to whoever Beat his opponent first using the bit notes in syn
 #### Spritesheet Maker: Stitches: An HTML5 sprite sheet generator
 #### Link = https://draeton.github.io/stitches/
 
-Monster character ideas from:
-Paranoia
-by Toby Allen
+#### Monster character ideas from: Paranoia by Toby Allen
+#### Link: http://www.zestydoesthings.com/realmonsters#_=_

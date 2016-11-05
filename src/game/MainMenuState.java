@@ -48,7 +48,7 @@ public class MainMenuState extends BasicGameState implements KeyListener{
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 
         // load resources and initialize objects
-        imageBackground = new Image("Assets/mainMenuSprite.gif");
+//        imageBackground = new Image("Assets/mainMenuSprite.gif");
         // TODO: Replace correct files and filename
         imageBtnStart = new Image("Assets/player1.jpg");
         imageBtnOptions = new Image("Assets/player1.jpg");
@@ -106,7 +106,7 @@ public class MainMenuState extends BasicGameState implements KeyListener{
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
-        imageBackground.draw(0f, 0f);
+//        imageBackground.draw(0f, 0f);
         imageBtnStart.draw(coordBtnStart.getX(), coordBtnStart.getY());
         imageBtnOptions.draw(coordBtnOptions.getX(), coordBtnOptions.getY());
         imageBtnCredits.draw(coordBtnCredits.getX(), coordBtnCredits.getY());

@@ -78,7 +78,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
-    private Audio musicCharSelection;
+    private Audio audioMusicCharSelection;
     private Audio selectedMusic;
 
     public int getID() {
@@ -270,6 +270,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }
         } else { // if monsterPicking and songPicking is false
             if (enterPressed) {
+                audioMusicCharSelection.stop();
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
             }
 
