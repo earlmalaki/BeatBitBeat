@@ -270,7 +270,10 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }
         } else { // if monsterPicking and songPicking is false
             if (enterPressed) {
-                audioMusicCharSelection.stop();
+                MainMenuState.stopMusic();
+                for (int i = 0; i < audioSongChoices.length; i++) {
+                        audioSongChoices[i].stop();
+                }
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
             }
 
