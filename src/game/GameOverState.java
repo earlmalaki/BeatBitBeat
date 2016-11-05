@@ -1,4 +1,4 @@
-package master;
+package game;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -10,7 +10,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameOverState extends BasicGameState {
 
-    
+    @Override
+    public int getID() {
+        return BeatBitBeatMain.getGameOver();
+    }
+
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
     }
     
@@ -24,11 +28,7 @@ public class GameOverState extends BasicGameState {
 
     }
     
-    @Override
-    // State ID. 1 for GameOverState
-    public int getID() {
-        return 3;
-    }
+
 
     
 }

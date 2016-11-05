@@ -81,3 +81,11 @@ Here is where the competition starts. There would be a countdown to three then t
 Victory is awarded to whoever Beat his opponent first using the bit notes in sync with the beat. When the two players still have HP left after the song has finished, victory will be awarded to the player who has more HP.
 
 
+#
+
+#### Spritesheet Maker: Stitches: An HTML5 sprite sheet generator
+#### Link = https://draeton.github.io/stitches/
+
+Monster character ideas from:
+Paranoia
+by Toby Allen
