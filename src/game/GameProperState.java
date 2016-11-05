@@ -1,0 +1,381 @@
+package game;
+
+import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class GameProperState extends BasicGameState implements KeyListener {
+
+    private ArrayList<Rectangle> p1NoteBars;
+    private ArrayList<Rectangle> p2NoteBars;
+
+    private ArrayList<Integer> p1PressedNotes;
+    private ArrayList<Integer> p2PressedNotes;
+
+    private ArrayList<Rectangle> p1ReceiveBars;
+    private ArrayList<Rectangle> p2ReceiveBars;
+
+    private ArrayList<Rectangle> lineBars;
+
+    private static Audio gameMusic;
+    Image p1Sprite;
+    private Random random;
+
+    private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
+    private static final int displayHeight = BeatBitBeatMain.getDisplayHeight();
+
+    private int startingYPos = 50;
+    private int endingYPos = 650;
+
+    // Player 1 note x positions
+    private int p1x1 = (int) (displayWidth * (0.06));
+    private int p1x2 = (int) (p1x1 + (displayWidth * (0.05)));
+    private int p1x3 = (int) (p1x2 + (displayWidth * (0.05)));
+    private int p1x4 = (int) (p1x3 + (displayWidth * (0.05)));
+
+    // Player 2 note x positions
+    private int p2x4 = (int) (displayWidth - (displayWidth * (0.06)));
+    private int p2x3 = (int) (p2x4 - (displayWidth * (0.05)));
+    private int p2x2 = (int) (p2x3 - (displayWidth * (0.05)));
+    private int p2x1 = (int) (p2x2 - (displayWidth * (0.05)));
+
+
+    // Horizontal note receiving bar final dimensions
+    private static final int recBarWidth = 20;
+    private static final int recBarHeight = 10;
+
+    // Vertical note bar final dimensions
+    private static final int lineBarWidth = 5;
+    private static final int lineBarHeight = 600;
+
+    // Falling note dimensions
+    private static final int noteBarWidth = 20;
+    private static int noteBarHeight = 10;
+
+    // Music position
+    private double musicPosition = 00.00;
+
+    private int timePassed;
+
+    public int getID() {
+        return BeatBitBeatMain.getGameProper();
+    }
+
+    public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+        p1Sprite = new Image("/Assets/player1.jpg");
+
+        p1NoteBars = new ArrayList<>();
+        p2NoteBars = new ArrayList<>();
+
+        p1PressedNotes = new ArrayList<>();
+        p2PressedNotes = new ArrayList<>();
+
+        p1ReceiveBars = new ArrayList<>();
+        p2ReceiveBars = new ArrayList<>();
+
+        lineBars = new ArrayList<>();
+
+        random = new Random();
+
+        timePassed = 0;
+
+
+        // Add horizontal receive bars
+        p1ReceiveBars.add(new Rectangle(p1x1 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+        p1ReceiveBars.add(new Rectangle(p1x2 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+        p1ReceiveBars.add(new Rectangle(p1x3 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+        p1ReceiveBars.add(new Rectangle(p1x4 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+
+        p2ReceiveBars.add(new Rectangle(p2x1 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+        p2ReceiveBars.add(new Rectangle(p2x2 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+        p2ReceiveBars.add(new Rectangle(p2x3 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+        p2ReceiveBars.add(new Rectangle(p2x4 - recBarWidth/2, endingYPos, recBarWidth, recBarHeight));
+
+        // Add integers to list of pressed note for p1
+        // 0 for red, 1 for blue, 2 for yellow, 4 for green
+        p1PressedNotes.add(0);
+        p1PressedNotes.add(0);
+        p1PressedNotes.add(0);
+        p1PressedNotes.add(0);
+
+        // Add integers to list of pressed note for p2
+        // 0 for red, 1 for blue, 2 for yellow, 4 for green
+        p2PressedNotes.add(0);
+        p2PressedNotes.add(0);
+        p2PressedNotes.add(0);
+        p2PressedNotes.add(0);
+
+        // Add vertical line bars
+        lineBars.add(new Rectangle(p1x1 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p1x2 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p1x3 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p1x4 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p2x1 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p2x2 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p2x3 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+        lineBars.add(new Rectangle(p2x4 - lineBarWidth/2, startingYPos, lineBarWidth, lineBarHeight));
+
+    }
+
+
+
+    public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
+
+        // generate noteBars at random x
+        timePassed += delta;
+        //System.out.println(delta);
+        if(timePassed > 400){
+            timePassed = 0;
+
+            if (genRand() == 1){
+                p1NoteBars.add(new Rectangle(p1x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                p2NoteBars.add(new Rectangle(p2x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+            }
+            else if (genRand() == 2) {
+                p1NoteBars.add(new Rectangle(p1x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                p2NoteBars.add(new Rectangle(p2x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+            }
+            else if (genRand() == 3) {
+                p1NoteBars.add(new Rectangle(p1x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                p2NoteBars.add(new Rectangle(p2x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+            }
+            else if (genRand() == 4) {
+                p1NoteBars.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                p2NoteBars.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+            }
+        }
+
+
+
+
+        // Control the falling of noteBars bars
+        // P1
+        for(Rectangle rect : p1NoteBars){
+            rect.setCenterY(rect.getCenterY() + (delta / 5));
+        }
+
+        // Control the falling of noteBars bars
+        // P2
+        for(Rectangle rect : p2NoteBars){
+            rect.setCenterY(rect.getCenterY() + (delta / 5));
+        }
+
+        // detect if notebars go past the receive bars
+        // P1
+        for(int i = 0; i < p1NoteBars.size() - 1; i++) {
+            Rectangle rect = p1NoteBars.get(i);
+
+            if(rect.getCenterY() > endingYPos) {
+                p1NoteBars.remove(i);
+
+            }
+        }
+
+        // detect if notebars go past the receive bars
+        // P1
+        for(int i = 0; i < p2NoteBars.size() - 1; i++) {
+            Rectangle rect = p2NoteBars.get(i);
+
+            if(rect.getCenterY() > endingYPos) {
+                p2NoteBars.remove(i);
+
+            }
+        }
+
+        musicPosition = gameMusic.getPosition();
+
+    }
+
+    public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
+
+        // Game Screen borders
+        g.drawLine( (displayWidth / 3) - 80, 0, (displayWidth / 3) - 80, displayHeight);  // left vertical division line
+        g.drawLine( displayWidth - (displayWidth / 3) + 80, 0, displayWidth - (displayWidth / 3) + 80, displayHeight);  // right vertical division line
+        g.drawLine( (displayWidth / 2), displayHeight / 2, (displayWidth / 2), displayHeight);  // center vertical division line
+        g.drawLine((displayWidth / 3) - 80, displayHeight / 2, displayWidth - (displayWidth / 3) + 80, displayHeight / 2);  // center horizontal division line
+
+
+        // Draw player character sprites
+        g.drawImage(p1Sprite, 500, 200);
+
+        // Draw monster sprites
+
+        // Draw vertical line bars
+        g.setColor(Color.lightGray);
+        for(Rectangle r : lineBars){
+            g.fill(r);
+        }
+
+        // Draw horizontal receive bars for p1
+        int index = 0;
+        for(Rectangle rect : p1ReceiveBars){
+            if (index == 0) {
+                g.setColor(Color.red);
+            } else if (index == 1) {
+                g.setColor(Color.blue);
+            } else if (index == 2) {
+                g.setColor(Color.yellow);
+            } else if (index == 3) {
+                g.setColor(Color.green);
+            }
+            g.fill(rect);
+            index++;
+        }
+
+        index = 0;
+        // Draw horizontal receive bars for p2
+        for(Rectangle rect : p2ReceiveBars){
+            if (index == 0) {
+                g.setColor(Color.red);
+            } else if (index == 1) {
+                g.setColor(Color.blue);
+            } else if (index == 2) {
+                g.setColor(Color.yellow);
+            } else if (index == 3) {
+                g.setColor(Color.green);
+            }
+            g.fill(rect);
+            index++;
+        }
+
+        // Draw falling note bars for p1
+        for(Rectangle rect : p1NoteBars){
+            if (rect.getCenterX() == p1x1) {
+                g.setColor(Color.red);
+            } else if (rect.getCenterX() == p1x2) {
+                g.setColor(Color.blue);
+            } else if (rect.getCenterX() == p1x3) {
+                g.setColor(Color.yellow);
+            } else if (rect.getCenterX() == p1x4) {
+                g.setColor(Color.green);
+            }
+            g.fill(rect);
+        }
+        // Draw falling note bars for p1
+        for(Rectangle rect : p2NoteBars){
+            if (rect.getCenterX() == p2x1) {
+                g.setColor(Color.red);
+            } else if (rect.getCenterX() == p2x2) {
+                g.setColor(Color.blue);
+            } else if (rect.getCenterX() == p2x3) {
+                g.setColor(Color.yellow);
+            } else if (rect.getCenterX() == p2x4) {
+                g.setColor(Color.green);
+            }
+            g.fill(rect);
+        }
+
+
+        g.setColor(Color.white);
+        String strMusicPosition = String.valueOf(musicPosition);
+        g.drawString(strMusicPosition, (displayWidth / 2) - (strMusicPosition.length() / 2), 20);
+        g.drawString("Time", (displayWidth / 2) - 5, 5);
+        g.drawString("Curr NoteBars : " + p1NoteBars.size() + p2NoteBars.size(), displayWidth / 2, 50);
+
+        g.drawString("P1 Pressed Red: " + p1PressedNotes.get(0), 20, 100);
+        g.drawString("P1 Pressed Blue: " + p1PressedNotes.get(1), 20, 130);
+        g.drawString("P1 Pressed Yellow: " + p1PressedNotes.get(2), 20, 160);
+        g.drawString("P1 Pressed Green: " + p1PressedNotes.get(3), 20, 190);
+
+        g.drawString("P2 Pressed Red: " + p2PressedNotes.get(0), 900, 100);
+        g.drawString("P2 Pressed Blue: " + p2PressedNotes.get(1), 900, 130);
+        g.drawString("P2 Pressed Yellow: " + p2PressedNotes.get(2), 900, 160);
+        g.drawString("P2 Pressed Green: " + p2PressedNotes.get(3), 900, 190);
+
+
+    }
+
+
+
+    public int genRand() {
+        return random.nextInt(4) + 1;
+    }
+
+    @Override
+    public void keyPressed(int key, char pressedKey) {
+        // Key listener
+        if (key == Input.KEY_A) {
+            if (p1ReceiveBars.get(0).getCenterY() - 30 <= p1NoteBars.get(0).getCenterY() &&
+                    p1ReceiveBars.get(0).getCenterX() == p1NoteBars.get(0).getCenterX() ) {
+                p1PressedNotes.set(0, p1PressedNotes.get(0) + 1);
+            }
+            else {
+                p1PressedNotes.set(0, p1PressedNotes.get(0) - 1);
+            }
+        } else if (key == Input.KEY_S) {
+            if (p1ReceiveBars.get(1).getCenterY() - 30 <= p1NoteBars.get(0).getCenterY() &&
+                    p1ReceiveBars.get(1).getCenterX() == p1NoteBars.get(0).getCenterX() ) {
+                p1PressedNotes.set(1, p1PressedNotes.get(1) + 1);
+            }
+            else {
+                p1PressedNotes.set(1, p1PressedNotes.get(1) - 1);
+            }
+        } else if (key == Input.KEY_D) {
+            if (p1ReceiveBars.get(2).getCenterY() - 30 <= p1NoteBars.get(0).getCenterY() &&
+                    p1ReceiveBars.get(2).getCenterX() == p1NoteBars.get(0).getCenterX() ) {
+                p1PressedNotes.set(2, p1PressedNotes.get(2) + 1);
+            }
+            else {
+                p1PressedNotes.set(2, p1PressedNotes.get(2) - 1);
+            }
+        } else if (key == Input.KEY_F) {
+            if (p1ReceiveBars.get(3).getCenterY() - 30 <= p1NoteBars.get(0).getCenterY() &&
+                    p1ReceiveBars.get(3).getCenterX() == p1NoteBars.get(0).getCenterX() ) {
+                p1PressedNotes.set(3, p1PressedNotes.get(3) + 1);
+            }
+            else {
+                p1PressedNotes.set(3, p1PressedNotes.get(3) - 1);
+            }
+
+        }
+
+        if (key == Input.KEY_H) {
+            if (p2ReceiveBars.get(0).getCenterY() - 30 <= p2NoteBars.get(0).getCenterY() &&
+                    p2ReceiveBars.get(0).getCenterX() == p2NoteBars.get(0).getCenterX() ) {
+                p2PressedNotes.set(0, p2PressedNotes.get(0) + 1);
+            } else {
+                p2PressedNotes.set(0, p2PressedNotes.get(0) - 1);
+            }
+        } else if (key == Input.KEY_J) {
+            if (p2ReceiveBars.get(1).getCenterY() - 30 <= p2NoteBars.get(0).getCenterY() &&
+                    p2ReceiveBars.get(1).getCenterX() == p2NoteBars.get(0).getCenterX() ) {
+                p2PressedNotes.set(1, p2PressedNotes.get(1) + 1);
+            } else {
+                p2PressedNotes.set(1, p2PressedNotes.get(1) - 1);
+            }
+        } else if (key == Input.KEY_K) {
+            if (p2ReceiveBars.get(2).getCenterY() - 30 <= p2NoteBars.get(0).getCenterY() &&
+                    p2ReceiveBars.get(2).getCenterX() == p2NoteBars.get(0).getCenterX() ) {
+                p2PressedNotes.set(2, p2PressedNotes.get(2) + 1);
+            }
+            else {
+                p2PressedNotes.set(2, p2PressedNotes.get(2) - 1);
+            }
+        } else if (key == Input.KEY_L) {
+            if (p2ReceiveBars.get(3).getCenterY() - 30 <= p2NoteBars.get(0).getCenterY() &&
+                    p2ReceiveBars.get(3).getCenterX() == p2NoteBars.get(0).getCenterX() ) {
+                p2PressedNotes.set(3, p2PressedNotes.get(3) + 1);
+            } else {
+                p2PressedNotes.set(3, p2PressedNotes.get(3) - 1);
+            }
+
+        }
+    }
+
+    @Override
+    public void keyReleased(int key, char pressedKey) {
+
+    }
+
+
+    public static void setGameMusic(Audio music) {
+        gameMusic = music;
+    }
+
+
+} // END OF CLASS
