@@ -1,3 +1,36 @@
+/**
+ * Albores, Allyssa
+ * Bedio, Aiden Justin
+ * Malaki, Earl Timothy
+ * Paler, Timothy River
+ *
+ * BSCS - II | UP - Cebu
+ * CMSC22 - OOP
+ * Final Project
+ */
+
+/**
+ * Done:
+ * - Key Listener for receiving bars (ASDF, HJKL)
+ * - Image handler for background
+ * - Music player
+ * - Randomized dropping of notes
+ *
+ * To Do:
+ * - Put wallpaper file
+ * - Put receiving bar, vertical bar, and note graphic files
+ * - finalize positioning of elements after putting in final graphics
+ * - Music beat map making and reading
+ * - Dropping notes according to beat map
+ * - Better receiving bar accuracy
+ * - GAME PART. Monster objects, hp, skills, resources, etc.
+ * - End of game state
+ *
+ * Note:
+ * - Prioritize MVP first.
+ *
+ */
+
 package game;
 
 import org.newdawn.slick.*;
@@ -23,7 +56,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private ArrayList<Rectangle> lineBars;
 
     private static Audio gameMusic;
-    Image p1Sprite;
+    private Coordinate coordPlayer1;
+    private Coordinate coordPlayer2;
+    private static Animation animationPlayer1;
+    private static Animation animationPlayer2;
+
+
     private Random random;
 
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
@@ -67,7 +105,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
     }
 
     public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-        p1Sprite = new Image("/Assets/player1.jpg");
+//        animationPlayer1 = CharacterSelectionState.getAnimateP1Monster();
+//        animationPlayer2 = CharacterSelectionState.getAnimateP2Monster();
+
+        coordPlayer1 = new Coordinate((displayWidth / 2) - 300, 100);
+        coordPlayer2 = new Coordinate((displayWidth / 2) + 100, 100);
 
         p1NoteBars = new ArrayList<>();
         p2NoteBars = new ArrayList<>();
@@ -128,7 +170,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         // generate noteBars at random x
         timePassed += delta;
-        //System.out.println(delta);
         if(timePassed > 400){
             timePassed = 0;
 
@@ -194,16 +235,17 @@ public class GameProperState extends BasicGameState implements KeyListener {
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 
         // Game Screen borders
+        // TODO this is to be replaced by on-wallpaper border lines
         g.drawLine( (displayWidth / 3) - 80, 0, (displayWidth / 3) - 80, displayHeight);  // left vertical division line
         g.drawLine( displayWidth - (displayWidth / 3) + 80, 0, displayWidth - (displayWidth / 3) + 80, displayHeight);  // right vertical division line
         g.drawLine( (displayWidth / 2), displayHeight / 2, (displayWidth / 2), displayHeight);  // center vertical division line
         g.drawLine((displayWidth / 3) - 80, displayHeight / 2, displayWidth - (displayWidth / 3) + 80, displayHeight / 2);  // center horizontal division line
 
 
-        // Draw player character sprites
-        g.drawImage(p1Sprite, 500, 200);
+        // Draw player character animations
+        animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
+        animationPlayer2.draw(coordPlayer2.getX(), coordPlayer2.getY());
 
-        // Draw monster sprites
 
         // Draw vertical line bars
         g.setColor(Color.lightGray);
@@ -273,10 +315,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         g.setColor(Color.white);
         String strMusicPosition = String.valueOf(musicPosition);
+        // TODO display only until 2 decimal places of music pos
         g.drawString(strMusicPosition, (displayWidth / 2) - (strMusicPosition.length() / 2), 20);
         g.drawString("Time", (displayWidth / 2) - 5, 5);
         g.drawString("Curr NoteBars : " + p1NoteBars.size() + p2NoteBars.size(), displayWidth / 2, 50);
 
+        // For testing purposes
         g.drawString("P1 Pressed Red: " + p1PressedNotes.get(0), 20, 100);
         g.drawString("P1 Pressed Blue: " + p1PressedNotes.get(1), 20, 130);
         g.drawString("P1 Pressed Yellow: " + p1PressedNotes.get(2), 20, 160);
@@ -286,20 +330,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.drawString("P2 Pressed Blue: " + p2PressedNotes.get(1), 900, 130);
         g.drawString("P2 Pressed Yellow: " + p2PressedNotes.get(2), 900, 160);
         g.drawString("P2 Pressed Green: " + p2PressedNotes.get(3), 900, 190);
-
-
-    }
-
-
-
-    public int genRand() {
-        return random.nextInt(4) + 1;
     }
 
     @Override
     public void keyPressed(int key, char pressedKey) {
         // Key listener
         if (key == Input.KEY_A) {
+            // if note bar is near or within corresponding receive bar
             if (p1ReceiveBars.get(0).getCenterY() - 30 <= p1NoteBars.get(0).getCenterY() &&
                     p1ReceiveBars.get(0).getCenterX() == p1NoteBars.get(0).getCenterX() ) {
                 p1PressedNotes.set(0, p1PressedNotes.get(0) + 1);
@@ -372,10 +409,23 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     }
 
+    public int genRand() {
+        return random.nextInt(4) + 1;
+    }
 
     public static void setGameMusic(Audio music) {
         gameMusic = music;
     }
 
+    public static void startMusic() {
+        gameMusic.playAsMusic(1.0f, 1.0f, false);
+    }
 
+    public static void setAnimationPlayer1(Animation animation) {
+        animationPlayer1 = animation;
+    }
+
+    public static void setAnimationPlayer2(Animation animation) {
+        animationPlayer2 = animation;
+    }
 } // END OF CLASS

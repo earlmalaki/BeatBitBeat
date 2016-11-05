@@ -1,3 +1,31 @@
+/**
+ * Albores, Allyssa
+ * Bedio, Aiden Justin
+ * Malaki, Earl Timothy
+ * Paler, Timothy River
+ *
+ * BSCS - II | UP - Cebu
+ * CMSC22 - OOP
+ * Final Project
+ */
+
+/**
+ * Done:
+ * - Key Listener for buttons(Start, Options, Credits, Exit)
+ * - Image or Sprite handler for background
+ * - Intro music
+ *
+ * To Do:
+ * - Put wallpaper file
+ * - Put button icon files
+ * - Put final music file
+ * - finalize positioning of buttons after putting in final graphics
+ *
+ * Note:
+ * - OptionsState and CreditsState is still empty. Work on this soon. Prioritize MVP first.
+ * - Button icons should be of same dimensions for correct positioning
+ */
+
 package game;
 
 import org.newdawn.slick.*;
@@ -13,6 +41,7 @@ import java.io.IOException;
 
 public class MainMenuState extends BasicGameState implements KeyListener{
 
+    // Images declaration
     private Image imageBackground;
     private Image imageBtnStart;
     private Image imageBtnOptions;
@@ -20,27 +49,29 @@ public class MainMenuState extends BasicGameState implements KeyListener{
     private Image imageBtnExit;
     private Image imageIndicator;
 
-    private Coordinate coordIndicator;
+    private int spacingOfBtns;      // fixed spacing of each button
+    private int indexOfSelectedState;
+    private boolean enterPressed;
+
     private int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
-    private int changeState;
-    private boolean enterPressed;
-
+    private Coordinate coordIndicator;      // coord for the selection indicator
     private Coordinate coordBtnStart;
     private Coordinate coordBtnOptions;
     private Coordinate coordBtnCredits;
     private Coordinate coordBtnExit;
 
+    // Animation for background
     private SpriteSheet spriteBG;
     private Animation animateSpriteBG;
 
-
+    // Audio declaration
     private static Audio audioMusicMainMenu;
     private Audio soundPressArrows;
     private Audio soundPressEnter;
 
-
+    // MainMenuState.java state ID = 0
     public int getID(){
         return BeatBitBeatMain.getMainMenu();
     }
@@ -48,32 +79,37 @@ public class MainMenuState extends BasicGameState implements KeyListener{
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
 
         // load resources and initialize objects
-//        imageBackground = new Image("Assets/mainMenuSprite.gif");
         // TODO: Replace correct files and filename
-        imageBtnStart = new Image("Assets/player1.jpg");
-        imageBtnOptions = new Image("Assets/player1.jpg");
-        imageBtnCredits = new Image("Assets/player1.jpg");
-        imageBtnExit = new Image("Assets/player1.jpg");
-        imageIndicator = new Image("Assets/player1.jpg");
+//        imageBackground = new Image("Assets/mainMenuSprite.gif");
+        imageBtnStart = new Image("Assets/MainMenuBtn.png");
+        imageBtnOptions = new Image("Assets/MainMenuBtn.png");
+        imageBtnCredits = new Image("Assets/MainMenuBtn.png");
+        imageBtnExit = new Image("Assets/MainMenuBtn.png");
+        imageIndicator = new Image("Assets/MainMenuIndicator.png");
 
-        coordBtnStart = new Coordinate(((displayWidth / 2) - (imageBtnStart.getWidth() / 2)), ((displayHeight / 2) + (imageBtnStart.getHeight() / 2) * 2));
-        coordBtnOptions = new Coordinate(((displayWidth / 2) - (imageBtnOptions.getWidth() / 2)), ((displayHeight / 2) + (imageBtnOptions.getHeight() / 2) * 3));
-        coordBtnCredits = new Coordinate(((displayWidth / 2) - (imageBtnCredits.getWidth() / 2)), ((displayHeight / 2) + (imageBtnCredits.getHeight() / 2) * 4));
-        coordBtnExit = new Coordinate(((displayWidth / 2) - (imageBtnExit.getWidth() / 2)), ((displayHeight / 2) + (imageBtnExit.getHeight() / 2) * 5));
+        // other btns depend on BtnStart's Y position
+        spacingOfBtns = ( (imageBtnStart.getHeight() / 2) * 3);
+        coordBtnStart = new Coordinate(displayWidth - 500, (imageBtnStart.getHeight() * 2) );
+        coordBtnOptions = new Coordinate(displayWidth - 500, coordBtnStart.getY() + spacingOfBtns );
+        coordBtnCredits = new Coordinate(displayWidth - 500, coordBtnOptions.getY() + spacingOfBtns );
+        coordBtnExit = new Coordinate(displayWidth - 500, coordBtnCredits.getY() + spacingOfBtns );
 
-        coordIndicator = new Coordinate((displayWidth / 2) - (imageBtnStart.getWidth() / 2) - 20, coordBtnStart.getY());
+        coordIndicator = new Coordinate(coordBtnStart.getX() - 100, coordBtnStart.getY());
 
-        changeState = -1;
+        indexOfSelectedState = -1;
         enterPressed = false;
 
+        // TODO: Replace correct files and filename
         spriteBG = new SpriteSheet("Assets/sprite.png", 533, 300); //ref, tw, th, spacing
-        animateSpriteBG = new Animation(spriteBG, 100);
+        animateSpriteBG = new Animation(spriteBG, 100);     // spritesheet, duration
 
 
         try {
+            // TODO: Replace correct music and filename
             audioMusicMainMenu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Romani.ogg"));
             audioMusicMainMenu.playAsMusic(1.0f, 1.0f, false);
 
+            // TODO: Replace correct sound effects and filename
             soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressArrowMainMenu.ogg"));
             soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressEnterMainMenu.ogg"));
 
@@ -90,17 +126,17 @@ public class MainMenuState extends BasicGameState implements KeyListener{
 
         if (enterPressed){
             if (coordIndicator.getY() == coordBtnStart.getY()) {    // if indicator is pointing to Start btn
-                changeState = BeatBitBeatMain.getCharacterSelection();
+                indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get fixed ID for state
             } else if (coordIndicator.getY() == coordBtnOptions.getY()) {     // if indicator is pointing to options btn
-                changeState = BeatBitBeatMain.getOptions();
+                indexOfSelectedState = BeatBitBeatMain.getOptions();
             } else if (coordIndicator.getY() == coordBtnCredits.getY()) {     // if indicator is pointing to credits btn
-                changeState = BeatBitBeatMain.getCredits();
+                indexOfSelectedState = BeatBitBeatMain.getCredits();
             } else if (coordIndicator.getY() == coordBtnExit.getY()) {        // if indicator is pointing to exit btn
                 System.exit(0);
             }
             enterPressed = false;
-            // enter state indicated by changeState
-            sbg.enterState(changeState, new FadeOutTransition(), new FadeInTransition());
+            // enter state indicated by indexOfSelectedState
+            sbg.enterState(indexOfSelectedState, new FadeOutTransition(), new FadeInTransition());
         }
 
     }
@@ -113,12 +149,9 @@ public class MainMenuState extends BasicGameState implements KeyListener{
         imageBtnExit.draw(coordBtnExit.getX(), coordBtnExit.getY());
         imageIndicator.draw(coordIndicator.getX(), coordIndicator.getY());
 
-        g.drawRect(coordIndicator.getX(), coordIndicator.getY(), 10, 10);
-
         animateSpriteBG.draw(0, 0);
 
         g.drawString("DELTA = "+delta, 100, 100);
-
 
     }
 
@@ -129,8 +162,8 @@ public class MainMenuState extends BasicGameState implements KeyListener{
         if (key == Input.KEY_UP) {
             soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
 
-            if (coordIndicator.getY() != coordBtnStart.getY()) {
-                coordIndicator.setY(coordIndicator.getY() - (imageBtnStart.getHeight() / 2));
+            if (coordIndicator.getY() != coordBtnStart.getY()) {    // if indicator is inside bounds
+                coordIndicator.setY(coordIndicator.getY() - spacingOfBtns);     // indicator moves by the fixed Spacing
             }
 
 
@@ -138,7 +171,7 @@ public class MainMenuState extends BasicGameState implements KeyListener{
             soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
 
             if (coordIndicator.getY() != coordBtnExit.getY()) {
-                coordIndicator.setY(coordIndicator.getY() + (imageBtnExit.getHeight() / 2));
+                coordIndicator.setY(coordIndicator.getY() + spacingOfBtns);
             }
         } else if (key == Input.KEY_ENTER) {
             soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
