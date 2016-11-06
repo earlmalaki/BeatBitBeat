@@ -23,13 +23,13 @@
 
 package game.monsters;
 
-public class Monster1 extends Monster {
+public class Monster2 extends Monster {
 
     private static final int hp = 100;
     private static final int mp = 100;
     private static final int damage = 100;
 
-    public Monster1() {
+    public Monster2() {
         super(hp, mp, damage);
 
     }

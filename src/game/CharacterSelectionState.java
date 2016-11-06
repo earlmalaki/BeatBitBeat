@@ -27,7 +27,7 @@
  * - put final choices of music (atleast 3)
  * - put final song art per music
  * - game button icon
- * - Monster Objects - backend logic for game proper
+ * - Monster Objects - backend logic for game proper    // update, nov 6. added monster implementation at monster selection
  *
  * Note:
  * - Monster selection icons should be of same dimensions for correct positioning
@@ -38,7 +38,7 @@
 
 package game;
 
-import game.monsters.Monster;
+import game.monsters.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -228,16 +228,26 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                         animateP1Monster = animateMonster1;     // set P1's animation to monster 1's
                         // TODO Gaming part
                         // TODO Monster object representing monster's unique capabilities
+
+                        // Update. nov 6.
+                        // added monster implementations
+
+                        monsterP1 = new Monster1();
                     } else if (caseMonsterAnimation == 2) {
                         animateP1Monster = animateMonster2;
+                        monsterP1 = new Monster2();
                     } else if (caseMonsterAnimation == 3) {
                         animateP1Monster = animateMonster3;
+                        monsterP1 = new Monster3();
                     } else if (caseMonsterAnimation == 4) {
                         animateP1Monster = animateMonster4;
+                        monsterP1 = new Monster4();
                     } else if (caseMonsterAnimation == 5) {
                         animateP1Monster = animateMonster5;
+                        monsterP1 = new Monster5();
                     } else if (caseMonsterAnimation == 6) {
                         animateP1Monster = animateMonster6;
+                        monsterP1 = new Monster6();
                     }
                     enterPressed = false;
                     p1Picking = false;
@@ -249,16 +259,25 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                         animateP2Monster = animateMonster1;     // set P2's animation to monster 1's
                         // TODO Gaming part
                         // TODO Monster object representing monster's unique capabilities
+
+                        // update
+
+                        monsterP2 = new Monster1();
                     } else if (caseMonsterAnimation == 2) {
                         animateP2Monster = animateMonster2;
+                        monsterP2 = new Monster2();
                     } else if (caseMonsterAnimation == 3) {
                         animateP2Monster = animateMonster3;
+                        monsterP2 = new Monster3();
                     } else if (caseMonsterAnimation == 4) {
                         animateP2Monster = animateMonster4;
+                        monsterP2 = new Monster4();
                     } else if (caseMonsterAnimation == 5) {
                         animateP2Monster = animateMonster5;
+                        monsterP2 = new Monster5();
                     } else if (caseMonsterAnimation == 6) {
                         animateP2Monster = animateMonster6;
+                        monsterP2 = new Monster6();
                     }
                     enterPressed = false;
                     monsterPicking = false;

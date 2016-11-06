@@ -16,7 +16,7 @@
  * TO DO:
  * - Add necessary instance variables
  * - Add necessary methods
- * - Make concrete specific monster classes
+ * - Make concrete specific monster classes (6 monsters)
  *
  * Note:
  * -
