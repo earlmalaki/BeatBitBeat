@@ -31,8 +31,11 @@
  *
  */
 
+// TODO Finish monster implementation
+
 package game;
 
+import game.monsters.Monster;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.openal.Audio;
@@ -43,6 +46,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameProperState extends BasicGameState implements KeyListener {
+
+    private static Monster monsterP1;
+    private static Monster monsterP2;
 
     private ArrayList<Rectangle> p1NoteBars;
     private ArrayList<Rectangle> p2NoteBars;
@@ -427,5 +433,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     public static void setAnimationPlayer2(Animation animation) {
         animationPlayer2 = animation;
+    }
+
+    public static void setMonsterP1(Monster monsterp1) {
+        monsterP1 = monsterp1;
+    }
+
+    public static void setMonsterP2(Monster monsterp2) {
+        monsterP2 = monsterp2;
     }
 } // END OF CLASS

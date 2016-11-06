@@ -338,6 +338,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 for (int i = 0; i < audioSongChoices.length; i++) {
                     audioSongChoices[i].stop();
                 }
+                GameProperState.setMonsterP1(monsterP1);
+                GameProperState.setMonsterP2(monsterP2);
                 GameProperState.setAnimationPlayer1(animateP1Monster);
                 GameProperState.setAnimationPlayer2(animateP2Monster);
                 GameProperState.startMusic();       // start music for the game proper
