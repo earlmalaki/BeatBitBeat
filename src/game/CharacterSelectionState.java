@@ -483,11 +483,4 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     }
 
-    public static Animation getAnimateP1Monster() {
-        return animateP1Monster;
-    }
-
-    public static Animation getAnimateP2Monster() {
-        return animateP2Monster;
-    }
 }

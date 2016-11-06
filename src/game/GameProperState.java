@@ -111,8 +111,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
     }
 
     public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-//        animationPlayer1 = CharacterSelectionState.getAnimateP1Monster();
-//        animationPlayer2 = CharacterSelectionState.getAnimateP2Monster();
 
         coordPlayer1 = new Coordinate((displayWidth / 2) - 300, 100);
         coordPlayer2 = new Coordinate((displayWidth / 2) + 100, 100);
