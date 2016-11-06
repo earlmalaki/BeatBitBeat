@@ -15,7 +15,7 @@
  * - For now, prioritize work on MainMenuState, CharacterSelectionState, GameProperState
  * - If not willing to use version control(better if we use ver control), make sure to work on separate TO DO to avoid wasted effort
  * - PUT COMMENTS ON CODES. Documentation for readability
- * - Let other's know what you're working on
+ * - Let others know what you're working on
  */
 
 package game;

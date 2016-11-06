@@ -18,7 +18,7 @@
  * To Do:
  * - Put wallpaper file
  * - Put button icon files
- * - Put final music file
+ * - Put final music file and loop
  * - finalize positioning of buttons after putting in final graphics
  *
  * Note:
@@ -106,7 +106,7 @@ public class MainMenuState extends BasicGameState implements KeyListener{
 
         try {
             // TODO: Replace correct music and filename
-            audioMusicMainMenu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Romani.ogg"));
+            audioMusicMainMenu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Main Music.ogg"));
             audioMusicMainMenu.playAsMusic(1.0f, 1.0f, false);
 
             // TODO: Replace correct sound effects and filename

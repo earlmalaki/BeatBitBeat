@@ -25,7 +25,7 @@
  * - put spritesheet for monster preview
  * - finalize positioning of buttons after putting in final graphics
  * - put final choices of music (atleast 3)
- * - put final song or per music
+ * - put final song art per music
  * - game button icon
  * - Monster Objects - backend logic for game proper
  *
