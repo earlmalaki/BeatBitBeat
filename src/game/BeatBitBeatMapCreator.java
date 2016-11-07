@@ -50,7 +50,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener{
         try {
             bw = new BufferedWriter(new FileWriter(file));
 
-            music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Main Music.ogg"));
+            music = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Main Menu Music.ogg"));
             music.playAsMusic(1.0f, 1.0f, false);
 
         } catch (IOException e) {
@@ -73,6 +73,10 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener{
             } else if (pressedGreen) {
                 pressedGreen = false;
                 bw.write("0001\n");
+            } else if (pressedBlue && pressedRed) {
+                pressedBlue = false;
+                pressedRed = false;
+                bw.write("1100\n");
             } else {
                 bw.write("0000\n");
             }
@@ -97,6 +101,9 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener{
             pressedYellow = true;
         } else if (key == Input.KEY_F) {
             pressedGreen = true;
+        } else if (key == Input.KEY_A && key == Input.KEY_S) {
+            pressedBlue = true;
+            pressedRed = true;
         }
 
         if (key == Input.KEY_ESCAPE) {

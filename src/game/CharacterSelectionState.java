@@ -98,7 +98,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     private Audio soundPressArrows;
     private Audio soundPressEnter;
-    private Audio[] audioSongChoices;
+    private Music[] audioSongChoices;
 
     private int caseMonsterAnimation;       // index holder for monster preview animation
     private int spacingXOfImageMonster;     // fixed spacing
@@ -188,15 +188,15 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         try {
             // TODO Replace with correct files
-            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressArrowMainMenu.ogg"));
-            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressEnterMainMenu.ogg"));
+            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));
+            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
 
             // TODO Replace with correct files and names
             // Audio array to songs. Order must be in sync with song art Image array
-            audioSongChoices = new Audio[]{
-                    AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Songs/Goin' Under/Goin' Under.ogg")),
-                    AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg")),
-                    AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Songs/Springtime/Kommisar - Springtime.ogg"))
+            audioSongChoices = new Music[] {
+                    new Music("Songs/Goin' Under/Goin' Under.ogg"),
+                    new Music("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg"),
+                    new Music("Songs/Springtime/Kommisar - Springtime.ogg")
             };
 
         } catch (IOException e) {
@@ -292,34 +292,34 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             MainMenuState.stopMusic();
             // Play Audio according to selection scanning
             if (indexImageSongArt == 0) {
-                if (!audioSongChoices[0].isPlaying()) {     // is not playing
+                if (!audioSongChoices[0].playing()) {     // is not playing
                     for (int i = 0; i < audioSongChoices.length; i++) {
                         if (i != 0) {
                             audioSongChoices[i].stop();     // stop playing others except the one being hovered
                         }
                     }
                     // play the one being hovered
-                    audioSongChoices[0].playAsSoundEffect(1.0f, 1.0f, false);
+                    audioSongChoices[0].play();
                 }
 
             } else if (indexImageSongArt == 1) {
-                if (!audioSongChoices[1].isPlaying()) {     // is not playing
+                if (!audioSongChoices[1].playing()) {     // is not playing
                     for (int i = 0; i < audioSongChoices.length; i++) {
                         if (i != 1) {
                             audioSongChoices[i].stop();
                         }
                     }
-                    audioSongChoices[1].playAsSoundEffect(1.0f, 1.0f, false);
+                    audioSongChoices[1].play();
                 }
 
             } else if (indexImageSongArt == 2) {
-                if (!audioSongChoices[2].isPlaying()) {     // is not playing
+                if (!audioSongChoices[2].playing()) {     // is not playing
                     for (int i = 0; i < audioSongChoices.length; i++) {
                         if (i != 2) {
                             audioSongChoices[i].stop();
                         }
                     }
-                    audioSongChoices[2].playAsSoundEffect(1.0f, 1.0f, false);
+                    audioSongChoices[2].play();
                 }
             }
 
@@ -327,7 +327,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 enterPressed = false;
                 songPicking = false;
                 for (int i = 0; i < audioSongChoices.length; i++) {
-                    if (audioSongChoices[i].isPlaying()) {
+                    if (audioSongChoices[i].playing()) {
                         GameProperState.setGameMusic(audioSongChoices[i]);      // save selected song for GameProperState usage
                     }
                 }

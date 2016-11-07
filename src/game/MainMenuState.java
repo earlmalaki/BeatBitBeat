@@ -106,14 +106,12 @@ public class MainMenuState extends BasicGameState implements KeyListener{
 
         try {
             // TODO: Replace correct music and filename
-            audioMusicMainMenu = new Music("Assets/State Music/Main Music.ogg");
+            audioMusicMainMenu = new Music("Assets/State Music/Main Menu Music.ogg");
             audioMusicMainMenu.loop();
-//            audioMusicMainMenu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Main Music.ogg"));
-//            audioMusicMainMenu.playAsMusic(1.0f, 1.0f, false);
 
             // TODO: Replace correct sound effects and filename
-            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressArrowMainMenu.ogg"));
-            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressEnterMainMenu.ogg"));
+            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));
+            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
 
         } catch (IOException e) {
             e.printStackTrace();

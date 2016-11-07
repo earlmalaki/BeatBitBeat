@@ -76,7 +76,6 @@ package game;
 import game.monsters.Monster;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -103,7 +102,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     private ArrayList<Rectangle> lineBars;
 
-    private static Audio gameMusic;
+    private static Music gameMusic;
     private Coordinate coordPlayer1;
     private Coordinate coordPlayer2;
     private static Animation animationPlayer1;
@@ -246,22 +245,42 @@ public class GameProperState extends BasicGameState implements KeyListener {
         String line = null;
         try {
             line = br.readLine();
+
+            if (line != null) {
+                if (line.equals("1000")) {
+                    p1NoteBars.add(new Rectangle(p1x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                } else if (line.equals("0100")) {
+                    p1NoteBars.add(new Rectangle(p1x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                } else if (line.equals("0010")) {
+                    p1NoteBars.add(new Rectangle(p1x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                } else if (line.equals("0001")) {
+                    p1NoteBars.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                }  else if (line.equals("1111")) {
+                    p1NoteBars.add(new Rectangle(p1x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+
+                    p1NoteBars.add(new Rectangle(p1x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+
+                    p1NoteBars.add(new Rectangle(p1x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+
+                    p1NoteBars.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+
+                    p1NoteBars.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    p2NoteBars.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+            }
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (line.equals("1000")) {
-            p1NoteBars.add(new Rectangle(p1x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-            p2NoteBars.add(new Rectangle(p2x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-        } else if (line.equals("0100")) {
-            p1NoteBars.add(new Rectangle(p1x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-            p2NoteBars.add(new Rectangle(p2x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-        } else if (line.equals("0010")) {
-            p1NoteBars.add(new Rectangle(p1x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-            p2NoteBars.add(new Rectangle(p2x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-        } else if (line.equals("0001")) {
-            p1NoteBars.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-            p2NoteBars.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-        }
+
 
 
         // Control the falling of noteBars bars
@@ -278,7 +297,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         // detect if notebars go past the receive bars
         // P1
-        for (int i = 0; i < p1NoteBars.size() - 1; i++) {
+        for (int i = 0; i < p1NoteBars.size(); i++) {
             Rectangle rect = p1NoteBars.get(i);
 
             if (rect.getCenterY() > endingYPos) {
@@ -484,12 +503,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
         return random.nextInt(4) + 1;
     }
 
-    public static void setGameMusic(Audio music) {
+    public static void setGameMusic(Music music) {
         gameMusic = music;
     }
 
     public static void startMusic() {
-        gameMusic.playAsMusic(1.0f, 1.0f, false);
+        gameMusic.play();
     }
 
     public static void setAnimationPlayer1(Animation animation) {
