@@ -67,7 +67,7 @@ public class MainMenuState extends BasicGameState implements KeyListener{
     private Animation animateSpriteBG;
 
     // Audio declaration
-    private static Audio audioMusicMainMenu;
+    private static Music audioMusicMainMenu;
     private Audio soundPressArrows;
     private Audio soundPressEnter;
 
@@ -106,8 +106,10 @@ public class MainMenuState extends BasicGameState implements KeyListener{
 
         try {
             // TODO: Replace correct music and filename
-            audioMusicMainMenu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Main Music.ogg"));
-            audioMusicMainMenu.playAsMusic(1.0f, 1.0f, false);
+            audioMusicMainMenu = new Music("Assets/State Music/Main Music.ogg");
+            audioMusicMainMenu.loop();
+//            audioMusicMainMenu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/State Music/Main Music.ogg"));
+//            audioMusicMainMenu.playAsMusic(1.0f, 1.0f, false);
 
             // TODO: Replace correct sound effects and filename
             soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/pressArrowMainMenu.ogg"));
