@@ -48,6 +48,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.io.File;
 import java.io.IOException;
 
 // Pick player, monster, music
@@ -98,7 +99,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     private Audio soundPressArrows;
     private Audio soundPressEnter;
-    private Music[] audioSongChoices;
+    private Music[] musicSongChoices;
+    private File[] fileSongBeatMaps;
 
     private int caseMonsterAnimation;       // index holder for monster preview animation
     private int spacingXOfImageMonster;     // fixed spacing
@@ -183,6 +185,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Songs/Goin' Under/bn.png"),
                 new Image("Songs/MechaTribe Assault/bn.png"),
                 new Image("Songs/Springtime/bn.png"),
+                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
         };
         coordImageSongArt = new Coordinate((displayWidth / 2) - (imagesSongArt[0].getWidth() / 2), displayHeight - (imagesSongArt[0].getHeight() * 2));
 
@@ -193,10 +196,18 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             // TODO Replace with correct files and names
             // Audio array to songs. Order must be in sync with song art Image array
-            audioSongChoices = new Music[] {
+            musicSongChoices = new Music[] {
                     new Music("Songs/Goin' Under/Goin' Under.ogg"),
                     new Music("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg"),
-                    new Music("Songs/Springtime/Kommisar - Springtime.ogg")
+                    new Music("Songs/Springtime/Kommisar - Springtime.ogg"),
+                    new Music("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix).ogg")
+            };
+
+            fileSongBeatMaps = new File[] {
+                    new File("Songs/Goin' Under/Goin' Under Beat Map.txt"),
+                    new File("Songs/MechaTribe Assault/Mecha-Tribe Assault Beat Map.txt"),
+                    new File("Songs/Springtime/Kommisar - Springtime Beat Map.txt"),
+                    new File("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix) Beat Map.txt")
             };
 
         } catch (IOException e) {
@@ -290,58 +301,67 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         } else if (songPicking) {    // song picking
             MainMenuState.stopMusic();
-            // Play Audio according to selection scanning
-            if (indexImageSongArt == 0) {
-                if (!audioSongChoices[0].playing()) {     // is not playing
-                    for (int i = 0; i < audioSongChoices.length; i++) {
-                        if (i != 0) {
-                            audioSongChoices[i].stop();     // stop playing others except the one being hovered
-                        }
-                    }
-                    // play the one being hovered
-                    audioSongChoices[0].play();
-                }
 
-            } else if (indexImageSongArt == 1) {
-                if (!audioSongChoices[1].playing()) {     // is not playing
-                    for (int i = 0; i < audioSongChoices.length; i++) {
-                        if (i != 1) {
-                            audioSongChoices[i].stop();
-                        }
-                    }
-                    audioSongChoices[1].play();
-                }
-
-            } else if (indexImageSongArt == 2) {
-                if (!audioSongChoices[2].playing()) {     // is not playing
-                    for (int i = 0; i < audioSongChoices.length; i++) {
-                        if (i != 2) {
-                            audioSongChoices[i].stop();
-                        }
-                    }
-                    audioSongChoices[2].play();
+            for (int i = 0; i < musicSongChoices.length; i++) {
+                if (!musicSongChoices[indexImageSongArt].playing()) {
+                    musicSongChoices[indexImageSongArt].play();
                 }
             }
+
+//            // Play Audio according to selection scanning
+//            if (indexImageSongArt == 0) {
+//                if (!musicSongChoices[0].playing()) {     // is not playing
+//                    for (int i = 0; i < musicSongChoices.length; i++) {
+//                        if (i != 0) {
+//                            musicSongChoices[i].stop();     // stop playing others except the one being hovered
+//                        }
+//                    }
+//                    // play the one being hovered
+//                    musicSongChoices[0].play();
+//                }
+//
+//            } else if (indexImageSongArt == 1) {
+//                if (!musicSongChoices[1].playing()) {     // is not playing
+//                    for (int i = 0; i < musicSongChoices.length; i++) {
+//                        if (i != 1) {
+//                            musicSongChoices[i].stop();
+//                        }
+//                    }
+//                    musicSongChoices[1].play();
+//                }
+//
+//            } else if (indexImageSongArt == 2) {
+//                if (!musicSongChoices[2].playing()) {     // is not playing
+//                    for (int i = 0; i < musicSongChoices.length; i++) {
+//                        if (i != 2) {
+//                            musicSongChoices[i].stop();
+//                        }
+//                    }
+//                    musicSongChoices[2].play();
+//                }
+//            }
 
             if (enterPressed) {     // song selected
                 enterPressed = false;
                 songPicking = false;
-                for (int i = 0; i < audioSongChoices.length; i++) {
-                    if (audioSongChoices[i].playing()) {
-                        GameProperState.setGameMusic(audioSongChoices[i]);      // save selected song for GameProperState usage
+                for (int i = 0; i < musicSongChoices.length; i++) {
+                    if (musicSongChoices[i].playing()) {
+                        GameProperState.setGameMusic(musicSongChoices[i]);      // save selected song for GameProperState usage
+                        GameProperState.setBeatMap(fileSongBeatMaps[i]);
                     }
                 }
             }
         } else { // if monsterPicking and songPicking is false
             if (enterPressed) {     // game button pressed
                 // stop playing preview of songs
-                for (int i = 0; i < audioSongChoices.length; i++) {
-                    audioSongChoices[i].stop();
+                for (int i = 0; i < musicSongChoices.length; i++) {
+                    musicSongChoices[i].stop();
                 }
                 GameProperState.setMonsterP1(monsterP1);
                 GameProperState.setMonsterP2(monsterP2);
                 GameProperState.setAnimationPlayer1(animateP1Monster);
                 GameProperState.setAnimationPlayer2(animateP2Monster);
+                // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
                 GameProperState.startMusic();       // start music for the game proper
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
             }
@@ -409,6 +429,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
 
+
+            // TODO use for each for efficient code
             // draw song art of the song being hovered at
             if (indexImageSongArt == 0) {
                 imagesSongArt[0].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
@@ -416,6 +438,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 imagesSongArt[1].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
             } else if (indexImageSongArt == 2) {
                 imagesSongArt[2].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
+            } else if (indexImageSongArt == 3) {
+                imagesSongArt[3].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
             }
         } else {   // EO (songPicking)
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());    // draw preview P1's selected monster
