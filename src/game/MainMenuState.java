@@ -19,7 +19,22 @@
  * - Put final music file and loop
  * - finalize positioning of buttons after putting in final graphics
  * <p>
- * Note:
+ * game.Note:
+ * - OptionsState and CreditsState is still empty. Work on this soon. Prioritize MVP first.
+ * - Button icons should be of same dimensions for correct positioning
+ * <p>
+ * Done:
+ * - Key Listener for buttons(Start, Options, Credits, Exit)
+ * - Image or Sprite handler for background
+ * - Intro music
+ * <p>
+ * To Do:
+ * - Put wallpaper file
+ * - Put button icon files
+ * - Put final music file and loop
+ * - finalize positioning of buttons after putting in final graphics
+ * <p>
+ * game.Note:
  * - OptionsState and CreditsState is still empty. Work on this soon. Prioritize MVP first.
  * - Button icons should be of same dimensions for correct positioning
  */
@@ -36,7 +51,7 @@
  * - Put final music file and loop
  * - finalize positioning of buttons after putting in final graphics
  *
- * Note:
+ * game.Note:
  * - OptionsState and CreditsState is still empty. Work on this soon. Prioritize MVP first.
  * - Button icons should be of same dimensions for correct positioning
  */
@@ -72,7 +87,6 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
 
-
     // Animation for background
     private SpriteSheet spriteBG;
     private Animation animateSpriteBG;
@@ -103,7 +117,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
         // other btns depend on BtnStart's Y position
         spacingOfBtns = ((imagesButtons[0].getHeight() / 2) * 3);
-        coordsButtons = new Coordinate[] {
+        coordsButtons = new Coordinate[]{
                 new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2)),
                 new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2) + spacingOfBtns),
                 new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2) + spacingOfBtns * 2),
@@ -124,8 +138,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
             // TODO: Replace correct music and filename
 //            audioMusicMainMenu = new Music("Assets/State Music/Main Menu Music.ogg");
 //            audioMusicMainMenu = new Music("Assets/State Music/Down with the Sickness.ogg");
-//            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
-//            audioMusicMainMenu.loop();
+            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
+            audioMusicMainMenu.loop();
 
             // TODO: Replace correct sound effects and filename
             soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));

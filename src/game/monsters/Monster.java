@@ -18,7 +18,7 @@
  * - Add necessary methods
  * - Make concrete specific monster classes (6 monsters)
  *
- * Note:
+ * game.Note:
  * -
  */
 

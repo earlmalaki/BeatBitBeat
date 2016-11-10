@@ -40,8 +40,8 @@ public class BeatBitBeatMain extends StateBasedGame{
 
 
     // Display Resolution
-    private static int displayWidth = 1280;
-    private static int displayHeight = 800;
+    private static int displayWidth;
+    private static int displayHeight;
 
     // Constructor
     public BeatBitBeatMain(String gameName){
@@ -51,8 +51,8 @@ public class BeatBitBeatMain extends StateBasedGame{
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new BeatBitBeatMain(gameName));
-//        displayWidth = app.getScreenWidth();
-//        displayHeight = app.getScreenHeight();
+        displayWidth = app.getScreenWidth();
+        displayHeight = app.getScreenHeight();
 
         app.setTitle("BeatBitBeat");                // Title for top bar
         app.setDisplayMode(displayWidth, displayHeight, false);     // fullscreen false for now

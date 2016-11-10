@@ -3,10 +3,33 @@
  * Bedio, Aiden Justin
  * Malaki, Earl Timothy
  * Paler, Timothy River
- *
+ * <p>
  * BSCS - II | UP - Cebu
  * CMSC22 - OOP
  * Final Project
+ * <p>
+ * Done:
+ * - Key Listener for monster selection indicator
+ * - monster selection
+ * - Image or Sprite handler for background
+ * - Music
+ * - Animation handler for monster preview. both P1 and P2
+ * - music selection
+ * - game button
+ * <p>
+ * To Do:
+ * - Put wallpaper file
+ * - Put monster selection icon files
+ * - put spritesheet for monster preview
+ * - finalize positioning of buttons after putting in final graphics
+ * - put final choices of music (atleast 3)
+ * - put final song art per music
+ * - game button icon
+ * - Monster Objects - backend logic for game proper    // update, nov 6. added monster implementation at monster selection
+ * <p>
+ * game.Note:
+ * - Monster selection icons should be of same dimensions for correct positioning
+ * - Monster preview sprites should be of same dimensions for correct positioning
  */
 
 /**
@@ -29,7 +52,7 @@
  * - game button icon
  * - Monster Objects - backend logic for game proper    // update, nov 6. added monster implementation at monster selection
  *
- * Note:
+ * game.Note:
  * - Monster selection icons should be of same dimensions for correct positioning
  * - Monster preview sprites should be of same dimensions for correct positioning
  *
@@ -117,7 +140,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         SpriteSheet spriteMonster6 = new SpriteSheet("Assets/Graphics/Monster Display Sprite/monster5.png", 200, 300);
 
         // TODO Replace correct names and adjust duration according to spritesheet
-        animateMonsters = new Animation[] {
+        animateMonsters = new Animation[]{
                 new Animation(spriteMonster1, 200),
                 new Animation(spriteMonster2, 200),
                 new Animation(spriteMonster3, 200),
@@ -133,7 +156,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         caseMonsterAnimation = 2;
 
         // TODO Replace with correct files and names
-        imagesMonsters = new Image[] {
+        imagesMonsters = new Image[]{
                 new Image("Assets/Graphics/Monster Avatar/AvatarMonster1.png"),
                 new Image("Assets/Graphics/Monster Avatar/AvatarMonster2.png"),
                 new Image("Assets/Graphics/Monster Avatar/AvatarMonster3.png"),
@@ -186,14 +209,14 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             // TODO Replace with correct files and names
             // Audio array to songs. Order must be in sync with song art Image array
-            musicSongChoices = new Music[] {
+            musicSongChoices = new Music[]{
                     new Music("Songs/Goin' Under/Goin' Under.ogg"),
                     new Music("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg"),
                     new Music("Songs/Springtime/Kommisar - Springtime.ogg"),
                     new Music("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix).ogg")
             };
 
-            fileSongBeatMaps = new File[] {
+            fileSongBeatMaps = new File[]{
                     new File("Songs/Goin' Under/Goin' Under Beat Map.txt"),
                     new File("Songs/MechaTribe Assault/Mecha-Tribe Assault Beat Map.txt"),
                     new File("Songs/Springtime/Kommisar - Springtime Beat Map.txt"),
@@ -228,7 +251,6 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
         }
-
 
 
         if (monsterPicking) {
@@ -365,8 +387,6 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
 
-
-            // TODO use for each for efficient code
             // draw song art of the song being hovered at
             imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
 

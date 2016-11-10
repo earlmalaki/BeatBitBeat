@@ -48,7 +48,7 @@ The envisioned Game is a combination Rhythm and Action/Fighting genre. It combin
 
 #### Rhythm Mechanics:
 	
-Note System: The Timing of the drop of the notes with respect to the music, and the track to which vertical line the note will spawn.
+game.Note System: The Timing of the drop of the notes with respect to the music, and the track to which vertical line the note will spawn.
 
 BarTime System: The Timing of the keys pressed by the player when the notes      dropped reach the bar line to hit the key.
 

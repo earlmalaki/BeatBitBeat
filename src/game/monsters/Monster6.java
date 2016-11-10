@@ -17,7 +17,7 @@
  * - add specific identity/behaviour (skills, capabilities, etc.)
  * - do this to the remaining monsters
  *
- * Note:
+ * game.Note:
  *
  */
 
