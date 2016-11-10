@@ -61,39 +61,20 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     private Image imageBackground;
     private Image imageMonsterIndicator;        // frame to emphasize hovered monster selection
-
-    private Image imageMonster1;
-    private Image imageMonster2;
-    private Image imageMonster3;
-    private Image imageMonster4;
-    private Image imageMonster5;
-    private Image imageMonster6;
-
     private Image[] imagesSongArt;
     private Image imageBtnGame;
 
-    private Animation animateMonster1;
-    private Animation animateMonster2;
-    private Animation animateMonster3;
-    private Animation animateMonster4;
-    private Animation animateMonster5;
-    private Animation animateMonster6;
+    private Image[] imagesMonsters;
+    private Coordinate[] coordsImageMonster;
+
+    private Animation[] animateMonsters;
 
     private static Animation animateP1Monster;
     private static Animation animateP2Monster;
 
     private Coordinate coordP1Monster;      // coord for the monster preview animation
     private Coordinate coordP2Monster;
-
-    private Coordinate coordImageMonster1;  // coord for the monster selection
-    private Coordinate coordImageMonster2;
-    private Coordinate coordImageMonster3;
-    private Coordinate coordImageMonster4;
-    private Coordinate coordImageMonster5;
-    private Coordinate coordImageMonster6;
-
     private Coordinate coordMonsterIndicator;
-
     private Coordinate coordImageSongArt;
     private Coordinate coordBtnGame;
 
@@ -107,7 +88,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private int spacingYOfImageMonster;
     private int indexImageSongArt;          // index holder for song art
 
-    private boolean enterPressed;
+    private boolean pressedEnter;
     private boolean monsterPicking;
     private boolean songPicking;
     private boolean p1Picking;
@@ -116,11 +97,15 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
+    private boolean pressedEscape;
+
     public int getID() {
         return BeatBitBeatMain.getCharacterSelection();
     }
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+
+        pressedEscape = false;
 
         // TODO Replace with correct files and names
         imageBackground = new Image("Assets/bgimage.jpg");
@@ -132,47 +117,52 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         SpriteSheet spriteMonster6 = new SpriteSheet("Assets/Graphics/Monster Display Sprite/monster5.png", 200, 300);
 
         // TODO Replace correct names and adjust duration according to spritesheet
-        animateMonster1 = new Animation(spriteMonster1, 200);
-        animateMonster2 = new Animation(spriteMonster2, 200);
-        animateMonster3 = new Animation(spriteMonster3, 200);
-        animateMonster4 = new Animation(spriteMonster4, 200);
-        animateMonster5 = new Animation(spriteMonster5, 200);
-        animateMonster6 = new Animation(spriteMonster6, 200);
+        animateMonsters = new Animation[] {
+                new Animation(spriteMonster1, 200),
+                new Animation(spriteMonster2, 200),
+                new Animation(spriteMonster3, 200),
+                new Animation(spriteMonster4, 200),
+                new Animation(spriteMonster5, 200),
+                new Animation(spriteMonster6, 200)
+        };
 
         // Coordinates for monster preview animations
         coordP1Monster = new Coordinate(50, 250);
         coordP2Monster = new Coordinate(displayWidth - (spriteMonster1.getWidth() / 2) - 50, 250);
 
-        caseMonsterAnimation = 0;
+        caseMonsterAnimation = 2;
 
         // TODO Replace with correct files and names
-        imageMonster1 = new Image("Assets/Graphics/Monster Avatar/AvatarMonster1.png");
-        imageMonster2 = new Image("Assets/Graphics/Monster Avatar/AvatarMonster2.png");
-        imageMonster3 = new Image("Assets/Graphics/Monster Avatar/AvatarMonster3.png");
-        imageMonster4 = new Image("Assets/Graphics/Monster Avatar/AvatarMonster4.png");
-        imageMonster5 = new Image("Assets/Graphics/Monster Avatar/AvatarMonster5.png");
-        imageMonster6 = new Image("Assets/Graphics/Monster Avatar/AvatarMonster5.png");
+        imagesMonsters = new Image[] {
+                new Image("Assets/Graphics/Monster Avatar/AvatarMonster1.png"),
+                new Image("Assets/Graphics/Monster Avatar/AvatarMonster2.png"),
+                new Image("Assets/Graphics/Monster Avatar/AvatarMonster3.png"),
+                new Image("Assets/Graphics/Monster Avatar/AvatarMonster4.png"),
+                new Image("Assets/Graphics/Monster Avatar/AvatarMonster5.png"),
+                new Image("Assets/Graphics/Monster Avatar/AvatarMonster5.png")
+        };
 
-        spacingXOfImageMonster = (imageMonster4.getWidth() / 2) * 3;
-        spacingYOfImageMonster = (imageMonster4.getHeight() / 2) * 3;
+        spacingXOfImageMonster = (imagesMonsters[0].getWidth() / 2) * 3;
+        spacingYOfImageMonster = (imagesMonsters[0].getHeight() / 2) * 3;
         imageMonsterIndicator = new Image("Assets/player1.jpg"); // TODO Replace with correct files and names
 
-        coordImageMonster2 = new Coordinate((displayWidth / 2) - (imageMonster2.getWidth() / 2), 200);
-        coordImageMonster1 = new Coordinate(coordImageMonster2.getX() - spacingXOfImageMonster, coordImageMonster2.getY());
-        coordImageMonster3 = new Coordinate(coordImageMonster2.getX() + spacingXOfImageMonster, coordImageMonster2.getY());
+        coordsImageMonster = new Coordinate[]{
+                new Coordinate((displayWidth / 2) - (imagesMonsters[0].getWidth() / 2) - spacingXOfImageMonster, 200),
+                new Coordinate((displayWidth / 2) - (imagesMonsters[0].getWidth() / 2), 200),
+                new Coordinate((displayWidth / 2) - (imagesMonsters[0].getWidth() / 2) + spacingXOfImageMonster, 200),
+                new Coordinate((displayWidth / 2) - (imagesMonsters[0].getWidth() / 2) - spacingXOfImageMonster, 200 + spacingYOfImageMonster),
+                new Coordinate((displayWidth / 2) - (imagesMonsters[0].getWidth() / 2), 200 + spacingYOfImageMonster),
+                new Coordinate((displayWidth / 2) - (imagesMonsters[0].getWidth() / 2) + spacingXOfImageMonster, 200 + spacingYOfImageMonster),
+        };
 
-        coordImageMonster5 = new Coordinate(coordImageMonster2.getX(), coordImageMonster2.getY() + spacingYOfImageMonster);
-        coordImageMonster4 = new Coordinate(coordImageMonster5.getX() - spacingXOfImageMonster, coordImageMonster5.getY());
-        coordImageMonster6 = new Coordinate(coordImageMonster5.getX() + spacingXOfImageMonster, coordImageMonster5.getY());
-
-        coordMonsterIndicator = new Coordinate(coordImageMonster2.getX(), coordImageMonster2.getY());
+        coordMonsterIndicator = new Coordinate(coordsImageMonster[1].getX(), coordsImageMonster[1].getY());
 
         // TODO Replace with correct files and names
         imageBtnGame = new Image("Assets/player1.jpg");
         coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
 
         // Flags
-        enterPressed = false;
+        pressedEnter = false;
         monsterPicking = true;
         songPicking = false;
         p1Picking = true;
@@ -218,79 +208,81 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 
-        if (monsterPicking) {
-            if (coordMonsterIndicator.equalTo(coordImageMonster1)) {        // indicator is at monster 1
-                caseMonsterAnimation = 1;                                   // set monster preview animation to monster 1's
-            } else if (coordMonsterIndicator.equalTo(coordImageMonster2)) {
-                caseMonsterAnimation = 2;
-            } else if (coordMonsterIndicator.equalTo(coordImageMonster3)) {
-                caseMonsterAnimation = 3;
-            } else if (coordMonsterIndicator.equalTo(coordImageMonster4)) {
-                caseMonsterAnimation = 4;
-            } else if (coordMonsterIndicator.equalTo(coordImageMonster5)) {
-                caseMonsterAnimation = 5;
-            } else if (coordMonsterIndicator.equalTo(coordImageMonster6)) {
-                caseMonsterAnimation = 6;
+        if (pressedEscape) {
+            pressedEscape = false;
+
+            caseMonsterAnimation = 2;
+            pressedEnter = false;
+            monsterPicking = true;
+            songPicking = false;
+            p1Picking = true;
+            p2Picking = false;
+
+            for (Music music : musicSongChoices) {
+                if (music.playing()) {
+                    music.stop();
+                }
             }
 
+//            MainMenuState.resumeMusic();
+
+            sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
+        }
+
+
+
+        if (monsterPicking) {
+
+            for (int i = 0; i < coordsImageMonster.length; i++) {
+                if (coordMonsterIndicator.equalTo(coordsImageMonster[i])) {
+                    caseMonsterAnimation = i + 1;       // index for casemonster starts at 1
+                }
+            }
+
+
             if (p1Picking) {    // if player 1's turn to pick
-                if (enterPressed) {
+                if (pressedEnter) {
+                    animateP1Monster = animateMonsters[caseMonsterAnimation - 1];
+
+                    // TODO Gaming part
+                    // TODO Monster object representing monster's unique capabilities
                     if (caseMonsterAnimation == 1) {
-                        animateP1Monster = animateMonster1;     // set P1's animation to monster 1's
-                        // TODO Gaming part
-                        // TODO Monster object representing monster's unique capabilities
-
-                        // Update. nov 6.
-                        // added monster implementations
-
                         monsterP1 = new Monster1();
                     } else if (caseMonsterAnimation == 2) {
-                        animateP1Monster = animateMonster2;
                         monsterP1 = new Monster2();
                     } else if (caseMonsterAnimation == 3) {
-                        animateP1Monster = animateMonster3;
                         monsterP1 = new Monster3();
                     } else if (caseMonsterAnimation == 4) {
-                        animateP1Monster = animateMonster4;
                         monsterP1 = new Monster4();
                     } else if (caseMonsterAnimation == 5) {
-                        animateP1Monster = animateMonster5;
                         monsterP1 = new Monster5();
                     } else if (caseMonsterAnimation == 6) {
-                        animateP1Monster = animateMonster6;
                         monsterP1 = new Monster6();
                     }
-                    enterPressed = false;
+                    pressedEnter = false;
                     p1Picking = false;
                     p2Picking = true;       // p2's turn to pick
                 }
             } else if (p2Picking) {    // if player 2's turn to pick
-                if (enterPressed) {
+                if (pressedEnter) {
+                    animateP2Monster = animateMonsters[caseMonsterAnimation - 1];
+
+                    // TODO Gaming part
+                    // TODO Monster object representing monster's unique capabilities
                     if (caseMonsterAnimation == 1) {
-                        animateP2Monster = animateMonster1;     // set P2's animation to monster 1's
-                        // TODO Gaming part
-                        // TODO Monster object representing monster's unique capabilities
-
-                        // update
-
                         monsterP2 = new Monster1();
                     } else if (caseMonsterAnimation == 2) {
-                        animateP2Monster = animateMonster2;
                         monsterP2 = new Monster2();
                     } else if (caseMonsterAnimation == 3) {
-                        animateP2Monster = animateMonster3;
                         monsterP2 = new Monster3();
                     } else if (caseMonsterAnimation == 4) {
-                        animateP2Monster = animateMonster4;
                         monsterP2 = new Monster4();
                     } else if (caseMonsterAnimation == 5) {
-                        animateP2Monster = animateMonster5;
                         monsterP2 = new Monster5();
                     } else if (caseMonsterAnimation == 6) {
-                        animateP2Monster = animateMonster6;
                         monsterP2 = new Monster6();
                     }
-                    enterPressed = false;
+                    pressedEnter = false;
                     monsterPicking = false;
                     p1Picking = false;
                     p2Picking = false;
@@ -300,49 +292,18 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }   // EO (p2Picking)
 
         } else if (songPicking) {    // song picking
-            MainMenuState.stopMusic();
+//            MainMenuState.pauseMusic();
 
+            // Play Audio according to selection scanning
             for (int i = 0; i < musicSongChoices.length; i++) {
                 if (!musicSongChoices[indexImageSongArt].playing()) {
                     musicSongChoices[indexImageSongArt].play();
                 }
             }
 
-//            // Play Audio according to selection scanning
-//            if (indexImageSongArt == 0) {
-//                if (!musicSongChoices[0].playing()) {     // is not playing
-//                    for (int i = 0; i < musicSongChoices.length; i++) {
-//                        if (i != 0) {
-//                            musicSongChoices[i].stop();     // stop playing others except the one being hovered
-//                        }
-//                    }
-//                    // play the one being hovered
-//                    musicSongChoices[0].play();
-//                }
-//
-//            } else if (indexImageSongArt == 1) {
-//                if (!musicSongChoices[1].playing()) {     // is not playing
-//                    for (int i = 0; i < musicSongChoices.length; i++) {
-//                        if (i != 1) {
-//                            musicSongChoices[i].stop();
-//                        }
-//                    }
-//                    musicSongChoices[1].play();
-//                }
-//
-//            } else if (indexImageSongArt == 2) {
-//                if (!musicSongChoices[2].playing()) {     // is not playing
-//                    for (int i = 0; i < musicSongChoices.length; i++) {
-//                        if (i != 2) {
-//                            musicSongChoices[i].stop();
-//                        }
-//                    }
-//                    musicSongChoices[2].play();
-//                }
-//            }
 
-            if (enterPressed) {     // song selected
-                enterPressed = false;
+            if (pressedEnter) {     // song selected
+                pressedEnter = false;
                 songPicking = false;
                 for (int i = 0; i < musicSongChoices.length; i++) {
                     if (musicSongChoices[i].playing()) {
@@ -352,17 +313,17 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 }
             }
         } else { // if monsterPicking and songPicking is false
-            if (enterPressed) {     // game button pressed
+            if (pressedEnter) {     // game button pressed
                 // stop playing preview of songs
                 for (int i = 0; i < musicSongChoices.length; i++) {
                     musicSongChoices[i].stop();
                 }
+
                 GameProperState.setMonsterP1(monsterP1);
                 GameProperState.setMonsterP2(monsterP2);
                 GameProperState.setAnimationPlayer1(animateP1Monster);
                 GameProperState.setAnimationPlayer2(animateP2Monster);
                 // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
-                GameProperState.startMusic();       // start music for the game proper
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
             }
 
@@ -374,12 +335,9 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         g.drawImage(imageBackground, 400f, 400f);
 
         // render monster selection icons
-        imageMonster1.draw(coordImageMonster1.getX(), coordImageMonster1.getY());
-        imageMonster2.draw(coordImageMonster2.getX(), coordImageMonster2.getY());
-        imageMonster3.draw(coordImageMonster3.getX(), coordImageMonster3.getY());
-        imageMonster4.draw(coordImageMonster4.getX(), coordImageMonster4.getY());
-        imageMonster5.draw(coordImageMonster5.getX(), coordImageMonster5.getY());
-        imageMonster6.draw(coordImageMonster6.getX(), coordImageMonster6.getY());
+        for (int i = 0; i < imagesMonsters.length; i++) {
+            imagesMonsters[i].draw(coordsImageMonster[i].getX(), coordsImageMonster[i].getY());
+        }
 
         // draw game button when done picking
         if (!monsterPicking && !songPicking) {
@@ -388,39 +346,17 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         if (monsterPicking) {
             imageMonsterIndicator.draw(coordMonsterIndicator.getX(), coordMonsterIndicator.getY());
-            g.drawRect(coordMonsterIndicator.getX(), coordMonsterIndicator.getY(), imageMonster1.getWidth(), imageMonster1.getHeight());
+            g.drawRect(coordMonsterIndicator.getX(), coordMonsterIndicator.getY(), imagesMonsters[0].getWidth(), imagesMonsters[0].getHeight());
 
             if (p1Picking) {
                 g.drawString("Player 1 pick", (displayWidth / 2) - 10, 10);     // temp instruction display. to be improved
-                if (caseMonsterAnimation == 1) {
-                    animateMonster1.draw(coordP1Monster.getX(), coordP1Monster.getY());     // draw monster preview animation of the monster being hovered at
-                } else if (caseMonsterAnimation == 2) {
-                    animateMonster2.draw(coordP1Monster.getX(), coordP1Monster.getY());
-                } else if (caseMonsterAnimation == 3) {
-                    animateMonster3.draw(coordP1Monster.getX(), coordP1Monster.getY());
-                } else if (caseMonsterAnimation == 4) {
-                    animateMonster4.draw(coordP1Monster.getX(), coordP1Monster.getY());
-                } else if (caseMonsterAnimation == 5) {
-                    animateMonster5.draw(coordP1Monster.getX(), coordP1Monster.getY());
-                } else if (caseMonsterAnimation == 6) {
-                    animateMonster6.draw(coordP1Monster.getX(), coordP1Monster.getY());
-                }
+
+                animateMonsters[caseMonsterAnimation - 1].draw(coordP1Monster.getX(), coordP1Monster.getY());
             } else if (p2Picking) {
                 g.drawString("Player 2 pick", (displayWidth / 2) - 10, 10);
                 animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());        // draw preview P1's selected monster
-                if (caseMonsterAnimation == 1) {
-                    animateMonster1.draw(coordP2Monster.getX(), coordP2Monster.getY());
-                } else if (caseMonsterAnimation == 2) {
-                    animateMonster2.draw(coordP2Monster.getX(), coordP2Monster.getY());
-                } else if (caseMonsterAnimation == 3) {
-                    animateMonster3.draw(coordP2Monster.getX(), coordP2Monster.getY());
-                } else if (caseMonsterAnimation == 4) {
-                    animateMonster4.draw(coordP2Monster.getX(), coordP2Monster.getY());
-                } else if (caseMonsterAnimation == 5) {
-                    animateMonster5.draw(coordP2Monster.getX(), coordP2Monster.getY());
-                } else if (caseMonsterAnimation == 6) {
-                    animateMonster6.draw(coordP2Monster.getX(), coordP2Monster.getY());
-                }
+
+                animateMonsters[caseMonsterAnimation - 1].draw(coordP2Monster.getX(), coordP2Monster.getY());
             }
 
         } else if (songPicking) {
@@ -432,15 +368,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             // TODO use for each for efficient code
             // draw song art of the song being hovered at
-            if (indexImageSongArt == 0) {
-                imagesSongArt[0].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
-            } else if (indexImageSongArt == 1) {
-                imagesSongArt[1].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
-            } else if (indexImageSongArt == 2) {
-                imagesSongArt[2].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
-            } else if (indexImageSongArt == 3) {
-                imagesSongArt[3].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
-            }
+            imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
+
         } else {   // EO (songPicking)
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());    // draw preview P1's selected monster
             animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
@@ -456,27 +385,27 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         if (monsterPicking) {
             if (key == Input.KEY_UP) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getY() != coordImageMonster2.getY()) {
+                if (coordMonsterIndicator.getY() != coordsImageMonster[0].getY()) {
                     coordMonsterIndicator.setY(coordMonsterIndicator.getY() - spacingYOfImageMonster);
                 }
             } else if (key == Input.KEY_DOWN) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getY() != coordImageMonster4.getY()) {
+                if (coordMonsterIndicator.getY() != coordsImageMonster[5].getY()) {
                     coordMonsterIndicator.setY(coordMonsterIndicator.getY() + spacingYOfImageMonster);
                 }
             } else if (key == Input.KEY_LEFT) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getX() != coordImageMonster1.getX()) {
+                if (coordMonsterIndicator.getX() != coordsImageMonster[0].getX()) {
                     coordMonsterIndicator.setX(coordMonsterIndicator.getX() - spacingXOfImageMonster);
                 }
             } else if (key == Input.KEY_RIGHT) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getX() != coordImageMonster3.getX()) {
+                if (coordMonsterIndicator.getX() != coordsImageMonster[5].getX()) {
                     coordMonsterIndicator.setX(coordMonsterIndicator.getX() + spacingXOfImageMonster);
                 }
             } else if (key == Input.KEY_ENTER) {
                 soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-                enterPressed = true;
+                pressedEnter = true;
             }
         } else if (songPicking) {
             if (key == Input.KEY_LEFT) {
@@ -491,13 +420,17 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 }
             } else if (key == Input.KEY_ENTER) {
                 soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-                enterPressed = true;
+                pressedEnter = true;
             }
 
         } else {
             if (key == Input.KEY_ENTER) {
-                enterPressed = true;
+                pressedEnter = true;
             }
+        }
+
+        if (key == Input.KEY_ESCAPE) {
+            pressedEscape = true;
         }
 
     }

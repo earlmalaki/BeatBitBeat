@@ -58,11 +58,11 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     // Images declaration
     private Image imageBackground;
-    private Image imageBtnStart;
-    private Image imageBtnOptions;
-    private Image imageBtnCredits;
-    private Image imageBtnExit;
     private Image imageIndicator;
+    private Coordinate coordIndicator;      // coord for the selection indicator
+
+    private Image[] imagesButtons;
+    private Coordinate[] coordsButtons;
 
     private int spacingOfBtns;      // fixed spacing of each button
     private int indexOfSelectedState;
@@ -71,11 +71,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     private int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
-    private Coordinate coordIndicator;      // coord for the selection indicator
-    private Coordinate coordBtnStart;
-    private Coordinate coordBtnOptions;
-    private Coordinate coordBtnCredits;
-    private Coordinate coordBtnExit;
+
 
     // Animation for background
     private SpriteSheet spriteBG;
@@ -96,22 +92,27 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         // load resources and initialize objects
         // TODO: Replace correct files and filename
 //        imageBackground = new Image("Assets/mainMenuSprite.gif");
-        imageBtnStart = new Image("Assets/MainMenuBtn.png");
-        imageBtnOptions = new Image("Assets/MainMenuBtn.png");
-        imageBtnCredits = new Image("Assets/MainMenuBtn.png");
-        imageBtnExit = new Image("Assets/MainMenuBtn.png");
         imageIndicator = new Image("Assets/MainMenuIndicator.png");
 
+        imagesButtons = new Image[]{
+                new Image("Assets/MainMenuBtn.png"),
+                new Image("Assets/MainMenuBtn.png"),
+                new Image("Assets/MainMenuBtn.png"),
+                new Image("Assets/MainMenuBtn.png")
+        };
+
         // other btns depend on BtnStart's Y position
-        spacingOfBtns = ((imageBtnStart.getHeight() / 2) * 3);
-        coordBtnStart = new Coordinate(displayWidth - 500, (imageBtnStart.getHeight() * 2));
-        coordBtnOptions = new Coordinate(displayWidth - 500, coordBtnStart.getY() + spacingOfBtns);
-        coordBtnCredits = new Coordinate(displayWidth - 500, coordBtnOptions.getY() + spacingOfBtns);
-        coordBtnExit = new Coordinate(displayWidth - 500, coordBtnCredits.getY() + spacingOfBtns);
+        spacingOfBtns = ((imagesButtons[0].getHeight() / 2) * 3);
+        coordsButtons = new Coordinate[] {
+                new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2)),
+                new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2) + spacingOfBtns),
+                new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2) + spacingOfBtns * 2),
+                new Coordinate(displayWidth - 500, (imagesButtons[0].getHeight() * 2) + spacingOfBtns * 3)
+        };
 
-        coordIndicator = new Coordinate(coordBtnStart.getX() - 100, coordBtnStart.getY());
+        coordIndicator = new Coordinate(coordsButtons[0].getX() - 100, coordsButtons[0].getY());
 
-        indexOfSelectedState = -1;
+        indexOfSelectedState = 0;
         enterPressed = false;
 
         // TODO: Replace correct files and filename
@@ -141,18 +142,19 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         this.delta = delta;  // for printing. temporary
 
-
         if (enterPressed) {
-            if (coordIndicator.getY() == coordBtnStart.getY()) {    // if indicator is pointing to Start btn
+            enterPressed = false;
+
+            if (coordIndicator.getY() == coordsButtons[0].getY()) {    // if indicator is pointing to Start btn
                 indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get fixed ID for state
-            } else if (coordIndicator.getY() == coordBtnOptions.getY()) {     // if indicator is pointing to options btn
+            } else if (coordIndicator.getY() == coordsButtons[1].getY()) {     // if indicator is pointing to options btn
                 indexOfSelectedState = BeatBitBeatMain.getOptions();
-            } else if (coordIndicator.getY() == coordBtnCredits.getY()) {     // if indicator is pointing to credits btn
+            } else if (coordIndicator.getY() == coordsButtons[2].getY()) {     // if indicator is pointing to credits btn
                 indexOfSelectedState = BeatBitBeatMain.getCredits();
-            } else if (coordIndicator.getY() == coordBtnExit.getY()) {        // if indicator is pointing to exit btn
+            } else if (coordIndicator.getY() == coordsButtons[3].getY()) {        // if indicator is pointing to exit btn
                 System.exit(0);
             }
-            enterPressed = false;
+
             // enter state indicated by indexOfSelectedState
             sbg.enterState(indexOfSelectedState, new FadeOutTransition(), new FadeInTransition());
         }
@@ -161,13 +163,13 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 //        imageBackground.draw(0f, 0f);
-        imageBtnStart.draw(coordBtnStart.getX(), coordBtnStart.getY());
-        imageBtnOptions.draw(coordBtnOptions.getX(), coordBtnOptions.getY());
-        imageBtnCredits.draw(coordBtnCredits.getX(), coordBtnCredits.getY());
-        imageBtnExit.draw(coordBtnExit.getX(), coordBtnExit.getY());
+        animateSpriteBG.draw(0, 0);
+
+        for (int i = 0; i < imagesButtons.length; i++) {
+            imagesButtons[i].draw(coordsButtons[i].getX(), coordsButtons[i].getY());
+        }
         imageIndicator.draw(coordIndicator.getX(), coordIndicator.getY());
 
-        animateSpriteBG.draw(0, 0);
 
         g.drawString("DELTA = " + delta, 100, 100);
 
@@ -179,7 +181,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_UP) {
             soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
 
-            if (coordIndicator.getY() != coordBtnStart.getY()) {    // if indicator is inside bounds
+            if (coordIndicator.getY() != coordsButtons[0].getY()) {    // if indicator is inside bounds
                 coordIndicator.setY(coordIndicator.getY() - spacingOfBtns);     // indicator moves by the fixed Spacing
             }
 
@@ -187,7 +189,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         } else if (key == Input.KEY_DOWN) {
             soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
 
-            if (coordIndicator.getY() != coordBtnExit.getY()) {
+            if (coordIndicator.getY() != coordsButtons[3].getY()) {
                 coordIndicator.setY(coordIndicator.getY() + spacingOfBtns);
             }
         } else if (key == Input.KEY_ENTER) {
@@ -204,8 +206,12 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     }
 
-    public static void stopMusic() {
-        audioMusicMainMenu.stop();
+    public static void pauseMusic() {
+        audioMusicMainMenu.pause();
+    }
+
+    public static void resumeMusic() {
+        audioMusicMainMenu.resume();
     }
 
 

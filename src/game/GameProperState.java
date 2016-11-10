@@ -168,7 +168,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private static final int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
-    private int startingYPos = 50;
+    private int startingYPos = 100;
     private int endingYPos = 650;
 
     // Player 1 note x positions
@@ -202,6 +202,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private int timePassed;
 
     private static BufferedReader br;
+
+    private boolean pressedEscape;
 
     public int getID() {
         return BeatBitBeatMain.getGameProper();
@@ -263,11 +265,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
         lineBars.add(new Rectangle(p2x3 - lineBarWidth / 2, startingYPos, lineBarWidth, lineBarHeight));
         lineBars.add(new Rectangle(p2x4 - lineBarWidth / 2, startingYPos, lineBarWidth, lineBarHeight));
 
-
+        pressedEscape  = false;
     }
 
 
+    int delta;  // for printing. temporary
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
+        this.delta = delta;
 
         try {
             String line = br.readLine();
@@ -437,6 +441,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.drawString("P2 Pressed Blue: " + p2PressedNotes.get(1), 900, 130);
         g.drawString("P2 Pressed Yellow: " + p2PressedNotes.get(2), 900, 160);
         g.drawString("P2 Pressed Green: " + p2PressedNotes.get(3), 900, 190);
+
+
+        g.drawString("DELTA = " + delta, 100, 100);
     }
 
     @Override
@@ -528,6 +535,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         }
 
+
+
+        if (key == Input.KEY_ESCAPE) {
+            pressedEscape = true;
+        }
     }
 
     @Override
@@ -551,10 +563,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
     }
 
-    public static void startMusic() {
-//        gameMusic.play();
-
-    }
 
     public static void setAnimationPlayer1(Animation animation) {
         animationPlayer1 = animation;
