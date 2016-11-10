@@ -3,10 +3,65 @@
  * Bedio, Aiden Justin
  * Malaki, Earl Timothy
  * Paler, Timothy River
- *
+ * <p>
  * BSCS - II | UP - Cebu
  * CMSC22 - OOP
  * Final Project
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
  */
 
 /**
@@ -68,15 +123,18 @@ public abstract class Monster {
         return damage;
     }
 
-    public int getHp(){
+    public int getHp() {
+
         return hp;
     }
 
     public void setHp(int hp) {
+
         this.hp = hp;
     }
 
     public void setDamage(int damage) {
+
         this.damage = damage;
     }
 
@@ -85,26 +143,32 @@ public abstract class Monster {
     }
 
     public void setResourceRed(int resourceRed) {
+
         this.resourceRed = resourceRed;
     }
 
     public void setResourceGreen(int resourceGreen) {
+
         this.resourceGreen = resourceGreen;
     }
 
     public void setResourceYellow(int resourceYellow) {
+
         this.resourceYellow = resourceYellow;
     }
 
     public int getMp() {
+
         return mp;
     }
 
     public void setMp(int mp) {
+
         this.mp = mp;
     }
 
     public int getResourceBlue() {
+
         return resourceBlue;
     }
 
@@ -113,26 +177,32 @@ public abstract class Monster {
     }
 
     public int getResourceGreen() {
+
         return resourceGreen;
     }
 
     public int getResourceYellow() {
+
         return resourceYellow;
     }
 
-    public void addResourceBlue(int res) {
-        resourceBlue += res;
+    public void addResourceBlue() {
+
+        resourceBlue++;
     }
 
-    public void addResourceRed(int res) {
-        resourceRed += res;
+    public void addResourceRed() {
+
+        resourceRed++;
     }
 
-    public void addResourceGreen(int res) {
-        resourceGreen += res;
+    public void addResourceGreen() {
+
+        resourceGreen++;
     }
 
-    public void addResourceYellow(int res) {
-        resourceYellow += res;
+    public void addResourceYellow() {
+
+        resourceYellow++;
     }
 }
