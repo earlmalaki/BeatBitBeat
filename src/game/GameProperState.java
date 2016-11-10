@@ -527,6 +527,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_M) {
 
         }
+
     }
 
     @Override

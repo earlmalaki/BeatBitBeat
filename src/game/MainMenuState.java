@@ -123,8 +123,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
             // TODO: Replace correct music and filename
 //            audioMusicMainMenu = new Music("Assets/State Music/Main Menu Music.ogg");
 //            audioMusicMainMenu = new Music("Assets/State Music/Down with the Sickness.ogg");
-            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
-            audioMusicMainMenu.loop();
+//            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
+//            audioMusicMainMenu.loop();
 
             // TODO: Replace correct sound effects and filename
             soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));

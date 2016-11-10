@@ -62,7 +62,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
 
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int returnVal = fc.showOpenDialog(null);
+        int returnVal = fc.showOpenDialog(new JFrame());
 
 //        int returnVal = fc.showDialog(new JFrame(), "Select Music File");
 

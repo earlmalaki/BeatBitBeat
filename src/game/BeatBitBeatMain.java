@@ -64,7 +64,7 @@ public class BeatBitBeatMain extends StateBasedGame{
         app.start();
     }
 
-    public void initStatesList(GameContainer gc) throws SlickException{
+    public void initStatesList(GameContainer gc) throws SlickException {
 
         // Instantiate each state and add to the list of states
         this.addState(new MainMenuState());
