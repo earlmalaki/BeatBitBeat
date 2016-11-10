@@ -27,7 +27,7 @@ public class Monster2 extends Monster {
 
     private static final int hp = 100;
     private static final int mp = 100;
-    private static final int damage = 100;
+    private static final int damage = 0;
 
     public Monster2() {
         super(hp, mp, damage);
