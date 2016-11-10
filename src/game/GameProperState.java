@@ -218,11 +218,15 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private static final int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
-    private int startingYPos = 100;
+    private int startingYPos = 0;
     private int endingYPos = 600;
 
     // Music position
-    private double musicPosition = 00.00;
+    private float musicPosition = 00.00f;
+
+    private int speedNoteDrop = 4;
+    private int timePassed = 0;
+    private boolean skillCast = false;
 
 
     private ArrayList<Rectangle> receiveBarsP1;
@@ -342,42 +346,34 @@ public class GameProperState extends BasicGameState implements KeyListener {
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
         this.delta = delta;
 
-        try {
-            String line = br.readLine();
 
-            if (line != null) {
-                if (line.equals("1000")) {
-//                    notesP1.add(notesForP1[0]);
-//                    notesP2.add(notesForP2[0]);
-
-                    notesP1.add(new Rectangle(p1x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                    notesP2.add(new Rectangle(p2x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-
-                } else if (line.equals("0100")) {
-//                    notesP1.add(notesForP1[1]);
-//                    notesP2.add(notesForP2[1]);
-
-                    notesP1.add(new Rectangle(p1x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                    notesP2.add(new Rectangle(p2x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                } else if (line.equals("0010")) {
-//                    notesP1.add(notesForP1[2]);
-//                    notesP2.add(notesForP2[2]);
-
-                    notesP1.add(new Rectangle(p1x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                    notesP2.add(new Rectangle(p2x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                } else if (line.equals("0001")) {
-//                    notesP1.add(notesForP1[3]);
-//                    notesP2.add(notesForP2[3]);
-
-                    notesP1.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                    notesP2.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
-                }
-
-
+        // TODO adjust pitch. match pitch loss and map read speed loss
+        // slow music and read map
+        if (skillCast) {
+            timePassed += delta;
+            if (timePassed == 3000) {     // 3000ms == 3s
+                skillCast = false;
+                timePassed = 0;
+                speedNoteDrop = 4;
+                gameMusic.play();
+                gameMusic.setPosition(musicPosition);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            else {
+                speedNoteDrop = 1;
+                // reduce file read speed to 15 lines per second
+                // original speed is 60 lines per second
+                // speed dropped from 4 to 1, which is a 75% drop
+                // beat map reading speed should also decrease by 75%
+                if (timePassed % 45 == 0) {
+                    readBeatMap();
+                }
+            }
+
+        } else {
+            readBeatMap();
         }
+
+
 
 
 //        for (Note note: notesP1) {
@@ -428,16 +424,18 @@ public class GameProperState extends BasicGameState implements KeyListener {
 //            note.setY(note.getY() + (delta / 4));
 //        }
 
+
+
         // Control the falling of noteBars bars
         // P1
         for (Rectangle rect : notesP1) {
-            rect.setCenterY(rect.getCenterY() + (delta / 4));
+            rect.setCenterY(rect.getCenterY() + speedNoteDrop);
         }
 
         // Control the falling of noteBars bars
         // P2
         for (Rectangle rect : notesP2) {
-            rect.setCenterY(rect.getCenterY() + (delta / 4));
+            rect.setCenterY(rect.getCenterY() + speedNoteDrop);
         }
 
         // detect if notebars go past the receive bars
@@ -469,6 +467,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         musicPosition = gameMusic.getPosition();
+        animationPlayer2.update(delta);
 
     }
 
@@ -484,7 +483,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         // Draw player character animations
         animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
-        animationPlayer2.draw(coordPlayer2.getX(), coordPlayer2.getY());
+        animationPlayer2.getCurrentFrame().getFlippedCopy(true, false).draw(coordPlayer2.getX(), coordPlayer2.getY());
 
 
         // Draw vertical line bars
@@ -721,7 +720,10 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_M) {
-
+            skillCast = true;
+            gameMusic.play(.25f, 1f);
+            gameMusic.setPosition(musicPosition);
+            // TODO adjust pitch. match pitch loss and map read speed loss
         }
 
 
@@ -734,6 +736,46 @@ public class GameProperState extends BasicGameState implements KeyListener {
     public void keyReleased(int key, char pressedKey) {
 
     }
+
+    public void readBeatMap() {
+        try {
+            String line = br.readLine();
+
+            if (line != null) {
+                if (line.equals("1000")) {
+//                    notesP1.add(notesForP1[0]);
+//                    notesP2.add(notesForP2[0]);
+
+                    notesP1.add(new Rectangle(p1x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    notesP2.add(new Rectangle(p2x1 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+
+                } else if (line.equals("0100")) {
+//                    notesP1.add(notesForP1[1]);
+//                    notesP2.add(notesForP2[1]);
+
+                    notesP1.add(new Rectangle(p1x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    notesP2.add(new Rectangle(p2x2 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                } else if (line.equals("0010")) {
+//                    notesP1.add(notesForP1[2]);
+//                    notesP2.add(notesForP2[2]);
+
+                    notesP1.add(new Rectangle(p1x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    notesP2.add(new Rectangle(p2x3 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                } else if (line.equals("0001")) {
+//                    notesP1.add(notesForP1[3]);
+//                    notesP2.add(notesForP2[3]);
+
+                    notesP1.add(new Rectangle(p1x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                    notesP2.add(new Rectangle(p2x4 - (noteBarWidth / 2), startingYPos, noteBarWidth, noteBarHeight));
+                }
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void setGameMusic(Music music) {
         gameMusic = music;

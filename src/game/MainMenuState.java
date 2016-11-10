@@ -134,9 +134,9 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
         try {
             // TODO: Replace correct music and filename
-//            audioMusicMainMenu = new Music("Assets/State Music/Main Menu Music.ogg");
+            audioMusicMainMenu = new Music("Assets/State Music/Main Menu Music.ogg");
 //            audioMusicMainMenu = new Music("Assets/State Music/Down with the Sickness.ogg");
-            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
+//            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
             audioMusicMainMenu.loop();
 
             // TODO: Replace correct sound effects and filename
