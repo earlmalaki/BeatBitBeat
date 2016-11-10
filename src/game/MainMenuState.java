@@ -88,7 +88,6 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
 
     // Animation for background
-    private SpriteSheet spriteBG;
     private Animation animateSpriteBG;
 
     // Audio declaration
@@ -105,14 +104,13 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
         // load resources and initialize objects
         // TODO: Replace correct files and filename
-//        imageBackground = new Image("Assets/mainMenuSprite.gif");
-        imageIndicator = new Image("Assets/MainMenuIndicator.png");
+        imageIndicator = new Image("Assets/Graphics/Main Menu/Indicator.png");
 
         imagesButtons = new Image[]{
-                new Image("Assets/MainMenuBtn.png"),
-                new Image("Assets/MainMenuBtn.png"),
-                new Image("Assets/MainMenuBtn.png"),
-                new Image("Assets/MainMenuBtn.png")
+                new Image("Assets/Graphics/Main Menu/Start Button.png"),
+                new Image("Assets/Graphics/Main Menu/Options Button.png"),
+                new Image("Assets/Graphics/Main Menu/Credits Button.png"),
+                new Image("Assets/Graphics/Main Menu/Exit Button.png"),
         };
 
         // other btns depend on BtnStart's Y position
@@ -130,8 +128,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         enterPressed = false;
 
         // TODO: Replace correct files and filename
-        spriteBG = new SpriteSheet("Assets/sprite.png", 533, 300); //ref, tw, th, spacing
-        animateSpriteBG = new Animation(spriteBG, 100);     // spritesheet, duration
+        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.jpeg", 1366, 768, 1); //ref, tw, th, spacing
+        animateSpriteBG = new Animation(spriteBG, 300);     // spritesheet, duration
 
 
         try {
@@ -176,7 +174,6 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//        imageBackground.draw(0f, 0f);
         animateSpriteBG.draw(0, 0);
 
         for (int i = 0; i < imagesButtons.length; i++) {
