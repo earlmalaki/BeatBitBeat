@@ -45,6 +45,8 @@ import java.util.ArrayList;
 
 public class GameProperState extends BasicGameState implements KeyListener {
 
+    private Image imageBG;
+
     private static Monster monsterP1;
     private static Monster monsterP2;
 
@@ -66,7 +68,19 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
 
     private float startingYPos = 0f;
-    private float endingYPos = 600f;
+    private float badYPos = 570f;
+    private float goodYPos = 580f;
+    private float perfectYPos = 590f;
+    private float endingYPos = 600f;    // miss
+
+    private boolean badHitP1;
+    private boolean badHitP2;
+    private boolean goodHitP1;
+    private boolean goodHitP2;
+    private boolean perfectHitP1;
+    private boolean perfectHitP2;
+    private boolean missHitP1;
+    private boolean missHitP2;
 
 
     private static Music gameMusic;
@@ -99,6 +113,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     }
 
     public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+
+        imageBG = new Image("Assets/Graphics/Game Proper/Game Proper BG.jpeg");
 
         pressedEscape = false;
 
@@ -189,6 +205,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 
+        imageBG.draw();
+
         // Game Screen borders
         // TODO this is to be replaced by on-wallpaper border lines
         g.drawLine((displayWidth / 3) - (int) (displayWidth * 0.16), 0, (displayWidth / 3) - (int) (displayWidth * 0.16), displayHeight);  // left vertical division line
@@ -228,9 +246,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.drawString("P1 Pressed Blue: " + monsterP1.getResourceBlue(), 20, 130);
 
         g.drawString("P2 Pressed Red: " + monsterP2.getResourceRed(), 900, 100);
-        g.drawString("P2 Pressed Blue: " + monsterP2.getResourceYellow(), 900, 130);
-        g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceGreen(), 900, 160);
-        g.drawString("P2 Pressed Green: " + monsterP2.getResourceBlue(), 900, 190);
+        g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceYellow(), 900, 160);
+        g.drawString("P2 Pressed Green: " + monsterP2.getResourceGreen(), 900, 190);
+        g.drawString("P2 Pressed Blue: " + monsterP2.getResourceBlue(), 900, 130);
 
 
         g.drawString("DELTA = " + delta, 100, 50);
@@ -241,52 +259,99 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Key listener
         if (key == Input.KEY_Q) {
 
-            // if note bar is near or within corresponding receive bar
-            if (endingYPos - 40 <= notesP1.get(0).getY() ) {
-                monsterP1.addResourceRed();
+            // if note bar is near or within corresponding hitbox
+            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP1.addResourceRed(1);
+            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP1.addResourceRed(2);
             }
 
         }
         if (key == Input.KEY_W) {
-            if (endingYPos - 40 <= notesP1.get(0).getY() ) {
-                monsterP1.addResourceYellow();
+
+            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP1.addResourceYellow(1);
+            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP1.addResourceYellow(2);
             }
 
         }
         if (key == Input.KEY_E) {
-            if (endingYPos - 40 <= notesP1.get(0).getY() ) {
-                monsterP1.addResourceGreen();
+
+            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP1.addResourceGreen(1);
+            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP1.addResourceGreen(2);
             }
 
         }
         if (key == Input.KEY_R) {
-            if (endingYPos - 40 <= notesP1.get(0).getY() ) {
-                monsterP1.addResourceBlue();
+
+            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP1.addResourceBlue(1);
+            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP1.addResourceBlue(2);
             }
 
         }
 
         if (key == Input.KEY_U) {
-            if (endingYPos - 40 <= notesP2.get(0).getY() ) {
-                monsterP2.addResourceRed();
+
+            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP2.addResourceRed(1);
+            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP2.addResourceRed(2);
             }
 
         }
         if (key == Input.KEY_I) {
-            if (endingYPos - 40 <= notesP2.get(0).getY() ) {
-                monsterP2.addResourceYellow();
+
+            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP2.addResourceYellow(1);
+            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP2.addResourceYellow(2);
             }
 
         }
         if (key == Input.KEY_O) {
-            if (endingYPos - 40 <= notesP2.get(0).getY() ) {
-                monsterP2.addResourceGreen();
+
+            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP2.addResourceGreen(1);
+            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP2.addResourceGreen(2);
             }
 
         }
         if (key == Input.KEY_P) {
-            if (endingYPos - 40 <= notesP2.get(0).getY() ) {
-                monsterP2.addResourceBlue();
+
+            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP2.addResourceBlue(1);
+            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP2.addResourceBlue(2);
             }
 
         }

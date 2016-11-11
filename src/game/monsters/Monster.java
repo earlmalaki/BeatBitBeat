@@ -120,19 +120,19 @@ public abstract class Monster {
         return resourceYellow;
     }
 
-    public void addResourceBlue() {
-        resourceBlue++;
+    public void addResourceBlue(int res) {
+        resourceBlue += res;
     }
 
-    public void addResourceRed() {
-        resourceRed++;
+    public void addResourceRed(int res) {
+        resourceRed += res;
     }
 
-    public void addResourceGreen() {
-        resourceGreen++;
+    public void addResourceGreen(int res) {
+        resourceGreen += res;
     }
 
-    public void addResourceYellow() {
-        resourceYellow++;
+    public void addResourceYellow(int res) {
+        resourceYellow += res;
     }
 }

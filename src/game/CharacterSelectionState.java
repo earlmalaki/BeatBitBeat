@@ -137,7 +137,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         pressedEscape = false;
 
         // TODO Replace with correct files and names
-        imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.jpg");
+        imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.jpeg");
 
         SpriteSheet spriteMonster1 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Big Blue Sprite.png", 300, 300, 1); //ref, tw, th, spacing
         SpriteSheet spriteMonster2 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 420, 300, 1);
@@ -391,7 +391,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        g.drawImage(imageBackground, 400f, 400f);
+        imageBackground.draw();
 
         // render monster selection icons
         for (int i = 0; i < imagesHumans1x1.length; i++) {

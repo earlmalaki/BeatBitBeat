@@ -128,8 +128,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         enterPressed = false;
 
         // TODO: Replace correct files and filename
-        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.jpeg", 1366, 768, 1); //ref, tw, th, spacing
-        animateSpriteBG = new Animation(spriteBG, 300);     // spritesheet, duration
+        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.jpeg", 1280, 800, 1); //ref, tw, th, spacing
+        animateSpriteBG = new Animation(spriteBG, 250);     // spritesheet, duration
 
 
         try {
