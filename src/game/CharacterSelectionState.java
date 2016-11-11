@@ -174,10 +174,10 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         };
 
         // Coordinates for monster preview animations
-        coordP1Monster = new Coordinate( (int)(displayWidth * 0.03), (int)(displayHeight * 0.20));
-        coordP2Monster = new Coordinate( (int)(displayWidth - 300 - (displayWidth * 0.03)), (int)(displayHeight * 0.20));
-        coordP1Human = new Coordinate( (int)(displayWidth * 0.05), (int)(displayHeight * 0.60));
-        coordP2Human = new Coordinate( (int)(displayWidth - 200 - (displayWidth * 0.02)), (int)(displayHeight * 0.60));
+        coordP1Monster = new Coordinate( (float)(displayWidth * 0.03), (float)(displayHeight * 0.20));
+        coordP2Monster = new Coordinate( (float)(displayWidth - 300 - (displayWidth * 0.03)), (float)(displayHeight * 0.20));
+        coordP1Human = new Coordinate( (float)(displayWidth * 0.05), (float)(displayHeight * 0.60));
+        coordP2Human = new Coordinate( (float)(displayWidth - 200 - (displayWidth * 0.02)), (float)(displayHeight * 0.60));
 
         caseMonsterAnimation = 2;
 

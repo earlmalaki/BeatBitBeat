@@ -5,11 +5,13 @@ import org.newdawn.slick.Image;
 public class Note {
 
     private Image image;
-    private Coordinate coord;
+    private float x;
+    private float y;
 
-    public Note(Image image, Coordinate coord) {
+    public Note(Image image, float x, float y) {
         this.image = image;
-        this.coord = coord;
+        this.x = x;
+        this.y = y;
     }
 
     public Image getImage() {
@@ -20,27 +22,19 @@ public class Note {
         this.image = image;
     }
 
-    public Coordinate getCoord() {
-        return coord;
+    public float getX() {
+        return x;
     }
 
-    public void setCoord(Coordinate coord) {
-        this.coord = coord;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public int getX() {
-        return coord.getX();
+    public float getY() {
+        return y;
     }
 
-    public int getY() {
-        return coord.getY();
-    }
-
-    public void setX(int x) {
-        coord.setX(x);
-    }
-
-    public void setY(int y) {
-        coord.setY(y);
+    public void setY(float y) {
+        this.y = y;
     }
 }
