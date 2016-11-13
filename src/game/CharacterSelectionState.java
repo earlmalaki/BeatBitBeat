@@ -18,6 +18,7 @@
  * - game button
  * <p>
  * To Do:
+ * - Import mirrored spritesheet for mosnter and human, then modify code (.update() )
  * - Put wallpaper file
  * - Put monster selection icon files
  * - put spritesheet for monster preview
