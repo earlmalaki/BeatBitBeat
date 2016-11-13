@@ -12,12 +12,12 @@
  * - Key Listener for buttons(Start, Options, Credits, Exit)
  * - Image or Sprite handler for background
  * - Intro music
+ * - Put wallpaper file
+ * - Put arrow icon files
+ * - finalize positioning of buttons after putting in final graphics
  * <p>
  * To Do:
- * - Put wallpaper file
- * - Put button icon files
- * - Put final music file and loop
- * - finalize positioning of buttons after putting in final graphics
+ * - Put final music
  * <p>
  * game.Note:
  * - OptionsState and CreditsState is still empty. Work on this soon. Prioritize MVP first.
@@ -39,20 +39,22 @@ import java.io.IOException;
 
 public class MainMenuState extends BasicGameState implements KeyListener {
 
-    // Images declaration
-    private Image imageBackground;
-    private float yIndicator;
+    private float yIndicator = 400;
 
+    // Image array to contain png file for each arrow
     private Image[] imagesArrows;
+
+    // coordinate set of arrows
+    // store fixed coords of arrows
     private Coordinate[] coordsArrows;
 
-    private int spacingOfBtns;      // fixed spacing of each button
-    private int indexSelection;
-    private boolean enterPressed;
+    // current focused button
+    private int indexSelection = 0;
+
+    private boolean enterPressed = false;
 
     private int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
-
 
     // Animation for background
     private Animation animateSpriteBG;
@@ -77,28 +79,20 @@ public class MainMenuState extends BasicGameState implements KeyListener {
                 new Image("Assets/Graphics/Main Menu/Exit Arrow.png"),
         };
 
-        spacingOfBtns = 64;
         coordsArrows = new Coordinate[]{
-                new Coordinate( (displayWidth / 2) - 180, 463),
-                new Coordinate( (displayWidth / 2) - 180, 529),
-                new Coordinate( (displayWidth / 2) - 180, 594),
-                new Coordinate( (displayWidth / 2) - 180, 659)
+                new Coordinate((displayWidth / 2) - 180, 463),
+                new Coordinate((displayWidth / 2) - 180, 529),
+                new Coordinate((displayWidth / 2) - 180, 594),
+                new Coordinate((displayWidth / 2) - 180, 659)
         };
 
-        yIndicator = 400;
-
-        indexSelection = 0;
-        enterPressed = false;
-
-        // TODO: Replace correct files and filename
+        // TODO: Replace correct file for background spritesheet
         SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", 1280, 800, 1); //ref, tw, th, spacing
         animateSpriteBG = new Animation(spriteBG, 250);     // spritesheet, duration
 
 
         try {
             // TODO: Replace correct music and filename
-//            audioMusicMainMenu = new Music("Assets/State Music/Main Menu Music.ogg");
-//            audioMusicMainMenu = new Music("Assets/State Music/Down with the Sickness.ogg");
             audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
             audioMusicMainMenu.loop();
 
@@ -115,12 +109,14 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     int delta;  // for printing. temporary
     float xMouse;
     float yMouse;
+
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         this.delta = delta;  // for printing. temporary
         Input input = gc.getInput();
         xMouse = input.getMouseX();
         yMouse = input.getMouseY();
 
+        // Enter selected state
         if (enterPressed) {
             enterPressed = false;
 
@@ -137,7 +133,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
             // enter state indicated by indexOfSelectedState
             sbg.enterState(indexOfSelectedState, new FadeOutTransition(), new FadeInTransition());
-        }
+        }   // end of if (enterPressed)
 
     }
 
@@ -155,7 +151,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         }
 
         g.drawString("DELTA = " + delta, 100, 100);
-        g.drawString("X = " +xMouse +" Y = " +yMouse,100,130);
+        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
 
     }
 

@@ -101,7 +101,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private float speedNoteDrop = 4f;
     private int timePassed = 0;     // in milliseconds
     private boolean slowCast = false;
-    private int timeSlowEffect;  // 5000ms == 5s
+    private int timeSlowEffect = 3000;  // 3000ms == 3s
 
     private static BufferedReader br;
     private boolean pressedEscape = false;
@@ -141,9 +141,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
                 new Image("Assets/Graphics/Game Proper/Pressed Hitbox Yellow.png")
         };
 
-
-
-        timeSlowEffect = 3000;  // 5000ms == 5s
     }
 
 
@@ -270,29 +267,29 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Hitbox feedback
         // Draw glowing hitbox if corresponding key is pressed
         if (pressedQ) {
-            imagesPressedHitbox[0].draw(p1x1 - 6, perfectYPos - 22);
+            imagesPressedHitbox[0].draw(p1x1 - 6, perfectYPos - 19);
         }
         if (pressedW) {
-            imagesPressedHitbox[1].draw(p1x2 - 6, perfectYPos - 22);
+            imagesPressedHitbox[1].draw(p1x2 - 6, perfectYPos - 19);
         }
         if (pressedE) {
-            imagesPressedHitbox[2].draw(p1x3 - 6, perfectYPos - 22);
+            imagesPressedHitbox[2].draw(p1x3 - 6, perfectYPos - 19);
         }
         if (pressedR) {
-            imagesPressedHitbox[3].draw(p1x4 - 6, perfectYPos - 22);
+            imagesPressedHitbox[3].draw(p1x4 - 6, perfectYPos - 19);
         }
 
         if (pressedU) {
-            imagesPressedHitbox[0].draw(p2x1 - 6, perfectYPos - 22);
+            imagesPressedHitbox[0].draw(p2x1 - 6, perfectYPos - 19);
         }
         if (pressedI) {
-            imagesPressedHitbox[1].draw(p2x2 - 6, perfectYPos - 22);
+            imagesPressedHitbox[1].draw(p2x2 - 6, perfectYPos - 19);
         }
         if (pressedO) {
-            imagesPressedHitbox[2].draw(p2x3 - 6, perfectYPos - 22);
+            imagesPressedHitbox[2].draw(p2x3 - 6, perfectYPos - 19);
         }
         if (pressedP) {
-            imagesPressedHitbox[3].draw(p2x4 - 6, perfectYPos - 22);
+            imagesPressedHitbox[3].draw(p2x4 - 6, perfectYPos - 19);
         }
     }
 

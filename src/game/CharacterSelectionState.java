@@ -32,32 +32,6 @@
  * - Monster preview sprites should be of same dimensions for correct positioning
  */
 
-/**
- * Done:
- * - Key Listener for monster selection indicator
- * - monster selection
- * - Image or Sprite handler for background
- * - Music
- * - Animation handler for monster preview. both P1 and P2
- * - music selection
- * - game button
- *
- * To Do:
- * - Put wallpaper file
- * - Put monster selection icon files
- * - put spritesheet for monster preview
- * - finalize positioning of buttons after putting in final graphics
- * - put final choices of music (atleast 3)
- * - put final song art per music
- * - game button icon
- * - Monster Objects - backend logic for game proper    // update, nov 6. added monster implementation at monster selection
- *
- * game.Note:
- * - Monster selection icons should be of same dimensions for correct positioning
- * - Monster preview sprites should be of same dimensions for correct positioning
- *
- */
-
 
 package game;
 
@@ -77,18 +51,23 @@ import java.io.IOException;
 // Pick player, monster, music
 public class CharacterSelectionState extends BasicGameState implements KeyListener {
 
-    // TODO Gaming part
-    // TODO Monster object to represent the monster/person/player/hero
+    private int displayWidth = BeatBitBeatMain.getDisplayWidth();
+    private int displayHeight = BeatBitBeatMain.getDisplayHeight();
+    private int spacingXOfImageHuman;
+    private int spacingYOfImageHuman;
+
     private Monster monsterP1;
     private Monster monsterP2;
 
     private Image imageBackground;
-    private Image imageMonsterIndicator;        // frame to emphasize hovered monster selection
+    private Image imageHumanIndicator;        // frame to emphasize hovered human selection
     private Image[] imagesSongArt;
     private Image imageBtnGame;
     private Image imageBtnPickSong;
 
     private Image[] imagesHumans1x1;
+
+    // coordinate set for of human 1x1 pics in selection screen
     private Coordinate[] coordsImagesHuman;
 
     private Animation[] animateMonsters;
@@ -99,12 +78,17 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private static Animation animateP1Human;
     private static Animation animateP2Human;
 
-    private Coordinate coordP1Monster;      // coord for the monster preview animation
-    private Coordinate coordP2Monster;
-    private Coordinate coordP1Human;      // coord for the human preview animation
-    private Coordinate coordP2Human;
+    // Coordinates for monster preview animations
 
-    private Coordinate coordMonsterIndicator;
+    // coord for the monster preview animation
+    private Coordinate coordP1Monster = new Coordinate( (float)(displayWidth * 0.03), (float)(displayHeight * 0.20));
+    private Coordinate coordP2Monster = new Coordinate( (float)(displayWidth - 300 - (displayWidth * 0.03)), (float)(displayHeight * 0.20));
+
+    // coord for the human preview animation
+    private Coordinate coordP1Human = new Coordinate( (float)(displayWidth * 0.05), (float)(displayHeight * 0.60));
+    private Coordinate coordP2Human = new Coordinate( (float)(displayWidth - 200 - (displayWidth * 0.02)), (float)(displayHeight * 0.60));
+
+    private Coordinate coordHumanIndicator;
     private Coordinate coordImageSongArt;
     private Coordinate coordBtnGame;
 
@@ -113,21 +97,18 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private Music[] musicSongChoices;
     private File[] fileSongBeatMaps;
 
-    private int caseMonsterAnimation;       // index holder for monster preview animation
-    private int spacingXOfImageMonster;     // fixed spacing
-    private int spacingYOfImageMonster;
+    private int caseMonsterAnimation = 2;       // index holder for monster preview animation
     private int indexImageSongArt;          // index holder for song art
 
-    private boolean pressedEnter;
-    private boolean monsterPicking;
-    private boolean songPicking;
-    private boolean p1Picking;
-    private boolean p2Picking;
+    // Flags
+    private boolean pressedEnter = false;
+    private boolean monsterPicking = true;
+    private boolean songPicking = false;
+    private boolean p1Picking = true;
+    private boolean p2Picking = false;
 
-    private int displayWidth = BeatBitBeatMain.getDisplayWidth();
-    private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
-    private boolean pressedEscape;
+    private boolean pressedEscape = false;
 
     public int getID() {
         return BeatBitBeatMain.getCharacterSelection();
@@ -135,52 +116,28 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        pressedEscape = false;
-
-        // TODO Replace with correct files and names
         imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.png");
 
-        SpriteSheet spriteMonster1 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Big Blue Sprite.png", 300, 300, 1); //ref, tw, th, spacing
-        SpriteSheet spriteMonster2 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 420, 300, 1);
-        SpriteSheet spriteMonster3 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Flame Sprite.png", 300, 300, 1);
-        SpriteSheet spriteMonster4 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1);
-        SpriteSheet spriteMonster5 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1);
-        SpriteSheet spriteMonster6 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1);
-
-        // TODO Replace correct names and adjust duration according to spritesheet
+        // TODO Replace correct file names, Width & Height, adjust duration
         animateMonsters = new Animation[]{
-                new Animation(spriteMonster1, 250),
-                new Animation(spriteMonster2, 250),
-                new Animation(spriteMonster3, 250),
-                new Animation(spriteMonster4, 250),
-                new Animation(spriteMonster5, 250),
-                new Animation(spriteMonster6, 250)
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Big Blue Sprite.png", 300, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 420, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Flame Sprite.png", 300, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1), 250)
         };
 
-        SpriteSheet spriteHuman1 = new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 100, 100, 1); //ref, tw, th, spacing
-        SpriteSheet spriteHuman2 = new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 100, 100, 1);
-        SpriteSheet spriteHuman3 = new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 100, 100, 1);
-        SpriteSheet spriteHuman4 = new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 100, 100, 1);
-        SpriteSheet spriteHuman5 = new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 100, 100, 1);
-        SpriteSheet spriteHuman6 = new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 100, 100, 1);
-
-        // TODO Replace correct names and adjust duration according to spritesheet
+        // TODO Replace correct file names, Width & Height, adjust duration
         animateHumans = new Animation[]{
-                new Animation(spriteHuman1, 250),
-                new Animation(spriteHuman2, 250),
-                new Animation(spriteHuman3, 250),
-                new Animation(spriteHuman4, 250),
-                new Animation(spriteHuman5, 250),
-                new Animation(spriteHuman6, 250)
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250)
         };
 
-        // Coordinates for monster preview animations
-        coordP1Monster = new Coordinate( (float)(displayWidth * 0.03), (float)(displayHeight * 0.20));
-        coordP2Monster = new Coordinate( (float)(displayWidth - 300 - (displayWidth * 0.03)), (float)(displayHeight * 0.20));
-        coordP1Human = new Coordinate( (float)(displayWidth * 0.05), (float)(displayHeight * 0.60));
-        coordP2Human = new Coordinate( (float)(displayWidth - 200 - (displayWidth * 0.02)), (float)(displayHeight * 0.60));
-
-        caseMonsterAnimation = 2;
 
         // TODO Replace with correct files and names
         imagesHumans1x1 = new Image[]{
@@ -192,34 +149,29 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 5.png")
         };
 
-        spacingXOfImageMonster = (imagesHumans1x1[0].getWidth() / 2) * 3;
-        spacingYOfImageMonster = (imagesHumans1x1[0].getHeight() / 2) * 3;
-        imageMonsterIndicator = new Image("Assets/player1.jpg"); // TODO Replace with correct files and names
-
+        spacingXOfImageHuman = (imagesHumans1x1[0].getWidth() / 2);
+        spacingYOfImageHuman = (imagesHumans1x1[0].getHeight() / 2);
         coordsImagesHuman = new Coordinate[]{
-                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) - spacingXOfImageMonster, 200),
+                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) - spacingXOfImageHuman, 200),
                 new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2), 200),
-                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) + spacingXOfImageMonster, 200),
-                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) - spacingXOfImageMonster, 200 + spacingYOfImageMonster),
-                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2), 200 + spacingYOfImageMonster),
-                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) + spacingXOfImageMonster, 200 + spacingYOfImageMonster),
+                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) + spacingXOfImageHuman, 200),
+                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) - spacingXOfImageHuman, 200 + spacingYOfImageHuman),
+                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2), 200 + spacingYOfImageHuman),
+                new Coordinate((displayWidth / 2) - (imagesHumans1x1[0].getWidth() / 2) + spacingXOfImageHuman, 200 + spacingYOfImageHuman),
         };
-
-        coordMonsterIndicator = new Coordinate(coordsImagesHuman[1].getX(), coordsImagesHuman[1].getY());
+        coordHumanIndicator = new Coordinate(coordsImagesHuman[1].getX(), coordsImagesHuman[1].getY());
 
         // TODO Replace with correct files and names
+        // Assets/Graphics/Character Selection/Indicator.png
+        imageHumanIndicator = new Image("Assets/player1.jpg");
+
         imageBtnGame = new Image("Assets/Graphics/Character Selection/Play Button.png");
-        coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
         imageBtnPickSong = new Image("Assets/Graphics/Character Selection/Choose Song Button.png");
 
-        // Flags
-        pressedEnter = false;
-        monsterPicking = true;
-        songPicking = false;
-        p1Picking = true;
-        p2Picking = false;
+        coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
 
-        // TODO Replace with correct files and names
+
+        // TODO Replace with correct music files and names
         // Image array to hold song arts. Order must be in sync with Audio array
         indexImageSongArt = 0;
         imagesSongArt = new Image[]{
@@ -228,6 +180,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Songs/Springtime/bn.png"),
                 new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
         };
+
         coordImageSongArt = new Coordinate((displayWidth / 2) - (imagesSongArt[0].getWidth() / 2), displayHeight - (imagesSongArt[0].getHeight() * 2));
 
         try {
@@ -257,8 +210,18 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     }
 
+    int delta;  // for printing. temporary
+    float xMouse;
+    float yMouse;
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 
+        this.delta = delta;  // for printing. temporary
+        Input input = gc.getInput();
+        xMouse = input.getMouseX();
+        yMouse = input.getMouseY();
+
+        // cancel/redo selection
+        // reset selections
         if (pressedEscape) {
             pressedEscape = false;
 
@@ -275,8 +238,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 }
             }
 
-//            MainMenuState.resumeMusic();
-
+            MainMenuState.resumeMusic();
             sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
         }
 
@@ -284,7 +246,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         if (monsterPicking) {
 
             for (int i = 0; i < coordsImagesHuman.length; i++) {
-                if (coordMonsterIndicator.equalTo(coordsImagesHuman[i])) {
+                if (coordHumanIndicator.equalTo(coordsImagesHuman[i])) {
                     caseMonsterAnimation = i + 1;       // index for casemonster starts at 1
                 }
             }
@@ -393,21 +355,22 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        g.drawString("DELTA = " + delta, 100, 100);
+        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
+
+
         imageBackground.draw();
 
-        // render monster selection icons
-        for (int i = 0; i < imagesHumans1x1.length; i++) {
-            imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY());
-        }
-
-        // draw game button when done picking
-        if (!monsterPicking && !songPicking) {
-            imageBtnGame.draw(coordBtnGame.getX(), coordBtnGame.getY());
-        }
 
         if (monsterPicking) {
-            imageMonsterIndicator.draw(coordMonsterIndicator.getX(), coordMonsterIndicator.getY());
-            g.drawRect(coordMonsterIndicator.getX(), coordMonsterIndicator.getY(), imagesHumans1x1[0].getWidth(), imagesHumans1x1[0].getHeight());
+            // render human selection icons
+            for (int i = 0; i < imagesHumans1x1.length; i++) {
+                imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY());
+            }
+            imageHumanIndicator.draw(coordHumanIndicator.getX(), coordHumanIndicator.getY());
+            imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY(), Color.darkGray);
+            imageBtnGame.draw( ((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50), Color.darkGray);
+
 
             if (p1Picking) {
                 g.drawString("Player 1 pick", (displayWidth / 2) - 10, 10);     // temp instruction display. to be improved
@@ -428,6 +391,11 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         } else if (songPicking) {
             g.drawString("Pick a song", (displayWidth / 2) - 10, 10);
 
+            // render human selection icons
+            for (int i = 0; i < imagesHumans1x1.length; i++) {
+                imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY(), Color.darkGray);
+            }
+
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
 
@@ -436,12 +404,16 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             // draw song art of the song being hovered at
             imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
+            imageBtnPickSong.draw( ((displayWidth / 2) - (imageBtnPickSong.getWidth() / 2)), (displayHeight - imageBtnPickSong.getHeight() - 50));
 
-        } else {   // EO (songPicking)
+        } else {   // character and music picking is done
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
             animateP2Monster.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Monster.getX(), coordP2Monster.getY());
             animateP2Human.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Human.getX(), coordP2Human.getY());
+
+            imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
+            imageBtnGame.draw( ((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50));
         }
 
 
@@ -454,23 +426,23 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         if (monsterPicking) {
             if (key == Input.KEY_UP) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getY() != coordsImagesHuman[0].getY()) {
-                    coordMonsterIndicator.setY(coordMonsterIndicator.getY() - spacingYOfImageMonster);
+                if (coordHumanIndicator.getY() != coordsImagesHuman[0].getY()) {
+                    coordHumanIndicator.setY(coordHumanIndicator.getY() - spacingYOfImageHuman);
                 }
             } else if (key == Input.KEY_DOWN) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getY() != coordsImagesHuman[5].getY()) {
-                    coordMonsterIndicator.setY(coordMonsterIndicator.getY() + spacingYOfImageMonster);
+                if (coordHumanIndicator.getY() != coordsImagesHuman[5].getY()) {
+                    coordHumanIndicator.setY(coordHumanIndicator.getY() + spacingYOfImageHuman);
                 }
             } else if (key == Input.KEY_LEFT) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getX() != coordsImagesHuman[0].getX()) {
-                    coordMonsterIndicator.setX(coordMonsterIndicator.getX() - spacingXOfImageMonster);
+                if (coordHumanIndicator.getX() != coordsImagesHuman[0].getX()) {
+                    coordHumanIndicator.setX(coordHumanIndicator.getX() - spacingXOfImageHuman);
                 }
             } else if (key == Input.KEY_RIGHT) {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (coordMonsterIndicator.getX() != coordsImagesHuman[5].getX()) {
-                    coordMonsterIndicator.setX(coordMonsterIndicator.getX() + spacingXOfImageMonster);
+                if (coordHumanIndicator.getX() != coordsImagesHuman[5].getX()) {
+                    coordHumanIndicator.setX(coordHumanIndicator.getX() + spacingXOfImageHuman);
                 }
             } else if (key == Input.KEY_ENTER) {
                 soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
