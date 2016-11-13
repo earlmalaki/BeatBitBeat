@@ -86,6 +86,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private Image imageMonsterIndicator;        // frame to emphasize hovered monster selection
     private Image[] imagesSongArt;
     private Image imageBtnGame;
+    private Image imageBtnPickSong;
 
     private Image[] imagesHumans1x1;
     private Coordinate[] coordsImagesHuman;
@@ -137,7 +138,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         pressedEscape = false;
 
         // TODO Replace with correct files and names
-        imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.jpeg");
+        imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.png");
 
         SpriteSheet spriteMonster1 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Big Blue Sprite.png", 300, 300, 1); //ref, tw, th, spacing
         SpriteSheet spriteMonster2 = new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 420, 300, 1);
@@ -207,8 +208,9 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         coordMonsterIndicator = new Coordinate(coordsImagesHuman[1].getX(), coordsImagesHuman[1].getY());
 
         // TODO Replace with correct files and names
-        imageBtnGame = new Image("Assets/player1.jpg");
+        imageBtnGame = new Image("Assets/Graphics/Character Selection/Play Button.png");
         coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
+        imageBtnPickSong = new Image("Assets/Graphics/Character Selection/Choose Song Button.png");
 
         // Flags
         pressedEnter = false;
@@ -391,7 +393,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//        imageBackground.draw();
+        imageBackground.draw();
 
         // render monster selection icons
         for (int i = 0; i < imagesHumans1x1.length; i++) {

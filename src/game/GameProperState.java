@@ -38,6 +38,8 @@ import game.monsters.Monster;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -210,6 +212,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         musicPosition = gameMusic.getPosition();
         animationPlayer2.update(delta);
+
+        if (monsterP1.getHp() <= 0) {
+            sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
+        } else if (monsterP2.getHp() <= 0) {
+            sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
+        }
 
     }
 
@@ -399,12 +407,72 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         }
 
-        if (key == Input.KEY_H) {
 
+
+        // FIXME
+        // negative values
+        // Cooldown
+        // Slow-mo
+        // Resource cost
+        /*** Start of Skills ***/
+        if (key == Input.KEY_Z) {
+
+            if (monsterP1.getResourceRed() >= 3 && monsterP1.getResourceGreen() >= 3) { //monsters has resources, go atk
+                monsterP1.setDamage(5);
+                monsterP1.setResourceRed(monsterP1.getResourceRed() - 3);
+                monsterP1.setResourceYellow(monsterP1.getResourceYellow() - 3);
+                monsterP1.attack(monsterP2);
+            }
         }
 
-        if (key == Input.KEY_J) {
+        if (key == Input.KEY_X) {
+            if (monsterP1.getResourceBlue() >= 7 && monsterP1.getResourceYellow() >= 7) { //monsters has resources, go atk
+                monsterP1.setDamage(12);
+                monsterP1.setResourceRed(monsterP1.getResourceRed() - 1);
+//                monsterP1.setResourceYellow(monsterP1.getResourceYellow() - 1);
+                monsterP1.attack(monsterP2);
+            }
+        }
 
+        if (key == Input.KEY_C) {
+            if (monsterP1.getResourceRed() >= 12 && monsterP1.getResourceYellow() >= 12 && monsterP1.getResourceBlue() >= 12 && monsterP1.getResourceGreen() >= 12) { //monsters has resources, go atk
+                monsterP1.setDamage(55);
+                monsterP1.setResourceRed(monsterP1.getResourceRed() - 12);
+                monsterP1.setResourceYellow(monsterP1.getResourceYellow() - 12);
+                monsterP1.setResourceGreen(monsterP1.getResourceGreen() - 12);
+                monsterP1.setResourceBlue(monsterP1.getResourceBlue() - 12);
+                monsterP1.attack(monsterP2);
+            }
+        }
+
+        if (key == Input.KEY_COMMA) {
+
+            if (monsterP2.getResourceRed() >= 3 && monsterP2.getResourceGreen() >= 3) { //monsters has resources, go atk
+                monsterP2.setDamage(5);
+                monsterP2.setResourceRed(monsterP1.getResourceRed() - 3);
+                monsterP2.setResourceGreen(monsterP2.getResourceGreen() - 3);
+                monsterP2.attack(monsterP1);
+            }
+        }
+
+        if (key == Input.KEY_PERIOD) {
+            if (monsterP2.getResourceBlue() >= 7 && monsterP2.getResourceYellow() >= 7) { //monsters has resources, go atk
+                monsterP2.setDamage(12);
+                monsterP2.setResourceYellow(monsterP2.getResourceYellow() - 7);
+                monsterP2.setResourceBlue(monsterP2.getResourceBlue() - 7);
+                monsterP2.attack(monsterP1);
+            }
+        }
+
+        if (key == Input.KEY_BACKSLASH) {
+            if (monsterP2.getResourceRed() >= 12 && monsterP2.getResourceYellow() >= 12 && monsterP2.getResourceBlue() >= 12 && monsterP2.getResourceGreen() >= 12) { //monsters has resources, go atk
+                monsterP2.setDamage(55);
+                monsterP2.setResourceRed(monsterP2.getResourceRed() - 12);
+                monsterP2.setResourceYellow(monsterP2.getResourceYellow() - 12);
+                monsterP2.setResourceGreen(monsterP2.getResourceGreen() - 12);
+                monsterP2.setResourceBlue(monsterP2.getResourceBlue() - 12);
+                monsterP2.attack(monsterP1);
+            }
         }
 
         if (key == Input.KEY_M) {
@@ -413,8 +481,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
             gameMusic.setPosition(musicPosition);
             // TODO adjust pitch. match pitch loss and map read speed loss
         }
+        /*** End of Skills ***/
 
 
+        // Pause
+        // TODO pause game
         if (key == Input.KEY_ESCAPE) {
             pressedEscape = true;
         }
