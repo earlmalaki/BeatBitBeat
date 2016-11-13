@@ -7,15 +7,15 @@
  * BSCS - II | UP - Cebu
  * CMSC22 - OOP
  * Final Project
- *
-
-/**
+ * <p>
+ * <p>
+ * /**
  * Done:
  * - Key Listener for receiving bars (ASDF, HJKL)
  * - Image handler for background
  * - Music player
  * - Randomized dropping of notes
- *
+ * <p>
  * To Do:
  * - Put wallpaper file
  * - Put receiving bar, vertical bar, and note graphic files
@@ -25,10 +25,9 @@
  * - Better receiving bar accuracy
  * - GAME PART. Monster objects, hp, skills, resources, etc.
  * - End of game state
- *
+ * <p>
  * game.Note:
  * - Prioritize MVP first.
- *
  */
 
 // TODO Finish monster implementation
@@ -50,28 +49,30 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private static Monster monsterP1;
     private static Monster monsterP2;
 
-    private ArrayList<Note> notesP1;
-    private ArrayList<Note> notesP2;
+    private ArrayList<Note> notesP1 = new ArrayList<>();
+    private ArrayList<Note> notesP2 = new ArrayList<>();
+
     private Image[] imagesNotes;
+    private Image[] imagesPressedHitbox;
 
     // Player 1 note x positions
-    private float p1x1 = (float) (displayWidth * (0.01));
-    private float p1x2 = (float) (p1x1 + (displayWidth * (0.03)));
-    private float p1x3 = (float) (p1x2 + (displayWidth * (0.03)));
-    private float p1x4 = (float) (p1x3 + (displayWidth * (0.03)));
+    private float p1x1 = 36f - 13f;
+    private float p1x2 = 74f - 13f;
+    private float p1x3 = 113f - 13f;
+    private float p1x4 = 150f - 13f;
 
     // Player 2 note x positions
-    private float p2x4 = (float) (displayWidth - (displayWidth * (0.06)));
-    private float p2x3 = (float) (p2x4 - (displayWidth * (0.03)));
-    private float p2x2 = (float) (p2x3 - (displayWidth * (0.03)));
-    private float p2x1 = (float) (p2x2 - (displayWidth * (0.03)));
+    private float p2x1 = 1090f - 13f;
+    private float p2x2 = 1128f - 13f;
+    private float p2x3 = 1166f - 13f;
+    private float p2x4 = 1203f - 13f;
 
-
+    // Significant Y axis positions
     private float startingYPos = 0f;
-    private float badYPos = 570f;
-    private float goodYPos = 580f;
-    private float perfectYPos = 590f;
-    private float endingYPos = 600f;    // miss
+    private float badYPos = 600f;
+    private float goodYPos = 615f;
+    private float perfectYPos = 630f;
+    private float endingYPos = 645;    // miss
 
     private boolean badHitP1;
     private boolean badHitP2;
@@ -82,30 +83,38 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private boolean missHitP1;
     private boolean missHitP2;
 
-
     private static Music gameMusic;
-    private Coordinate coordPlayer1;
-    private Coordinate coordPlayer2;
+    private Coordinate coordPlayer1 = new Coordinate((displayWidth / 2) - 400, 100);
+    private Coordinate coordPlayer2 = new Coordinate((displayWidth / 2) + 100, 100);
+
     private static Animation animationPlayer1;
     private static Animation animationPlayer2;
 
-
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private static final int displayHeight = BeatBitBeatMain.getDisplayHeight();
-
 
     // Music position
     private float musicPosition = 00.00f;
 
     private float speedNoteDrop = 4f;
     private int timePassed = 0;     // in milliseconds
-    private boolean skillCast = false;
+    private boolean slowCast = false;
     private int timeSlowEffect;  // 5000ms == 5s
 
     private static BufferedReader br;
-    private boolean pressedEscape;
+    private boolean pressedEscape = false;
 
+    private float pitchSlowMusic = 0.05f;
 
+    private boolean pressedQ = false;
+    private boolean pressedW = false;
+    private boolean pressedE = false;
+    private boolean pressedR = false;
+
+    private boolean pressedU = false;
+    private boolean pressedI = false;
+    private boolean pressedO = false;
+    private boolean pressedP = false;
 
 
     public int getID() {
@@ -114,51 +123,64 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 
-        imageBG = new Image("Assets/Graphics/Game Proper/Game Proper BG.jpeg");
+        imageBG = new Image("Assets/Graphics/Game Proper/Game Proper BG.png");
 
-        pressedEscape = false;
-
-        coordPlayer1 = new Coordinate((displayWidth / 2) - 400, 100);
-        coordPlayer2 = new Coordinate((displayWidth / 2) + 100, 100);
-
-        imagesNotes = new Image[] {
+        imagesNotes = new Image[]{
                 new Image("Assets/Graphics/Game Proper/Note Red.png"),
-                new Image("Assets/Graphics/Game Proper/Note Yellow.png"),
                 new Image("Assets/Graphics/Game Proper/Note Green.png"),
-                new Image("Assets/Graphics/Game Proper/Note Blue.png")
+                new Image("Assets/Graphics/Game Proper/Note Blue.png"),
+                new Image("Assets/Graphics/Game Proper/Note Yellow.png")
         };
 
-        notesP1 = new ArrayList<>();
-        notesP2 = new ArrayList<>();
+        imagesPressedHitbox = new Image[]{
+                new Image("Assets/Graphics/Game Proper/Pressed Hitbox Red.png"),
+                new Image("Assets/Graphics/Game Proper/Pressed Hitbox Green.png"),
+                new Image("Assets/Graphics/Game Proper/Pressed Hitbox Blue.png"),
+                new Image("Assets/Graphics/Game Proper/Pressed Hitbox Yellow.png")
+        };
+
+
 
         timeSlowEffect = 3000;  // 5000ms == 5s
     }
 
 
     int delta;  // for printing. temporary
+    float xMouse;
+    float yMouse;
+
     public void update(GameContainer container, StateBasedGame sbg, int delta) throws SlickException {
         this.delta = delta;
+        Input input = container.getInput();
+        xMouse = input.getMouseX();
+        yMouse = input.getMouseY();
 
 
         // TODO adjust pitch. match pitch loss and map read speed loss
         // slow music and read map
-        if (skillCast) {
+        if (slowCast) {
             timePassed += delta;
             if (timePassed == timeSlowEffect) {
-                skillCast = false;
+                slowCast = false;
                 timePassed = 0;
                 speedNoteDrop = 4f;
                 gameMusic.play();
                 gameMusic.setPosition(musicPosition);
-            }
-            else {
-                speedNoteDrop = 0.4f;
-                // reduce file read speed to 6 lines per second
+            } else {
+                // Apply effects of slow skill
+                // Music pitch decreased from 1 to 0.05, or %5 percent
+                // so note drop and file reading should also decrease by the same percentage
+
+                // reduce speed of note vertical drop
+                // original speed is 4 px per second
+                // 4 * 0.05 = 0.2
+                speedNoteDrop = 0.2f;
+
+                // reduce speed of file reading
                 // original speed is 60 lines per second
-                // speed dropped from 4 to 0.4, which is 0.1 or 1%
-                // beat map reading speed should also decrease by the same percentage
-                // thus, reading should be at 6 lines per second
-                if (timePassed % 90 == 0) {
+                // 60 * 0.05 = 3
+                // thus, reading should be at 3 lines per second
+                if (timePassed % 300 == 0) {
                     readBeatMap();
                 }
             }
@@ -168,32 +190,20 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         // Control the falling of noteBars bars
-        for (Note note : notesP1) {
-            note.setY(note.getY() + speedNoteDrop);
-        }
+        for (int i = 0; i < notesP1.size(); i++) {      // or i < notesP2.size(), notes p1 and p2 are of same size
+            notesP1.get(i).setY(notesP1.get(i).getY() + speedNoteDrop);
+            notesP2.get(i).setY(notesP2.get(i).getY() + speedNoteDrop);
 
-        // Control the falling of noteBars bars
-        for (Note note : notesP2) {
-            note.setY(note.getY() + speedNoteDrop);
-        }
+            // detect if note bars go past the hitbox
+            if (notesP1.get(0).getY() > endingYPos) {
 
-
-        // detect if note bars go past the hitbox
-        for (int i = 0; i < notesP1.size() - 1; i++ ) {
-            if (notesP1.get(i).getY() > endingYPos) {
-
+                // play music
                 if (!gameMusic.playing()) {
                     gameMusic.play();
                 }
 
-                notesP1.remove(i);
-            }
-        }
-
-        // detect if note bars go past the hitbox
-        for (int i = 0; i < notesP2.size() - 1; i++ ) {
-            if (notesP2.get(i).getY() > endingYPos) {
-                notesP2.remove(i);
+                notesP1.remove(0);
+                notesP2.remove(0);
             }
         }
 
@@ -208,12 +218,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         imageBG.draw();
 
         // Game Screen borders
-        // TODO this is to be replaced by on-wallpaper border lines
-        g.drawLine((displayWidth / 3) - (int) (displayWidth * 0.16), 0, (displayWidth / 3) - (int) (displayWidth * 0.16), displayHeight);  // left vertical division line
-        g.drawLine(displayWidth - (displayWidth / 3) + (int) (displayWidth * 0.16), 0, displayWidth - (displayWidth / 3) + (int) (displayWidth * 0.16), displayHeight);  // right vertical division line
-        g.drawLine((displayWidth / 2), (displayHeight / 2) + 50, (displayWidth / 2), displayHeight);  // center vertical division line
-        g.drawLine((displayWidth / 3) - (int) (displayWidth * 0.16), (displayHeight / 2) + 50, displayWidth - (displayWidth / 3) + (int) (displayWidth * 0.16), (displayHeight / 2) + 50);  // center horizontal division line
-        g.drawLine(0 ,endingYPos, displayWidth, endingYPos);
+        g.drawLine(0, endingYPos, displayWidth, endingYPos);
 
         // Draw player character animations
         animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
@@ -221,137 +226,175 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
 
         // render falling notes
-        for (Note note : notesP1) {
-            note.getImage().draw(note.getX(), note.getY());
+        for (int i = 0; i < notesP1.size(); i++) {
+            if (notesP1.get(i).getY() + 8 <= perfectYPos) {
+                notesP1.get(i).getImage().draw(notesP1.get(i).getX(), notesP1.get(i).getY());
+                notesP2.get(i).getImage().draw(notesP2.get(i).getX(), notesP2.get(i).getY());
+            }
         }
-        for (Note note : notesP2) {
-            note.getImage().draw(note.getX(), note.getY());
-        }
-
 
         g.setColor(Color.white);
         g.drawString("Time", (displayWidth / 2) - 5, 5);
         String strMusicPosition = null;
-        if (gameMusic.playing()){
+        if (gameMusic.playing()) {
             strMusicPosition = String.valueOf(musicPosition);
             g.drawString(strMusicPosition, (displayWidth / 2) - (strMusicPosition.length()), 20);
 
         }
-        g.drawString("Curr NoteBars : " + notesP1.size() +"  " +notesP2.size(), (displayWidth / 2) - 10, 50);
+
+        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
+        g.drawString("Curr NoteBars : " + notesP1.size() + "  " + notesP2.size(), (displayWidth / 2) - 10, 50);
 
         // For testing purposes
-        g.drawString("P1 Pressed Red: " + monsterP1.getResourceRed(), 20, 100);
-        g.drawString("P1 Pressed Yellow: " + monsterP1.getResourceYellow(), 20, 160);
-        g.drawString("P1 Pressed Green: " + monsterP1.getResourceGreen(), 20, 190);
-        g.drawString("P1 Pressed Blue: " + monsterP1.getResourceBlue(), 20, 130);
+        g.drawString("P1 Pressed Red: " + monsterP1.getResourceRed(), p1x4 + 150, displayHeight - 150);
+        g.drawString("P1 Pressed Green: " + monsterP1.getResourceGreen(), p1x4 + 150, displayHeight - 140);
+        g.drawString("P1 Pressed Blue: " + monsterP1.getResourceBlue(), p1x4 + 150, displayHeight - 130);
+        g.drawString("P1 Pressed Yellow: " + monsterP1.getResourceYellow(), p1x4 + 150, displayHeight - 120);
 
-        g.drawString("P2 Pressed Red: " + monsterP2.getResourceRed(), 900, 100);
-        g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceYellow(), 900, 160);
-        g.drawString("P2 Pressed Green: " + monsterP2.getResourceGreen(), 900, 190);
-        g.drawString("P2 Pressed Blue: " + monsterP2.getResourceBlue(), 900, 130);
+        g.drawString("P2 Pressed Red: " + monsterP2.getResourceRed(), (displayWidth / 2) + 50, displayHeight - 150);
+        g.drawString("P2 Pressed Green: " + monsterP2.getResourceGreen(), (displayWidth / 2) + 50, displayHeight - 140);
+        g.drawString("P2 Pressed Blue: " + monsterP2.getResourceBlue(), (displayWidth / 2) + 50, displayHeight - 130);
+        g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceYellow(), (displayWidth / 2) + 50, displayHeight - 120);
 
 
         g.drawString("DELTA = " + delta, 100, 50);
+
+        // Hitbox feedback
+        // Draw glowing hitbox if corresponding key is pressed
+        if (pressedQ) {
+            imagesPressedHitbox[0].draw(p1x1 - 6, perfectYPos - 22);
+        }
+        if (pressedW) {
+            imagesPressedHitbox[1].draw(p1x2 - 6, perfectYPos - 22);
+        }
+        if (pressedE) {
+            imagesPressedHitbox[2].draw(p1x3 - 6, perfectYPos - 22);
+        }
+        if (pressedR) {
+            imagesPressedHitbox[3].draw(p1x4 - 6, perfectYPos - 22);
+        }
+
+        if (pressedU) {
+            imagesPressedHitbox[0].draw(p2x1 - 6, perfectYPos - 22);
+        }
+        if (pressedI) {
+            imagesPressedHitbox[1].draw(p2x2 - 6, perfectYPos - 22);
+        }
+        if (pressedO) {
+            imagesPressedHitbox[2].draw(p2x3 - 6, perfectYPos - 22);
+        }
+        if (pressedP) {
+            imagesPressedHitbox[3].draw(p2x4 - 6, perfectYPos - 22);
+        }
     }
 
     @Override
     public void keyPressed(int key, char pressedKey) {
         // Key listener
-        if (key == Input.KEY_Q) {
 
+        if (key == Input.KEY_Q) {
+            pressedQ = true;
+            imagesPressedHitbox[0].draw(p1x1 - 19, perfectYPos - 22);
             // if note bar is near or within corresponding hitbox
-            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+            if (notesP1.get(0).getX() == p1x1 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+            } else if (notesP1.get(0).getX() == p1x1 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP1.addResourceRed(1);
-            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+            } else if (notesP1.get(0).getX() == p1x1 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP1.addResourceRed(2);
             }
 
         }
         if (key == Input.KEY_W) {
-
-            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+            pressedW = true;
+            imagesPressedHitbox[1].draw(p1x2 - 19, perfectYPos - 22);
+            if (notesP1.get(0).getX() == p1x2 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
-                monsterP1.addResourceYellow(1);
-            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
-                monsterP1.addResourceYellow(2);
-            }
-
-        }
-        if (key == Input.KEY_E) {
-
-            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
-                // no resource gain
-                // display bad hit!
-            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+            } else if (notesP1.get(0).getX() == p1x2 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP1.addResourceGreen(1);
-            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+            } else if (notesP1.get(0).getX() == p1x2 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP1.addResourceGreen(2);
             }
 
         }
-        if (key == Input.KEY_R) {
-
-            if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+        if (key == Input.KEY_E) {
+            pressedE = true;
+            imagesPressedHitbox[2].draw(p1x3 - 19, perfectYPos - 22);
+            if (notesP1.get(0).getX() == p1x3 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-            } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+            } else if (notesP1.get(0).getX() == p1x3 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP1.addResourceBlue(1);
-            } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+            } else if (notesP1.get(0).getX() == p1x3 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP1.addResourceBlue(2);
+            }
+
+        }
+        if (key == Input.KEY_R) {
+            pressedR = true;
+            imagesPressedHitbox[3].draw(p1x4 - 19, perfectYPos - 22);
+            if (notesP1.get(0).getX() == p1x4 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (notesP1.get(0).getX() == p1x4 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP1.addResourceYellow(1);
+            } else if (notesP1.get(0).getX() == p1x4 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP1.addResourceYellow(2);
             }
 
         }
 
         if (key == Input.KEY_U) {
-
-            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+            pressedU = true;
+            imagesPressedHitbox[0].draw(p2x1 - 19, perfectYPos - 22);
+            if (notesP2.get(0).getX() == p2x1 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+            } else if (notesP2.get(0).getX() == p2x1 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceRed(1);
-            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+            } else if (notesP2.get(0).getX() == p2x1 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceRed(2);
             }
 
         }
         if (key == Input.KEY_I) {
-
-            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+            pressedI = true;
+            imagesPressedHitbox[1].draw(p2x2 - 19, perfectYPos - 22);
+            if (notesP2.get(0).getX() == p2x2 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
-                monsterP2.addResourceYellow(1);
-            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
-                monsterP2.addResourceYellow(2);
-            }
-
-        }
-        if (key == Input.KEY_O) {
-
-            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
-                // no resource gain
-                // display bad hit!
-            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+            } else if (notesP2.get(0).getX() == p2x2 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceGreen(1);
-            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+            } else if (notesP2.get(0).getX() == p2x2 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceGreen(2);
             }
 
         }
-        if (key == Input.KEY_P) {
-
-            if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+        if (key == Input.KEY_O) {
+            pressedO = true;
+            imagesPressedHitbox[2].draw(p2x3 - 19, perfectYPos - 22);
+            if (notesP2.get(0).getX() == p2x3 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-            } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+            } else if (notesP2.get(0).getX() == p2x3 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceBlue(1);
-            } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+            } else if (notesP2.get(0).getX() == p2x3 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceBlue(2);
+            }
+
+        }
+        if (key == Input.KEY_P) {
+            pressedP = true;
+            imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 22);
+            if (notesP2.get(0).getX() == p2x4 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                // no resource gain
+                // display bad hit!
+            } else if (notesP2.get(0).getX() == p2x4 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                monsterP2.addResourceYellow(1);
+            } else if (notesP2.get(0).getX() == p2x4 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                monsterP2.addResourceYellow(2);
             }
 
         }
@@ -365,8 +408,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_M) {
-            skillCast = true;
-            gameMusic.play(0.10f, 1f);
+            slowCast = true;
+            gameMusic.play(pitchSlowMusic, 1f);
             gameMusic.setPosition(musicPosition);
             // TODO adjust pitch. match pitch loss and map read speed loss
         }
@@ -379,6 +422,32 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     @Override
     public void keyReleased(int key, char pressedKey) {
+
+        if (key == Input.KEY_Q) {
+            pressedQ = false;
+        }
+        if (key == Input.KEY_W) {
+            pressedW = false;
+        }
+        if (key == Input.KEY_E) {
+            pressedE = false;
+        }
+        if (key == Input.KEY_R) {
+            pressedR = false;
+        }
+
+        if (key == Input.KEY_U) {
+            pressedU = false;
+        }
+        if (key == Input.KEY_I) {
+            pressedI = false;
+        }
+        if (key == Input.KEY_O) {
+            pressedO = false;
+        }
+        if (key == Input.KEY_P) {
+            pressedP = false;
+        }
 
     }
 

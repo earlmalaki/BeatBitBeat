@@ -391,7 +391,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        imageBackground.draw();
+//        imageBackground.draw();
 
         // render monster selection icons
         for (int i = 0; i < imagesHumans1x1.length; i++) {
