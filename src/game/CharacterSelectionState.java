@@ -407,6 +407,11 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             imageBtnPickSong.draw( ((displayWidth / 2) - (imageBtnPickSong.getWidth() / 2)), (displayHeight - imageBtnPickSong.getHeight() - 50));
 
         } else {   // character and music picking is done
+            // render human selection icons
+            for (int i = 0; i < imagesHumans1x1.length; i++) {
+                imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY(), Color.darkGray);
+            }
+
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
             animateP2Monster.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Monster.getX(), coordP2Monster.getY());
