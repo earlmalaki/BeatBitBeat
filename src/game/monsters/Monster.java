@@ -125,4 +125,12 @@ public abstract class Monster {
     public void addResourceYellow(int res) {
         resourceYellow += res;
     }
+
+    public boolean checkResources(int red, int yellow, int green, int blue){
+        return (resourceRed >= red && resourceYellow >= yellow & resourceGreen >= green && resourceBlue >= blue)? true : false;
+    }
+
+    public abstract void skill1();
+    public abstract void skill2();
+    public abstract void skillUlt();
 }
