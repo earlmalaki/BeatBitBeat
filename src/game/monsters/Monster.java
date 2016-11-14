@@ -24,6 +24,8 @@
 
 package game.monsters;
 
+import org.newdawn.slick.Animation;
+
 public abstract class Monster {
 
     private int hp;
@@ -34,23 +36,13 @@ public abstract class Monster {
     private int resourceGreen;
     private int resourceYellow;
 
-    private int skill1Duration = 0;
-    private int skill2Duration = 0;
-    private int skillUltDuration = 0;
-
-
-    public Monster(int hp, int damage, int skill1Duration, int skill2Duration, int skillUltDuration) {
+    public Monster(int hp) {
         this.hp = hp;
-        this.damage = damage;
 
         resourceBlue = 0;
         resourceRed = 0;
         resourceGreen = 0;
         resourceYellow = 0;
-
-        this.skill1Duration = skill1Duration;
-        this.skill2Duration = skill2Duration;
-        this.skillUltDuration = skillUltDuration;
     }
 
     // subtract damage points inflicted on this character
@@ -143,15 +135,12 @@ public abstract class Monster {
     public abstract void skill2();
     public abstract void skillUlt();
 
-    public int getSkill1Duration() {
-        return skill1Duration;
-    }
+    public abstract int getSkill1Duration();
+    public abstract int getSkill2Duration();
+    public abstract int getSkillUltDuration();
 
-    public int getSkill2Duration() {
-        return skill2Duration;
-    }
+    public abstract Animation getSkill1Animation();
+    public abstract Animation getSkill2Animation();
+    public abstract Animation getSkillUltAnimation();
 
-    public int getSkillUltDuration() {
-        return skillUltDuration;
-    }
 }
