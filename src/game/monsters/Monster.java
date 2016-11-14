@@ -34,7 +34,12 @@ public abstract class Monster {
     private int resourceGreen;
     private int resourceYellow;
 
-    public Monster(int hp, int damage) {
+    private int skill1Duration = 0;
+    private int skill2Duration = 0;
+    private int skillUltDuration = 0;
+
+
+    public Monster(int hp, int damage, int skill1Duration, int skill2Duration, int skillUltDuration) {
         this.hp = hp;
         this.damage = damage;
 
@@ -42,6 +47,10 @@ public abstract class Monster {
         resourceRed = 0;
         resourceGreen = 0;
         resourceYellow = 0;
+
+        this.skill1Duration = skill1Duration;
+        this.skill2Duration = skill2Duration;
+        this.skillUltDuration = skillUltDuration;
     }
 
     // subtract damage points inflicted on this character
@@ -127,10 +136,22 @@ public abstract class Monster {
     }
 
     public boolean checkResources(int red, int yellow, int green, int blue){
-        return (resourceRed >= red && resourceYellow >= yellow & resourceGreen >= green && resourceBlue >= blue)? true : false;
+        return (resourceRed >= red && resourceYellow >= yellow & resourceGreen >= green && resourceBlue >= blue);
     }
 
     public abstract void skill1();
     public abstract void skill2();
     public abstract void skillUlt();
+
+    public int getSkill1Duration() {
+        return skill1Duration;
+    }
+
+    public int getSkill2Duration() {
+        return skill2Duration;
+    }
+
+    public int getSkillUltDuration() {
+        return skillUltDuration;
+    }
 }

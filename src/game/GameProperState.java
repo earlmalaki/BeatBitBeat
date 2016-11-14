@@ -84,6 +84,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private boolean perfectHitP2;
     private boolean missHitP1;
     private boolean missHitP2;
+    private int comboP1 = 0;
+    private int comboP2 = 0;
 
     private static Music gameMusic;
     private Coordinate coordPlayer1 = new Coordinate((displayWidth / 2) - 400, 100);
@@ -100,8 +102,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     private float speedNoteDrop = 4f;
     private int timePassed = 0;     // in milliseconds
-    private boolean slowCast = false;
-    private int timeSlowEffect = 3000;  // 3000ms == 3s
+    private boolean skillCast = false;
+    private int slowDuration = 3000;  // 3000ms == 3s
 
     private static BufferedReader br;
     private boolean pressedEscape = false;
@@ -157,10 +159,10 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         // TODO adjust pitch. match pitch loss and map read speed loss
         // slow music and read map
-        if (slowCast) {
+        if (skillCast) {
             timePassed += delta;
-            if (timePassed == timeSlowEffect) {
-                slowCast = false;
+            if (timePassed == slowDuration) {
+                skillCast = false;
                 timePassed = 0;
                 speedNoteDrop = 4f;
                 gameMusic.play();
@@ -261,6 +263,14 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.drawString("P2 Pressed Blue: " + monsterP2.getResourceBlue(), (displayWidth / 2) + 50, displayHeight - 130);
         g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceYellow(), (displayWidth / 2) + 50, displayHeight - 120);
 
+//        if (comboP1 > 5) {
+            g.drawString("Combo! " +comboP1, p1x1, 100);
+//        }
+//        if (comboP2 > 5) {
+            g.drawString("Combo! " +comboP2, p2x1, 100);
+//        }
+
+
 
         g.drawString("DELTA = " + delta, 100, 50);
 
@@ -304,10 +314,15 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP1.get(0).getX() == p1x1 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+
+                // TODO COMBO. delete note upon hit.
+                comboP1 = 0;
             } else if (notesP1.get(0).getX() == p1x1 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP1.addResourceRed(1);
+                comboP1++;
             } else if (notesP1.get(0).getX() == p1x1 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP1.addResourceRed(2);
+                comboP1++;
             }
 
         }
@@ -413,8 +428,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Resource cost
         /*** Start of Skills ***/
         if (key == Input.KEY_Z) {
-
             if(monsterP1.checkResources(3, 0, 3, 0)){//monsters has resources, go atk
+                skillCast(monsterP1.getSkill1Duration());       // call skillCast and pass duration of slow motion
                 monsterP1.skill1();
                 monsterP1.attack(monsterP2);
             }
@@ -457,9 +472,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_M) {
-            slowCast = true;
-            gameMusic.play(pitchSlowMusic, 1f);
-            gameMusic.setPosition(musicPosition);
+
             // TODO adjust pitch. match pitch loss and map read speed loss
         }
         /*** End of Skills ***/
@@ -470,6 +483,16 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_ESCAPE) {
             pressedEscape = true;
         }
+    }   // end of keypress method
+
+
+    // method for slowing things down
+    // accepts duration in MS
+    public void skillCast(int duration){
+        slowDuration = duration;
+        skillCast = true;   // flag for handling of slow in update() method
+        gameMusic.play(pitchSlowMusic, 1f);
+        gameMusic.setPosition(musicPosition);
     }
 
     @Override

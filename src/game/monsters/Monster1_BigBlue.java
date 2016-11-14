@@ -28,8 +28,13 @@ public class Monster1_BigBlue extends Monster {
     private static final int hp = 100;
     private static final int damage = 0;
 
+    // TODO enter proper duration of skill animation when sprites are done
+    private static final int skill1Duration = 0;
+    private static final int skill2Duration = 0;
+    private static final int skillUltDuration = 0;
+
     public Monster1_BigBlue() {
-        super(hp, damage);
+        super(hp, damage, skill1Duration, skill2Duration, skillUltDuration);
     }
 
     public void skill1 () {
@@ -52,5 +57,7 @@ public class Monster1_BigBlue extends Monster {
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
     }
+
+
 
 }
