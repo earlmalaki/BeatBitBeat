@@ -23,18 +23,29 @@
 
 package game.monsters;
 
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
 public class Monster1_BigBlue extends Monster {
 
     private static final int hp = 100;
-    private static final int damage = 0;
+
+    private Animation animationSkill1;
+    private Animation animationSkill2;
+    private Animation animationSkillUlt;
 
     // TODO enter proper duration of skill animation when sprites are done
     private static final int skill1Duration = 0;
     private static final int skill2Duration = 0;
     private static final int skillUltDuration = 0;
 
-    public Monster1_BigBlue() {
-        super(hp, damage, skill1Duration, skill2Duration, skillUltDuration);
+    public Monster1_BigBlue() throws SlickException {
+        super(hp);
+
+        animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 1 Blistol.png", 600, 300, 1), 250);
+        animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 2 Gatling.png", 600, 300, 1), 250);
+        animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 3 Bluezooka.png", 600, 300, 1), 250);
     }
 
     public void skill1 () {
@@ -58,6 +69,29 @@ public class Monster1_BigBlue extends Monster {
         super.setResourceBlue(super.getResourceBlue() - 12);
     }
 
+    public int getSkill1Duration() {
+        return skill1Duration;
+    }
+
+    public int getSkill2Duration() {
+        return skill2Duration;
+    }
+
+    public int getSkillUltDuration() {
+        return skillUltDuration;
+    }
+
+    public Animation getSkill1Animation() {
+        return animationSkill1;
+    }
+
+    public Animation getSkill2Animation() {
+        return animationSkill2;
+    }
+
+    public Animation getSkillUltAnimation() {
+        return animationSkillUlt;
+    }
 
 
 }

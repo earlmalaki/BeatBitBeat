@@ -103,7 +103,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private float speedNoteDrop = 4f;
     private int timePassed = 0;     // in milliseconds
     private boolean skillCast = false;
-    private int slowDuration = 3000;  // 3000ms == 3s
+    private int slowDuration = 0;  // 3000ms == 3s
 
     private static BufferedReader br;
     private boolean pressedEscape = false;
@@ -471,10 +471,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (key == Input.KEY_M) {
-
-            // TODO adjust pitch. match pitch loss and map read speed loss
-        }
         /*** End of Skills ***/
 
 
@@ -489,6 +485,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     // method for slowing things down
     // accepts duration in MS
     public void skillCast(int duration){
+        // match pitch loss and map read speed loss
         slowDuration = duration;
         skillCast = true;   // flag for handling of slow in update() method
         gameMusic.play(pitchSlowMusic, 1f);
