@@ -23,14 +23,24 @@
 
 package game.monsters;
 
-public class Monster1 extends Monster {
+public class Monster1_BigBlue extends Monster {
 
     private static final int hp = 100;
-    private static final int mp = 100;
-    private static final int damage = 100;
+    private static final int damage = 0;
 
-    public Monster1() {
-        super(hp, mp, damage);
+    public Monster1_BigBlue() {
+        super(hp, damage);
+    }
+
+    public void skillFistol () {
+
+    }
+
+    public void skillGatling () {
+
+    }
+
+    public void skillBluezooka () {
 
     }
 

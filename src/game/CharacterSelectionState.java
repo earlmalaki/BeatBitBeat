@@ -261,7 +261,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     // TODO Gaming part
                     // TODO Monster object representing monster's unique capabilities
                     if (caseMonsterAnimation == 1) {
-                        monsterP1 = new Monster1();
+                        monsterP1 = new Monster1_BigBlue();
                     } else if (caseMonsterAnimation == 2) {
                         monsterP1 = new Monster2();
                     } else if (caseMonsterAnimation == 3) {
@@ -289,7 +289,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     // TODO Gaming part
                     // TODO Monster object representing monster's unique capabilities
                     if (caseMonsterAnimation == 1) {
-                        monsterP2 = new Monster1();
+                        monsterP2 = new Monster1_BigBlue();
                     } else if (caseMonsterAnimation == 2) {
                         monsterP2 = new Monster2();
                     } else if (caseMonsterAnimation == 3) {

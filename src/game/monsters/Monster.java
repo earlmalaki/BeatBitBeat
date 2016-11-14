@@ -27,7 +27,6 @@ package game.monsters;
 public abstract class Monster {
 
     private int hp;
-    private int mp;
     private int damage;
 
     private int resourceBlue;
@@ -35,9 +34,8 @@ public abstract class Monster {
     private int resourceGreen;
     private int resourceYellow;
 
-    public Monster(int hp, int mp, int damage) {
+    public Monster(int hp, int damage) {
         this.hp = hp;
-        this.mp = mp;
         this.damage = damage;
 
         resourceBlue = 0;
@@ -94,14 +92,6 @@ public abstract class Monster {
 
     public void setResourceYellow(int resourceYellow) {
         this.resourceYellow = resourceYellow;
-    }
-
-    public int getMp() {
-        return mp;
-    }
-
-    public void setMp(int mp) {
-        this.mp = mp;
     }
 
     public int getResourceBlue() {
