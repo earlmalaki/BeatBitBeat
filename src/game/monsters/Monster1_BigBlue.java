@@ -32,25 +32,16 @@ public class Monster1_BigBlue extends Monster {
         super(hp, damage);
     }
 
-    public void skill1 () {
-        super.setDamage(5);
-        super.setResourceRed(super.getResourceRed() - 3);
-        super.setResourceYellow(super.getResourceYellow() - 3);
-    }
-
-    public void skill2 () {
-        super.setDamage(12);
-        super.setResourceRed(super.getResourceRed() - 7);
-        super.setResourceYellow(super.getResourceYellow() - 7);
+    public void skillFistol () {
 
     }
 
-    public void skillUlt () {
-        super.setDamage(55);
-        super.setResourceRed(super.getResourceRed() - 12);
-        super.setResourceYellow(super.getResourceYellow() - 12);
-        super.setResourceGreen(super.getResourceGreen() - 12);
-        super.setResourceBlue(super.getResourceBlue() - 12);
+    public void skillGatling () {
+
+    }
+
+    public void skillBluezooka () {
+
     }
 
 }

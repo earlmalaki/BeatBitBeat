@@ -3,10 +3,15 @@
  * Bedio, Aiden Justin
  * Malaki, Earl Timothy
  * Paler, Timothy River
- *
+ * <p>
  * BSCS - II | UP - Cebu
  * CMSC22 - OOP
  * Final Project
+ * <p>
+ * NOTE:
+ * - For now, prioritize work game MVP
+ * - Put code documentation for readability
+ * - Let others know what you're working on
  */
 
 
@@ -25,24 +30,25 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class BeatBitBeatMain extends StateBasedGame{
+public class BeatBitBeatMain extends StateBasedGame {
 
     private static final String gameName = "Beat Bit Beat";
 
     // Game state IDs
     private static final int mainMenu = 0;
     private static final int characterSelection = 1;
-    private static final int gameProper = 2;
-    private static final int gameOver = 3;
-    private static final int options = 4;
-    private static final int credits = 5;
+    private static final int versusPreview = 2;
+    private static final int gameProper = 3;
+    private static final int gameOver = 4;
+    private static final int options = 5;
+    private static final int credits = 6;
 
     // Display Resolution
     private static int displayWidth = 1280;
     private static int displayHeight = 800;
 
     // Constructor
-    public BeatBitBeatMain(String gameName){
+    public BeatBitBeatMain(String gameName) {
         super(gameName);
     }
 
@@ -117,6 +123,10 @@ public class BeatBitBeatMain extends StateBasedGame{
 
     public static int getDisplayHeight() {
         return displayHeight;
+    }
+
+    public static int getVersusPreview() {
+        return versusPreview;
     }
     /** EO Getters **/
 }
