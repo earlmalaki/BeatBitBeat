@@ -32,10 +32,15 @@
 
 package game.monsters;
 
+import org.newdawn.slick.Animation;
+
 public class Monster2 extends Monster {
 
     private static final int hp = 100;
-    private static final int damage = 0;
+
+    private Animation animationSkill1;
+    private Animation animationSkill2;
+    private Animation animationSkillUlt;
 
     // TODO enter proper duration of skill animation when sprites are done
     private static final int skill1Duration = 0;
@@ -43,7 +48,7 @@ public class Monster2 extends Monster {
     private static final int skillUltDuration = 0;
 
     public Monster2() {
-        super(hp, damage, skill1Duration, skill2Duration, skillUltDuration);
+        super(hp);
     }
 
     public void skill1() {
@@ -65,6 +70,30 @@ public class Monster2 extends Monster {
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
+    }
+
+    public int getSkill1Duration() {
+        return skill1Duration;
+    }
+
+    public int getSkill2Duration() {
+        return skill2Duration;
+    }
+
+    public int getSkillUltDuration() {
+        return skillUltDuration;
+    }
+
+    public Animation getSkill1Animation() {
+        return animationSkill1;
+    }
+
+    public Animation getSkill2Animation() {
+        return animationSkill2;
+    }
+
+    public Animation getSkillUltAnimation() {
+        return animationSkillUlt;
     }
 
 }

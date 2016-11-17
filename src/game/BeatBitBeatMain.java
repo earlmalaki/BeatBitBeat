@@ -15,13 +15,6 @@
  */
 
 
-/**
- * NOTE:
- * - For now, prioritize work game MVP
- * - Put code documentation for readability
- * - Let others know what you're working on
- */
-
 package game;
 
 import org.newdawn.slick.AppGameContainer;
