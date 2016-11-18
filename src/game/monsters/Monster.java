@@ -24,6 +24,8 @@
 
 package game.monsters;
 
+import org.newdawn.slick.Animation;
+
 public abstract class Monster {
 
     private int hp;
@@ -34,9 +36,8 @@ public abstract class Monster {
     private int resourceGreen;
     private int resourceYellow;
 
-    public Monster(int hp, int damage) {
+    public Monster(int hp) {
         this.hp = hp;
-        this.damage = damage;
 
         resourceBlue = 0;
         resourceRed = 0;
@@ -126,11 +127,20 @@ public abstract class Monster {
         resourceYellow += res;
     }
 
-    public boolean checkResources(int red, int yellow, int green, int blue){
-        return (resourceRed >= red && resourceYellow >= yellow & resourceGreen >= green && resourceBlue >= blue)? true : false;
+    public boolean checkResources(int red, int green, int blue, int yellow){
+        return (resourceRed >= red && resourceYellow >= yellow & resourceGreen >= green && resourceBlue >= blue);
     }
 
     public abstract void skill1();
     public abstract void skill2();
     public abstract void skillUlt();
+
+    public abstract int getSkill1Duration();
+    public abstract int getSkill2Duration();
+    public abstract int getSkillUltDuration();
+
+    public abstract Animation getSkill1Animation();
+    public abstract Animation getSkill2Animation();
+    public abstract Animation getSkillUltAnimation();
+
 }

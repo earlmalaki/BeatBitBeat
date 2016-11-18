@@ -30,8 +30,6 @@
  * - Prioritize MVP first.
  */
 
-// TODO Finish monster implementation
-
 package game;
 
 import game.monsters.Monster;
@@ -71,9 +69,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     // Significant Y axis positions
     private float startingYPos = 0f;
-    private float badYPos = 600f;
-    private float goodYPos = 615f;
-    private float perfectYPos = 630f;
+    private float badYPos = 585f;
+    private float goodYPos = 605f;
+    private float perfectYPos = 625f;
     private float endingYPos = 645;    // miss
 
     private boolean badHitP1;
@@ -84,6 +82,16 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private boolean perfectHitP2;
     private boolean missHitP1;
     private boolean missHitP2;
+
+    private boolean skill1P1 = false;
+    private boolean skill2P1 = false;
+    private boolean skillUltP1 = false;
+    private boolean skill1P2 = false;
+    private boolean skill2P2 = false;
+    private boolean skillUltP2 = false;
+
+    private int comboP1 = 0;
+    private int comboP2 = 0;
 
     private static Music gameMusic;
     private Coordinate coordPlayer1 = new Coordinate((displayWidth / 2) - 400, 100);
@@ -100,8 +108,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     private float speedNoteDrop = 4f;
     private int timePassed = 0;     // in milliseconds
-    private boolean slowCast = false;
-    private int timeSlowEffect = 3000;  // 3000ms == 3s
+    private boolean skillCast = false;
+    private int slowDuration = 0;  // 3000ms == 3s
 
     private static BufferedReader br;
     private boolean pressedEscape = false;
@@ -157,12 +165,18 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         // TODO adjust pitch. match pitch loss and map read speed loss
         // slow music and read map
-        if (slowCast) {
+        if (skillCast) {
             timePassed += delta;
-            if (timePassed == timeSlowEffect) {
-                slowCast = false;
+            if (timePassed >= slowDuration) {
+                skillCast = false;
                 timePassed = 0;
                 speedNoteDrop = 4f;
+                skill1P1 = false;
+                skill2P1 = false;
+                skillUltP1 = false;
+                skill1P2 = false;
+                skill2P2 = false;
+                skillUltP2 = false;
                 gameMusic.play();
                 gameMusic.setPosition(musicPosition);
             } else {
@@ -192,19 +206,29 @@ public class GameProperState extends BasicGameState implements KeyListener {
         for (int i = 0; i < notesP1.size(); i++) {      // or i < notesP2.size(), notes p1 and p2 are of same size
             notesP1.get(i).setY(notesP1.get(i).getY() + speedNoteDrop);
             notesP2.get(i).setY(notesP2.get(i).getY() + speedNoteDrop);
+        }
 
-            // detect if note bars go past the hitbox
-            if (notesP1.get(0).getY() > endingYPos) {
+        // Detect if notes reach the ending y pos
+//        for (int i = 0; i < notesP1.size(); i++) {
+            if (notesP1.size() != 0) {  // notesP1 size == notesP2 size
+                if (notesP1.get(0).getY() > endingYPos) {
+                    // play music
+                    if (!gameMusic.playing()) {
+                        gameMusic.play();
+                    }
 
-                // play music
-                if (!gameMusic.playing()) {
-                    gameMusic.play();
+                    comboP1 = 0;
+                    notesP1.remove(0);
                 }
 
-                notesP1.remove(0);
-                notesP2.remove(0);
+                if (notesP2.get(0).getY() > endingYPos) {
+                    comboP2 = 0;
+                    notesP2.remove(0);
+                }
             }
-        }
+//        }
+
+
 
 
         musicPosition = gameMusic.getPosition();
@@ -225,10 +249,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Game Screen borders
         g.drawLine(0, endingYPos, displayWidth, endingYPos);
 
-        // Draw player character animations
-        animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
-        animationPlayer2.getCurrentFrame().getFlippedCopy(true, false).draw(coordPlayer2.getX(), coordPlayer2.getY());
-
 
         // render falling notes
         for (int i = 0; i < notesP1.size(); i++) {
@@ -247,6 +267,35 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         }
 
+        // Hitbox feedback
+        // Draw glowing hitbox if corresponding key is pressed
+        if (pressedQ) {
+            imagesPressedHitbox[0].draw(p1x1 - 6, perfectYPos - 15);
+        }
+        if (pressedW) {
+            imagesPressedHitbox[1].draw(p1x2 - 6, perfectYPos - 15);
+        }
+        if (pressedE) {
+            imagesPressedHitbox[2].draw(p1x3 - 6, perfectYPos - 15);
+        }
+        if (pressedR) {
+            imagesPressedHitbox[3].draw(p1x4 - 6, perfectYPos - 15);
+        }
+
+        if (pressedU) {
+            imagesPressedHitbox[0].draw(p2x1 - 6, perfectYPos - 15);
+        }
+        if (pressedI) {
+            imagesPressedHitbox[1].draw(p2x2 - 6, perfectYPos - 15);
+        }
+        if (pressedO) {
+            imagesPressedHitbox[2].draw(p2x3 - 6, perfectYPos - 15);
+        }
+        if (pressedP) {
+            imagesPressedHitbox[3].draw(p2x4 - 6, perfectYPos - 15);
+        }
+
+
         g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
         g.drawString("Curr NoteBars : " + notesP1.size() + "  " + notesP2.size(), (displayWidth / 2) - 10, 50);
 
@@ -262,34 +311,36 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceYellow(), (displayWidth / 2) + 50, displayHeight - 120);
 
 
+//        if (comboP1 > 5) {
+            g.drawString("Combo! " +comboP1, p1x1, 100);
+//        }
+//        if (comboP2 > 5) {
+            g.drawString("Combo! " +comboP2, p2x1, 100);
+//        }
+
+
+
         g.drawString("DELTA = " + delta, 100, 50);
 
-        // Hitbox feedback
-        // Draw glowing hitbox if corresponding key is pressed
-        if (pressedQ) {
-            imagesPressedHitbox[0].draw(p1x1 - 6, perfectYPos - 19);
-        }
-        if (pressedW) {
-            imagesPressedHitbox[1].draw(p1x2 - 6, perfectYPos - 19);
-        }
-        if (pressedE) {
-            imagesPressedHitbox[2].draw(p1x3 - 6, perfectYPos - 19);
-        }
-        if (pressedR) {
-            imagesPressedHitbox[3].draw(p1x4 - 6, perfectYPos - 19);
-        }
 
-        if (pressedU) {
-            imagesPressedHitbox[0].draw(p2x1 - 6, perfectYPos - 19);
-        }
-        if (pressedI) {
-            imagesPressedHitbox[1].draw(p2x2 - 6, perfectYPos - 19);
-        }
-        if (pressedO) {
-            imagesPressedHitbox[2].draw(p2x3 - 6, perfectYPos - 19);
-        }
-        if (pressedP) {
-            imagesPressedHitbox[3].draw(p2x4 - 6, perfectYPos - 19);
+
+        // TODO fix skill animation
+        // Draw player character animations
+        if (skill1P1) {
+            monsterP1.getSkill1Animation().draw(coordPlayer1.getX(), coordPlayer1.getY());
+        } else if (skill2P1) {
+            monsterP1.getSkill2Animation().draw(coordPlayer1.getX(), coordPlayer1.getY());
+        } else if (skillUltP1) {
+            monsterP1.getSkillUltAnimation().draw(coordPlayer1.getX(), coordPlayer1.getY());
+        } else if (skill1P2) {
+            monsterP2.getSkill1Animation().draw(coordPlayer2.getX(), coordPlayer2.getY());
+        } else if (skill2P2) {
+            monsterP2.getSkill2Animation().draw(coordPlayer2.getX(), coordPlayer2.getY());
+        } else if (skillUltP2) {
+            monsterP2.getSkillUltAnimation().draw(coordPlayer2.getX(), coordPlayer2.getY());
+        } else {
+            animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
+            animationPlayer2.getCurrentFrame().getFlippedCopy(true, false).draw(coordPlayer2.getX(), coordPlayer2.getY());
         }
     }
 
@@ -299,61 +350,82 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_Q) {
             pressedQ = true;
-            imagesPressedHitbox[0].draw(p1x1 - 19, perfectYPos - 22);
             // if note bar is near or within corresponding hitbox
             if (notesP1.get(0).getX() == p1x1 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+
+                // TODO COMBO. delete note upon hit. UPDATE: Faulty implementation of combo (delete notes upon hit). Make new implementation
+                // Hit notes should be deleted so that only missed notes will reach the endingYPos
+                // notes reaching the endingYPos indicates a missed note, thus ending the combo
+                // combo will end if either BAD hit or MISS
+                comboP1 = 0;
             } else if (notesP1.get(0).getX() == p1x1 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+//                notesP1.remove(0);
                 monsterP1.addResourceRed(1);
+                comboP1++;
             } else if (notesP1.get(0).getX() == p1x1 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+//                notesP1.remove(0);
                 monsterP1.addResourceRed(2);
+                comboP1++;
             }
 
         }
         if (key == Input.KEY_W) {
             pressedW = true;
-            imagesPressedHitbox[1].draw(p1x2 - 19, perfectYPos - 22);
             if (notesP1.get(0).getX() == p1x2 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP1 = 0;
             } else if (notesP1.get(0).getX() == p1x2 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+//                notesP1.remove(0);
                 monsterP1.addResourceGreen(1);
+                comboP1++;
             } else if (notesP1.get(0).getX() == p1x2 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+//                notesP1.remove(0);
                 monsterP1.addResourceGreen(2);
+                comboP1++;
             }
 
         }
         if (key == Input.KEY_E) {
             pressedE = true;
-            imagesPressedHitbox[2].draw(p1x3 - 19, perfectYPos - 22);
             if (notesP1.get(0).getX() == p1x3 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP1 = 0;
             } else if (notesP1.get(0).getX() == p1x3 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+//                notesP1.remove(0);
                 monsterP1.addResourceBlue(1);
+                comboP1++;
             } else if (notesP1.get(0).getX() == p1x3 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+//                notesP1.remove(0);
                 monsterP1.addResourceBlue(2);
+                comboP1++;
             }
 
         }
         if (key == Input.KEY_R) {
             pressedR = true;
-            imagesPressedHitbox[3].draw(p1x4 - 19, perfectYPos - 22);
             if (notesP1.get(0).getX() == p1x4 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP1 = 0;
             } else if (notesP1.get(0).getX() == p1x4 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+//                notesP1.remove(0);
                 monsterP1.addResourceYellow(1);
+                comboP1++;
             } else if (notesP1.get(0).getX() == p1x4 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+//                notesP1.remove(0);
                 monsterP1.addResourceYellow(2);
+                comboP1++;
             }
 
         }
 
+        // TODO apply changes in P1 to P2
         if (key == Input.KEY_U) {
             pressedU = true;
-            imagesPressedHitbox[0].draw(p2x1 - 19, perfectYPos - 22);
             if (notesP2.get(0).getX() == p2x1 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
@@ -366,7 +438,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
         if (key == Input.KEY_I) {
             pressedI = true;
-            imagesPressedHitbox[1].draw(p2x2 - 19, perfectYPos - 22);
             if (notesP2.get(0).getX() == p2x2 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
@@ -379,7 +450,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
         if (key == Input.KEY_O) {
             pressedO = true;
-            imagesPressedHitbox[2].draw(p2x3 - 19, perfectYPos - 22);
             if (notesP2.get(0).getX() == p2x3 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
@@ -392,7 +462,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
         if (key == Input.KEY_P) {
             pressedP = true;
-            imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 22);
             if (notesP2.get(0).getX() == p2x4 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
@@ -411,17 +480,22 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Cooldown
         // Slow-mo
         // Resource cost
+        // TODO improve skill resource cost management. Change for code upgradability
         /*** Start of Skills ***/
+        // checkResources (red, green, blue, yellow)
         if (key == Input.KEY_Z) {
-
-            if(monsterP1.checkResources(3, 0, 3, 0)){//monsters has resources, go atk
+            if(monsterP1.checkResources(3, 0, 0, 3)){   //monsters has resources, go atk
+                skillCast(monsterP1.getSkill1Duration());       // call skillCast and pass duration of slow motion
+                skill1P1 = true;
                 monsterP1.skill1();
                 monsterP1.attack(monsterP2);
             }
         }
 
         if (key == Input.KEY_X) {
-            if (monsterP1.checkResources(0, 7, 0, 7)) { //monsters has resources, go atk
+            if (monsterP1.checkResources(7, 0, 0, 7)) { //monsters has resources, go atk
+                skillCast(monsterP1.getSkill2Duration());       // call skillCast and pass duration of slow motion
+                skill2P1 = true;
                 monsterP1.skill2();
                 monsterP1.attack(monsterP2);
             }
@@ -429,6 +503,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_C) {
             if (monsterP1.checkResources(12, 12, 12, 12)) { //monsters has resources, go atk
+                skillCast(monsterP1.getSkillUltDuration());       // call skillCast and pass duration of slow motion
+                skillUltP1 = true;
                 monsterP1.skillUlt();
                 monsterP1.attack(monsterP2);
             }
@@ -436,14 +512,18 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_COMMA) {
 
-            if(monsterP2.checkResources(3, 0, 3, 0)){//monsters has resources, go atk
+            if(monsterP2.checkResources(3, 0, 0, 3)){//monsters has resources, go atk
+                skillCast(monsterP2.getSkill1Duration());       // call skillCast and pass duration of slow motion
+                skill1P2 = true;
                 monsterP2.skill1();
                 monsterP2.attack(monsterP1);
             }
         }
 
         if (key == Input.KEY_PERIOD) {
-            if (monsterP2.checkResources(0, 7, 0, 7)) { //monsters has resources, go atk
+            if (monsterP2.checkResources(7, 0, 0, 7)) { //monsters has resources, go atk
+                skillCast(monsterP2.getSkill2Duration());       // call skillCast and pass duration of slow motion
+                skill2P2 = true;
                 monsterP2.skill2();
                 monsterP2.attack(monsterP1);
             }
@@ -451,17 +531,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_BACKSLASH) {
             if (monsterP2.checkResources(12, 12, 12, 12)) { //monsters has resources, go atk
+                skillCast(monsterP2.getSkillUltDuration());       // call skillCast and pass duration of slow motion
+                skillUltP2 = true;
                 monsterP2.skillUlt();
                 monsterP2.attack(monsterP1);
             }
         }
 
-        if (key == Input.KEY_M) {
-            slowCast = true;
-            gameMusic.play(pitchSlowMusic, 1f);
-            gameMusic.setPosition(musicPosition);
-            // TODO adjust pitch. match pitch loss and map read speed loss
-        }
         /*** End of Skills ***/
 
 
@@ -470,6 +546,17 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_ESCAPE) {
             pressedEscape = true;
         }
+    }   // end of keypress method
+
+
+    // method for slowing things down
+    // accepts duration in MS
+    public void skillCast(int duration){
+        // match pitch loss and map read speed loss
+        slowDuration = duration;
+        skillCast = true;   // flag for handling of slow in update() method
+        gameMusic.play(pitchSlowMusic, 1f);
+        gameMusic.setPosition(musicPosition);
     }
 
     @Override
