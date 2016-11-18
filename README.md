@@ -3,7 +3,7 @@
 ###### Currently may contain various bugs and may have limited functionality
 ###### Functionality will be added and bugs be fixed as development progresses
 
-###### LINK TO PROTOTYPE~~2~~1 : https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing
+### LINK TO PROTOTYPE~~2~~1 : [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
 
 ##
 
