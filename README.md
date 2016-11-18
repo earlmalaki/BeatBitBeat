@@ -3,7 +3,7 @@
 ###### Currently may contain various bugs and may have limited functionality
 ###### Functionality will be added and bugs be fixed as development progresses
 
-### LINK TO PROTOTYPE~~2~~1 : [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
+### LINK TO PROTOTYPE~~2~~ 1 : [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
 
 ##
 
@@ -88,6 +88,4 @@ Victory is awarded to whoever Beat his opponent first using the bit notes in syn
 #### Spritesheet Maker: Stitches: An HTML5 sprite sheet generator
 #### Link = https://draeton.github.io/stitches/
 
-#### Monster character ideas from: Paranoia by Toby Allen
-#### Link: http://www.zestydoesthings.com/realmonsters#_=_
 
