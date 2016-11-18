@@ -1,7 +1,9 @@
 # BeatBitBeat
-###### Project is still in its early stages -- 2 out of 10
+###### Project is still in its early stages -- 4 out of 10
 ###### Currently may contain various bugs and may have limited functionality
 ###### Functionality will be added and bugs be fixed as development progresses
+
+###### LINK TO PROTOTYPE~~2~~1 : https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing
 
 ##
 
