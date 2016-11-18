@@ -4,7 +4,7 @@
 ###### Functionality will be added and bugs be fixed as development progresses
 
 ### LINK TO PROTOTYPE~~2~~ 1 : [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
-
+#### Download and UNZIP. Run "Prototype.jar".
 ##
 
 #### A Final Project in CMSC22 - Object Oriented Programming
