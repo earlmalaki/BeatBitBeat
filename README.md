@@ -3,8 +3,10 @@
 ###### Currently may contain various bugs and may have limited functionality
 ###### Functionality will be added and bugs be fixed as development progresses
 
-### LINK TO PROTOTYPE~~2~~ 1 : [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
-#### Download and UNZIP. Run "Prototype.jar".
+### LINK TO PROTOTYPE~~2~~ 1
+### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
+### Windows" [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6d2VZeGtqdTBlTms)
+#### Download and UNZIP. Run "Prototype.jar" (Mac) or "Proto_win.jar" (Windows)
 ##
 
 #### A Final Project in CMSC22 - Object Oriented Programming
