@@ -150,8 +150,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
             imagesArrows[3].draw(coordsArrows[3].getX(), coordsArrows[3].getY());
         }
 
-        g.drawString("DELTA = " + delta, 100, 100);
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
+//        g.drawString("DELTA = " + delta, 100, 100);
+//        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
 
     }
 
