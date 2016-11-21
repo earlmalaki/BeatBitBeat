@@ -1,8 +1,12 @@
 # BeatBitBeat
-###### Project is still in its early stages -- 2 out of 10
+###### Project is still in its early stages -- 4 out of 10
 ###### Currently may contain various bugs and may have limited functionality
 ###### Functionality will be added and bugs be fixed as development progresses
 
+### DOWNLOAD LINKS TO PROTOTYPE~~2~~ 1:
+### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
+### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6SDF6OVpUa2NvTW8)
+#### Download and UNZIP. Run "Prototype.jar" (Mac) or "Proto_win.jar" (Windows)
 ##
 
 #### A Final Project in CMSC22 - Object Oriented Programming
@@ -86,6 +90,4 @@ Victory is awarded to whoever Beat his opponent first using the bit notes in syn
 #### Spritesheet Maker: Stitches: An HTML5 sprite sheet generator
 #### Link = https://draeton.github.io/stitches/
 
-#### Monster character ideas from: Paranoia by Toby Allen
-#### Link: http://www.zestydoesthings.com/realmonsters#_=_
 
