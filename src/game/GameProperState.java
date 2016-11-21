@@ -303,12 +303,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.drawString("Y " + monsterP2.getResourceYellow(), (displayWidth / 2) + 200, displayHeight - 150);
 
 
-
 //        if (comboP1 > 5) {
-        g.drawString("" +comboP1, p1x2, 100);
+        g.drawString("" + comboP1, p1x2, 100);
 //        }
 //        if (comboP2 > 5) {
-        g.drawString("" +comboP2, p2x2, 100);
+        g.drawString("" + comboP2, p2x2, 100);
 //        }
 
 
@@ -322,21 +321,21 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Draw player character animations
         if (skill1P1) {
             monsterP1.getAnimationSkill1().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
+//            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skill2P1) {
             monsterP1.getAnimationSkill2().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
+//            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skillUltP1) {
             monsterP1.getAnimationSkillUlt().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            //          monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skill1P2) {
-            monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            //        monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
             monsterP2.getAnimationSkill1().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skill2P2) {
-            monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            //     monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
             monsterP2.getAnimationSkill2().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skillUltP2) {
-            monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            //   monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
             monsterP2.getAnimationSkillUlt().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else {
             animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
@@ -485,6 +484,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_Z) {
             if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
+                System.out.println("HEHEHEZ");
                 skill1P1 = true;
                 monsterP1.skill1();
                 monsterP1.attack(monsterP2);
@@ -493,6 +493,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_X) {
             if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
+                System.out.println("HEHEHEXX");
                 skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P1 = true;
                 monsterP1.skill2();

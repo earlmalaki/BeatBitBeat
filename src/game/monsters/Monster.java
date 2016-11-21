@@ -37,7 +37,7 @@ public abstract class Monster {
     private int resourceGreen;
     private int resourceYellow;
     //TODO
-    //add damage dealt, total resource rbgy for stats
+    //add damage dealt, total resource rbgy for stats, max combo
 
 
 
@@ -49,9 +49,13 @@ public abstract class Monster {
         resourceGreen = 0;
         resourceYellow = 0;
     }
-    // returns true if alive
+    public void takeDamage(int damage) {
+        this.hp -= damage;
+    }
 
-
+    public void attack(Monster defender) {
+        defender.takeDamage(damage);
+    }
 
     public int getHp(){
         return hp;
@@ -109,7 +113,7 @@ public abstract class Monster {
     }
 
     public boolean checkResources(SkillCost skillCost){
-        return (resourceRed == skillCost.getCostRed()) && (resourceGreen == skillCost.getCostGreen()) && (resourceBlue == skillCost.getCostBlue()) && (resourceYellow == skillCost.getCostYellow());
+        return (resourceRed >= skillCost.getCostRed()) && (resourceGreen >= skillCost.getCostGreen()) && (resourceBlue >= skillCost.getCostBlue()) && (resourceYellow >= skillCost.getCostYellow());
     }
 
 

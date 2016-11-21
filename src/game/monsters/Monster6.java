@@ -16,6 +16,33 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -47,9 +74,9 @@ public class Monster6 extends Monster {
     // TODO enter proper duration of skill animation when sprites are done
     private Animation animationHumanIdle;
 
-    private final SkillCost costSkill1 = new SkillCost(3,0,0,3);
-    private final SkillCost costSkill2 = new SkillCost(0,7,7,0);
-    private final SkillCost costSkillUlt = new SkillCost(12,12,12,12);
+    private final SkillCost costSkill1 = new SkillCost(3, 0, 0, 3);
+    private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
+    private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private SkillCost currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
     // TODO enter proper duration of skill animation when sprites are done
     private static final int skill1Duration = 3000;
@@ -81,33 +108,27 @@ public class Monster6 extends Monster {
     }
 
     public void skill1() {
-        currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
-        if(costSkill1.equalTo(currResources)) {
-            super.setDamage(5);
-            super.setResourceRed(super.getResourceRed() - 3);
-            super.setResourceYellow(super.getResourceYellow() - 3);
-        }
+        super.setDamage(5);
+        super.setResourceRed(super.getResourceRed() - 3);
+        super.setResourceYellow(super.getResourceYellow() - 3);
+
     }
 
     public void skill2() {
-        currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
-        if(costSkill2.equalTo(currResources)) {
-            super.setDamage(12);
-            super.setResourceRed(super.getResourceGreen() - 7);
-            super.setResourceYellow(super.getResourceBlue() - 7);
-        }
+        super.setDamage(12);
+        super.setResourceRed(super.getResourceGreen() - 7);
+        super.setResourceYellow(super.getResourceBlue() - 7);
+
     }
 
     public void skillUlt() {
-        currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
-        if(costSkillUlt.equalTo(currResources)) {
-            super.setDamage(55);
-            super.setResourceRed(super.getResourceRed() - 12);
-            super.setResourceYellow(super.getResourceYellow() - 12);
-            super.setResourceGreen(super.getResourceGreen() - 12);
-            super.setResourceBlue(super.getResourceBlue() - 12);
-        }
+        super.setDamage(55);
+        super.setResourceRed(super.getResourceRed() - 12);
+        super.setResourceYellow(super.getResourceYellow() - 12);
+        super.setResourceGreen(super.getResourceGreen() - 12);
+        super.setResourceBlue(super.getResourceBlue() - 12);
     }
+
 
     @Override
     public int getDurationSkill1() {

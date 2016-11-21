@@ -49,7 +49,7 @@ public class SkillCost {
         this.costYellow = costYellow;
     }
 
-    public boolean equalTo (SkillCost skillCost) {
+    public boolean canSkill (SkillCost skillCost) {
         return (this.costRed >= skillCost.getCostRed()) && (this.costGreen >= skillCost.getCostGreen()) && (this.costBlue >= skillCost.getCostBlue()) && (this.costYellow >= skillCost.getCostYellow());
     }
 
