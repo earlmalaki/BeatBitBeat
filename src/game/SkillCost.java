@@ -50,7 +50,7 @@ public class SkillCost {
     }
 
     public boolean equalTo (SkillCost skillCost) {
-        return (this.costRed == skillCost.getCostRed()) && (this.costGreen == skillCost.getCostGreen()) && (this.costBlue == skillCost.getCostBlue()) && (this.costYellow == skillCost.getCostYellow());
+        return (this.costRed >= skillCost.getCostRed()) && (this.costGreen >= skillCost.getCostGreen()) && (this.costBlue >= skillCost.getCostBlue()) && (this.costYellow >= skillCost.getCostYellow());
     }
 
 }
