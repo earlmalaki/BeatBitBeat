@@ -23,6 +23,7 @@
 
 package game.monsters;
 
+import game.SkillCost;
 import org.newdawn.slick.Animation;
 
 public class Monster3 extends Monster {
@@ -39,7 +40,7 @@ public class Monster3 extends Monster {
     private static final int skillUltDuration = 0;
 
     public Monster3() {
-        super(hp);
+        super();
     }
 
     public void skill1 () {
@@ -61,6 +62,61 @@ public class Monster3 extends Monster {
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
+    }
+
+    @Override
+    public int getDurationSkill1() {
+        return 0;
+    }
+
+    @Override
+    public int getDurationSkill2() {
+        return 0;
+    }
+
+    @Override
+    public int getDurationSkillUlt() {
+        return 0;
+    }
+
+    @Override
+    public Animation getAnimationIdle() {
+        return null;
+    }
+
+    @Override
+    public Animation getAnimationHumanIdle() {
+        return null;
+    }
+
+    @Override
+    public Animation getAnimationSkill1() {
+        return null;
+    }
+
+    @Override
+    public Animation getAnimationSkill2() {
+        return null;
+    }
+
+    @Override
+    public Animation getAnimationSkillUlt() {
+        return null;
+    }
+
+    @Override
+    public SkillCost getCostSkill1() {
+        return null;
+    }
+
+    @Override
+    public SkillCost getCostSkill2() {
+        return null;
+    }
+
+    @Override
+    public SkillCost getCostSkillUlt() {
+        return null;
     }
 
     public int getSkill1Duration() {

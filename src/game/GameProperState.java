@@ -232,7 +232,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
 
         musicPosition = gameMusic.getPosition();
-        animationPlayer2.update(delta);
 
         if (monsterP1.getHp() <= 0) {
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
@@ -327,20 +326,26 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // TODO fix skill animation
         // Draw player character animations
         if (skill1P1) {
-            monsterP1.getSkill1Animation().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP1.getAnimationSkill1().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skill2P1) {
-            monsterP1.getSkill2Animation().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP1.getAnimationSkill2().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skillUltP1) {
-            monsterP1.getSkillUltAnimation().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP1.getAnimationSkillUlt().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skill1P2) {
-            monsterP2.getSkill1Animation().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP2.getAnimationSkill1().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skill2P2) {
-            monsterP2.getSkill2Animation().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP2.getAnimationSkill2().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else if (skillUltP2) {
-            monsterP2.getSkillUltAnimation().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
+            monsterP2.getAnimationSkillUlt().draw(coordPlayer2.getX(), coordPlayer2.getY());
         } else {
             animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
-            animationPlayer2.getCurrentFrame().getFlippedCopy(true, false).draw(coordPlayer2.getX(), coordPlayer2.getY());
+            animationPlayer2.draw(coordPlayer2.getX(), coordPlayer2.getY());
         }
     }
 
@@ -484,8 +489,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         /*** Start of Skills ***/
         // checkResources (red, green, blue, yellow)
         if (key == Input.KEY_Z) {
-            if(monsterP1.checkResources(3, 0, 0, 3)){   //monsters has resources, go atk
-                skillCast(monsterP1.getSkill1Duration());       // call skillCast and pass duration of slow motion
+            if(monsterP1.checkResources(monsterP1.getCostSkill1())){   //monsters has resources, go atk
+                skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
                 skill1P1 = true;
                 monsterP1.skill1();
                 monsterP1.attack(monsterP2);
@@ -493,8 +498,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_X) {
-            if (monsterP1.checkResources(7, 0, 0, 7)) { //monsters has resources, go atk
-                skillCast(monsterP1.getSkill2Duration());       // call skillCast and pass duration of slow motion
+            if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
+                skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P1 = true;
                 monsterP1.skill2();
                 monsterP1.attack(monsterP2);
@@ -502,8 +507,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_C) {
-            if (monsterP1.checkResources(12, 12, 12, 12)) { //monsters has resources, go atk
-                skillCast(monsterP1.getSkillUltDuration());       // call skillCast and pass duration of slow motion
+            if (monsterP1.checkResources(monsterP1.getCostSkillUlt())) { //monsters has resources, go atk
+                skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                 skillUltP1 = true;
                 monsterP1.skillUlt();
                 monsterP1.attack(monsterP2);
@@ -512,8 +517,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_COMMA) {
 
-            if(monsterP2.checkResources(3, 0, 0, 3)){//monsters has resources, go atk
-                skillCast(monsterP2.getSkill1Duration());       // call skillCast and pass duration of slow motion
+            if(monsterP2.checkResources(monsterP2.getCostSkill1())){//monsters has resources, go atk
+                skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
                 skill1P2 = true;
                 monsterP2.skill1();
                 monsterP2.attack(monsterP1);
@@ -521,8 +526,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_PERIOD) {
-            if (monsterP2.checkResources(7, 0, 0, 7)) { //monsters has resources, go atk
-                skillCast(monsterP2.getSkill2Duration());       // call skillCast and pass duration of slow motion
+            if (monsterP2.checkResources(monsterP2.getCostSkill2())) { //monsters has resources, go atk
+                skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P2 = true;
                 monsterP2.skill2();
                 monsterP2.attack(monsterP1);
@@ -530,8 +535,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_BACKSLASH) {
-            if (monsterP2.checkResources(12, 12, 12, 12)) { //monsters has resources, go atk
-                skillCast(monsterP2.getSkillUltDuration());       // call skillCast and pass duration of slow motion
+            if (monsterP2.checkResources(monsterP2.getCostSkillUlt())) { //monsters has resources, go atk
+                skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                 skillUltP2 = true;
                 monsterP2.skillUlt();
                 monsterP2.attack(monsterP1);
