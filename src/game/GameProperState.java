@@ -46,8 +46,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     private Image imageBG;
 
-    private static Monster monsterP1;
-    private static Monster monsterP2;
+    public static Monster monsterP1;
+    public static Monster monsterP2;
 
     private ArrayList<Note> notesP1 = new ArrayList<>();
     private ArrayList<Note> notesP2 = new ArrayList<>();
@@ -90,8 +90,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private boolean skill2P2 = false;
     private boolean skillUltP2 = false;
 
-    private int comboP1 = 0;
-    private int comboP2 = 0;
 
     private static Music gameMusic;
     private Coordinate coordPlayer1 = new Coordinate((displayWidth / 2) - 400, 100);
@@ -304,10 +302,10 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
 
 //        if (comboP1 > 5) {
-        g.drawString("" + comboP1, p1x2, 100);
+        g.drawString("" + monsterP1.getCombo(), p1x2, 100);
 //        }
 //        if (comboP2 > 5) {
-        g.drawString("" + comboP2, p2x2, 100);
+        g.drawString("" + monsterP2.getCombo(), p2x2, 100);
 //        }
 
 
@@ -355,18 +353,19 @@ public class GameProperState extends BasicGameState implements KeyListener {
                 // display bad hit!
 
                 // TODO COMBO. delete note upon hit. UPDATE: Faulty implementation of combo (delete notes upon hit). Make new implementation
+                //FIXME Does not display last animation before the monster gets killed
                 // Hit notes should be deleted so that only missed notes will reach the endingYPos
                 // notes reaching the endingYPos indicates a missed note, thus ending the combo
                 // combo will end if either BAD hit or MISS
-                comboP1 = 0;
+                monsterP1.setCombo(0);
             } else if (notesP1.get(0).getX() == p1x1 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
 //                notesP1.remove(0);
                 monsterP1.addResourceRed(1);
-                comboP1++;
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             } else if (notesP1.get(0).getX() == p1x1 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
 //                notesP1.remove(0);
                 monsterP1.addResourceRed(2);
-                comboP1++;
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             }
 
         }
@@ -375,15 +374,17 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP1.get(0).getX() == p1x2 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-                comboP1 = 0;
+
+                monsterP1.setCombo(0);
             } else if (notesP1.get(0).getX() == p1x2 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
 //                notesP1.remove(0);
                 monsterP1.addResourceGreen(1);
-                comboP1++;
+
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             } else if (notesP1.get(0).getX() == p1x2 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
 //                notesP1.remove(0);
                 monsterP1.addResourceGreen(2);
-                comboP1++;
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             }
 
         }
@@ -392,15 +393,18 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP1.get(0).getX() == p1x3 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-                comboP1 = 0;
+
+                monsterP1.setCombo(0);
             } else if (notesP1.get(0).getX() == p1x3 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
 //                notesP1.remove(0);
                 monsterP1.addResourceBlue(1);
-                comboP1++;
+
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             } else if (notesP1.get(0).getX() == p1x3 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
 //                notesP1.remove(0);
                 monsterP1.addResourceBlue(2);
-                comboP1++;
+
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             }
 
         }
@@ -409,15 +413,18 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP1.get(0).getX() == p1x4 && badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
-                comboP1 = 0;
+
+                monsterP1.setCombo(0);
             } else if (notesP1.get(0).getX() == p1x4 && goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
 //                notesP1.remove(0);
                 monsterP1.addResourceYellow(1);
-                comboP1++;
+
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             } else if (notesP1.get(0).getX() == p1x4 && perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
 //                notesP1.remove(0);
                 monsterP1.addResourceYellow(2);
-                comboP1++;
+
+                monsterP1.setCombo(monsterP1.getCombo() + 1);
             }
 
         }
@@ -473,18 +480,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
 
-        // FIXME
-        // negative values
-        // Cooldown
-        // Slow-mo
-        // Resource cost
+        // TODO Cooldown
         // TODO improve skill resource cost management. Change for code upgradability
         /*** Start of Skills ***/
         // checkResources (red, green, blue, yellow)
         if (key == Input.KEY_Z) {
             if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
-                System.out.println("HEHEHEZ");
                 skill1P1 = true;
                 monsterP1.skill1();
                 monsterP1.attack(monsterP2);
@@ -493,7 +495,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_X) {
             if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
-                System.out.println("HEHEHEXX");
                 skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P1 = true;
                 monsterP1.skill2();

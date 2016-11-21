@@ -3,10 +3,65 @@
  * Bedio, Aiden Justin
  * Malaki, Earl Timothy
  * Paler, Timothy River
- *
+ * <p>
  * BSCS - II | UP - Cebu
  * CMSC22 - OOP
  * Final Project
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
+ * <p>
+ * Done:
+ * - skeleton code for abstract Monster class
+ * <p>
+ * TO DO:
+ * - Add necessary instance variables
+ * - Add necessary methods
+ * - Make concrete specific monster classes (6 monsters)
+ * <p>
+ * game.Note:
+ * -
  */
 
 /**
@@ -36,31 +91,40 @@ public abstract class Monster {
     private int resourceRed;
     private int resourceGreen;
     private int resourceYellow;
+
+
+    private int combo;
+    private int maxCombo;
     //TODO
     //add damage dealt, total resource rbgy for stats, max combo
 
 
-
     public Monster() {
         this.hp = 100;
-
         resourceBlue = 0;
         resourceRed = 0;
         resourceGreen = 0;
         resourceYellow = 0;
+        combo = 0;
+        maxCombo = 0;
     }
+
     public void takeDamage(int damage) {
         this.hp -= damage;
+    }
+
+    public int getMaxCombo() {
+        return maxCombo;
     }
 
     public void attack(Monster defender) {
         defender.takeDamage(damage);
     }
 
-    public int getHp(){
+    public int getHp() {
         return hp;
     }
-    
+
     public void setDamage(int damage) {
         this.damage = damage;
     }
@@ -104,6 +168,7 @@ public abstract class Monster {
     public void addResourceRed(int res) {
         resourceRed += res;
     }
+
     public void addResourceGreen(int res) {
         resourceGreen += res;
     }
@@ -112,29 +177,50 @@ public abstract class Monster {
         resourceYellow += res;
     }
 
-    public boolean checkResources(SkillCost skillCost){
+    public int getCombo() {
+
+        return combo;
+    }
+
+    public void setCombo(int combo) {
+        if (combo > maxCombo) {
+            maxCombo = combo;
+        }
+        this.combo = combo;
+    }
+
+    public boolean checkResources(SkillCost skillCost) {
         return (resourceRed >= skillCost.getCostRed()) && (resourceGreen >= skillCost.getCostGreen()) && (resourceBlue >= skillCost.getCostBlue()) && (resourceYellow >= skillCost.getCostYellow());
     }
 
 
     public abstract void skill1();
+
     public abstract void skill2();
+
     public abstract void skillUlt();
 
     public abstract int getDurationSkill1();
+
     public abstract int getDurationSkill2();
+
     public abstract int getDurationSkillUlt();
 
 
     public abstract Animation getAnimationIdle();
+
     public abstract Animation getAnimationHumanIdle();
 
     public abstract Animation getAnimationSkill1();
+
     public abstract Animation getAnimationSkill2();
+
     public abstract Animation getAnimationSkillUlt();
 
     public abstract SkillCost getCostSkill1();
+
     public abstract SkillCost getCostSkill2();
+
     public abstract SkillCost getCostSkillUlt();
 
 }
