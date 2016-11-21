@@ -97,6 +97,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private static Music gameMusic;
     private Coordinate coordMonsterP1 = new Coordinate((displayWidth / 2) - 400, 100);
     private Coordinate coordMonsterP2 = new Coordinate((displayWidth / 2) - 190, 100);
+    private Coordinate coordHumanP1 = new Coordinate((displayWidth / 2) - 350, 350);
+    private Coordinate coordHumanP2 = new Coordinate((displayWidth - 450), 350);
 
     private static Animation animationPlayer1;
     private static Animation animationPlayer2;
@@ -348,8 +350,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
             monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else {
-            animationPlayer1.draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-            animationPlayer2.draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+
+            monsterP1.getAnimationHumanIdle().draw(coordHumanP1.getX(), coordHumanP1.getY());
+            monsterP2.getAnimationHumanIdle().draw(coordHumanP2.getX(), coordHumanP2.getY());
         }
 
 
