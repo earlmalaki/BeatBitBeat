@@ -34,6 +34,7 @@ package game;
 
 import game.monsters.Monster;
 import org.newdawn.slick.*;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -46,8 +47,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     private Image imageBG;
 
-    private static Monster monsterP1;
-    private static Monster monsterP2;
+    public static Monster monsterP1;
+    public static Monster monsterP2;
 
     private ArrayList<Note> notesP1 = new ArrayList<>();
     private ArrayList<Note> notesP2 = new ArrayList<>();
@@ -69,9 +70,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     // Significant Y axis positions
     private float startingYPos = 0f;
-    private float badYPos = 585f;
-    private float goodYPos = 605f;
-    private float perfectYPos = 625f;
+    private float badYPos = 570f;
+    private float goodYPos = 595f;
+    private float perfectYPos = 620f;
     private float endingYPos = 645;    // miss
 
     private boolean badHitP1;
@@ -94,8 +95,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private int comboP2 = 0;
 
     private static Music gameMusic;
-    private Coordinate coordPlayer1 = new Coordinate((displayWidth / 2) - 400, 100);
-    private Coordinate coordPlayer2 = new Coordinate((displayWidth / 2) + 100, 100);
+    private Coordinate coordMonsterP1 = new Coordinate((displayWidth / 2) - 400, 100);
+    private Coordinate coordMonsterP2 = new Coordinate((displayWidth / 2) - 190, 100);
 
     private static Animation animationPlayer1;
     private static Animation animationPlayer2;
@@ -126,12 +127,32 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private boolean pressedO = false;
     private boolean pressedP = false;
 
+    // Create a font with the size of 20, and not bold or italic.
+    UnicodeFont fontCombo;
+    UnicodeFont fontResources;
+    UnicodeFont fontTime;
+
 
     public int getID() {
         return BeatBitBeatMain.getGameProper();
     }
 
     public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+
+        fontCombo = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 44, false, false);
+        fontCombo.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontCombo.addAsciiGlyphs();
+        fontCombo.loadGlyphs();
+
+        fontTime = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 28, false, false);
+        fontTime.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontTime.addAsciiGlyphs();
+        fontTime.loadGlyphs();
+
+        fontResources = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 20, false, false);
+        fontResources.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontResources.addAsciiGlyphs();
+        fontResources.loadGlyphs();
 
         imageBG = new Image("Assets/Graphics/Game Proper/Game Proper BG.png");
 
@@ -241,9 +262,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         imageBG.draw();
 
-        // Game Screen borders
-        g.drawLine(0, endingYPos, displayWidth, endingYPos);
-
 
         // render falling notes
         for (int i = 0; i < notesP1.size(); i++) {
@@ -253,62 +271,54 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        g.setColor(Color.white);
-        g.drawString("Time", (displayWidth / 2) - 5, 5);
-        String strMusicPosition = null;
-        if (gameMusic.playing()) {
-            strMusicPosition = String.valueOf(musicPosition);
-            g.drawString(strMusicPosition, (displayWidth / 2) - (strMusicPosition.length()), 20);
-
-        }
-
         // Hitbox feedback
         // Draw glowing hitbox if corresponding key is pressed
         if (pressedQ) {
-            imagesPressedHitbox[0].draw(p1x1 - 6, perfectYPos - 15);
+            imagesPressedHitbox[0].draw(p1x1 - 6, endingYPos - 34);
         }
         if (pressedW) {
-            imagesPressedHitbox[1].draw(p1x2 - 6, perfectYPos - 15);
+            imagesPressedHitbox[1].draw(p1x2 - 6, endingYPos - 34);
         }
         if (pressedE) {
-            imagesPressedHitbox[2].draw(p1x3 - 6, perfectYPos - 15);
+            imagesPressedHitbox[2].draw(p1x3 - 6, endingYPos - 34);
         }
         if (pressedR) {
-            imagesPressedHitbox[3].draw(p1x4 - 6, perfectYPos - 15);
+            imagesPressedHitbox[3].draw(p1x4 - 6, endingYPos - 34);
         }
 
         if (pressedU) {
-            imagesPressedHitbox[0].draw(p2x1 - 6, perfectYPos - 15);
+            imagesPressedHitbox[0].draw(p2x1 - 6, endingYPos - 34);
         }
         if (pressedI) {
-            imagesPressedHitbox[1].draw(p2x2 - 6, perfectYPos - 15);
+            imagesPressedHitbox[1].draw(p2x2 - 6, endingYPos - 34);
         }
         if (pressedO) {
-            imagesPressedHitbox[2].draw(p2x3 - 6, perfectYPos - 15);
+            imagesPressedHitbox[2].draw(p2x3 - 6, endingYPos - 34);
         }
         if (pressedP) {
-            imagesPressedHitbox[3].draw(p2x4 - 6, perfectYPos - 15);
+            imagesPressedHitbox[3].draw(p2x4 - 6, endingYPos - 34);
         }
 
 
-        // For testing purposes
-        g.drawString("R " + monsterP1.getResourceRed(), p1x4 + 150, displayHeight - 150);
-        g.drawString("G " + monsterP1.getResourceGreen(), p1x4 + 200, displayHeight - 150);
-        g.drawString("B " + monsterP1.getResourceBlue(), p1x4 + 250, displayHeight - 150);
-        g.drawString("Y " + monsterP1.getResourceYellow(), p1x4 + 300, displayHeight - 150);
+        // Print resources
+        fontResources.drawString(p1x4 + 150, displayHeight - 150, "R " + monsterP1.getResourceRed());
+        fontResources.drawString(p1x4 + 200, displayHeight - 150, "G " + monsterP1.getResourceGreen());
+        fontResources.drawString(p1x4 + 250, displayHeight - 150, "B " + monsterP1.getResourceBlue());
+        fontResources.drawString(p1x4 + 300, displayHeight - 150, "Y " + monsterP1.getResourceYellow());
 
-        g.drawString("R " + monsterP2.getResourceRed(), (displayWidth / 2) + 50, displayHeight - 150);
-        g.drawString("G " + monsterP2.getResourceGreen(), (displayWidth / 2) + 100, displayHeight - 150);
-        g.drawString("B " + monsterP2.getResourceBlue(), (displayWidth / 2) + 150, displayHeight - 150);
-        g.drawString("Y " + monsterP2.getResourceYellow(), (displayWidth / 2) + 200, displayHeight - 150);
+        fontResources.drawString((displayWidth / 2) + 50, displayHeight - 150, "R " + monsterP2.getResourceRed());
+        fontResources.drawString((displayWidth / 2) + 100, displayHeight - 150, "G " + monsterP2.getResourceGreen());
+        fontResources.drawString((displayWidth / 2) + 150, displayHeight - 150, "B " + monsterP2.getResourceBlue());
+        fontResources.drawString((displayWidth / 2) + 200, displayHeight - 150, "Y " + monsterP2.getResourceYellow());
 
-
-//        if (comboP1 > 5) {
-        g.drawString("" + comboP1, p1x2, 100);
-//        }
-//        if (comboP2 > 5) {
-        g.drawString("" + comboP2, p2x2, 100);
-//        }
+        // print music position / time
+        g.setColor(Color.white);
+        fontTime.drawString( (displayWidth / 2) - 5, 5, "Time");
+        if (gameMusic.playing()) {
+            fontTime.drawString( (displayWidth / 2) - 100, 20, String.format("%.2f", musicPosition));
+        } else {
+            fontTime.drawString( (displayWidth / 2) - 100, 20, "00.00");
+        }
 
 
         //
@@ -320,27 +330,35 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // TODO fix skill animation
         // Draw player character animations
         if (skill1P1) {
-            monsterP1.getAnimationSkill1().draw(coordPlayer1.getX(), coordPlayer1.getY());
-//            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationSkill1().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else if (skill2P1) {
-            monsterP1.getAnimationSkill2().draw(coordPlayer1.getX(), coordPlayer1.getY());
-//            monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else if (skillUltP1) {
-            monsterP1.getAnimationSkillUlt().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            //          monsterP2.getAnimationIdle().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else if (skill1P2) {
-            //        monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            monsterP2.getAnimationSkill1().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationSkill1().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else if (skill2P2) {
-            //     monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            monsterP2.getAnimationSkill2().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else if (skillUltP2) {
-            //   monsterP1.getAnimationIdle().draw(coordPlayer1.getX(), coordPlayer1.getY());
-            monsterP2.getAnimationSkillUlt().draw(coordPlayer2.getX(), coordPlayer2.getY());
+            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         } else {
-            animationPlayer1.draw(coordPlayer1.getX(), coordPlayer1.getY());
-            animationPlayer2.draw(coordPlayer2.getX(), coordPlayer2.getY());
+            animationPlayer1.draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            animationPlayer2.draw(coordMonsterP2.getX(), coordMonsterP2.getY());
         }
+
+
+        //        if (comboP1 > 5) {
+        fontCombo.drawString(p1x2, 100, "" +comboP1);
+//        }
+//        if (comboP2 > 5) {
+        fontCombo.drawString(p2x2, 100, "" +comboP2);
+//        }
     }
 
     @Override
@@ -428,10 +446,14 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP2.get(0).getX() == p2x1 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP2 = 0;
             } else if (notesP2.get(0).getX() == p2x1 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceRed(1);
+                comboP2++;
+
             } else if (notesP2.get(0).getX() == p2x1 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceRed(2);
+                comboP2++;
             }
 
         }
@@ -440,10 +462,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP2.get(0).getX() == p2x2 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP2 = 0;
             } else if (notesP2.get(0).getX() == p2x2 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceGreen(1);
+                comboP2++;
             } else if (notesP2.get(0).getX() == p2x2 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceGreen(2);
+                comboP2++;
             }
 
         }
@@ -452,10 +477,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP2.get(0).getX() == p2x3 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP2 = 0;
             } else if (notesP2.get(0).getX() == p2x3 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceBlue(1);
+                comboP2++;
             } else if (notesP2.get(0).getX() == p2x3 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceBlue(2);
+                comboP2++;
             }
 
         }
@@ -464,10 +492,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
             if (notesP2.get(0).getX() == p2x4 && badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
                 // no resource gain
                 // display bad hit!
+                comboP2 = 0;
             } else if (notesP2.get(0).getX() == p2x4 && goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
                 monsterP2.addResourceYellow(1);
+                comboP2++;
             } else if (notesP2.get(0).getX() == p2x4 && perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
                 monsterP2.addResourceYellow(2);
+                comboP2++;
             }
 
         }
@@ -484,7 +515,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_Z) {
             if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
-                System.out.println("HEHEHEZ");
                 skill1P1 = true;
                 monsterP1.skill1();
                 monsterP1.attack(monsterP2);
@@ -493,7 +523,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_X) {
             if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
-                System.out.println("HEHEHEXX");
                 skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P1 = true;
                 monsterP1.skill2();
