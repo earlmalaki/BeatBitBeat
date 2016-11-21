@@ -79,32 +79,26 @@ public class Monster1_BigBlue extends Monster {
     }
 
     public void skill1() {
-        currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
-        if(costSkill1.equalTo(currResources)) {
             super.setDamage(5);
             super.setResourceRed(super.getResourceRed() - 3);
             super.setResourceYellow(super.getResourceYellow() - 3);
-        }
+
     }
 
     public void skill2() {
-        currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
-        if(costSkill2.equalTo(currResources)) {
             super.setDamage(12);
             super.setResourceRed(super.getResourceGreen() - 7);
             super.setResourceYellow(super.getResourceBlue() - 7);
-        }
+
     }
 
     public void skillUlt() {
-        currResources = new SkillCost(getResourceRed(), getResourceGreen(), getResourceBlue(), getResourceYellow());
-        if(costSkillUlt.equalTo(currResources)) {
             super.setDamage(55);
             super.setResourceRed(super.getResourceRed() - 12);
             super.setResourceYellow(super.getResourceYellow() - 12);
             super.setResourceGreen(super.getResourceGreen() - 12);
             super.setResourceBlue(super.getResourceBlue() - 12);
-        }
+
     }
 
     public int getDurationSkill1() {
