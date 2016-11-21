@@ -24,6 +24,7 @@
 
 package game.monsters;
 
+import game.SkillCost;
 import org.newdawn.slick.Animation;
 
 public abstract class Monster {
@@ -36,8 +37,10 @@ public abstract class Monster {
     private int resourceGreen;
     private int resourceYellow;
 
-    public Monster(int hp) {
-        this.hp = hp;
+
+
+    public Monster() {
+        this.hp = 100;
 
         resourceBlue = 0;
         resourceRed = 0;
@@ -127,20 +130,29 @@ public abstract class Monster {
         resourceYellow += res;
     }
 
-    public boolean checkResources(int red, int green, int blue, int yellow){
-        return (resourceRed >= red && resourceYellow >= yellow & resourceGreen >= green && resourceBlue >= blue);
+    public boolean checkResources(SkillCost skillCost){
+        return (resourceRed == skillCost.getCostRed()) && (resourceGreen == skillCost.getCostGreen()) && (resourceBlue == skillCost.getCostBlue()) && (resourceYellow == skillCost.getCostYellow());
     }
+
 
     public abstract void skill1();
     public abstract void skill2();
     public abstract void skillUlt();
 
-    public abstract int getSkill1Duration();
-    public abstract int getSkill2Duration();
-    public abstract int getSkillUltDuration();
+    public abstract int getDurationSkill1();
+    public abstract int getDurationSkill2();
+    public abstract int getDurationSkillUlt();
 
-    public abstract Animation getSkill1Animation();
-    public abstract Animation getSkill2Animation();
-    public abstract Animation getSkillUltAnimation();
+
+    public abstract Animation getAnimationIdle();
+    public abstract Animation getAnimationHumanIdle();
+
+    public abstract Animation getAnimationSkill1();
+    public abstract Animation getAnimationSkill2();
+    public abstract Animation getAnimationSkillUlt();
+
+    public abstract SkillCost getCostSkill1();
+    public abstract SkillCost getCostSkill2();
+    public abstract SkillCost getCostSkillUlt();
 
 }

@@ -71,8 +71,10 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     // coordinate set for of human 1x1 pics in selection screen
     private Coordinate[] coordsImagesHuman;
 
-    private Animation[] animateMonsters;
-    private Animation[] animateHumans;
+    private Animation[] animateMonstersP1;
+    private Animation[] animateHumansP1;
+    private Animation[] animateMonstersP2;
+    private Animation[] animateHumansP2;
 
     private static Animation animateP1Monster;
     private static Animation animateP2Monster;
@@ -111,6 +113,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     private boolean pressedEscape = false;
 
+
     public int getID() {
         return BeatBitBeatMain.getCharacterSelection();
     }
@@ -120,25 +123,42 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.png");
 
         // TODO Replace correct file names, Width & Height, adjust duration
-        animateMonsters = new Animation[]{
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Big Blue Sprite.png", 300, 300, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 420, 300, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Flame Sprite.png", 300, 300, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Monster Display Sprite/Ghost Sprite.png", 400, 300, 1), 250)
+        animateMonstersP1 = new Animation[]{
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 300, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 420, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 300, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 400, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 400, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 400, 300, 1), 250)
+        };
+
+        animateMonstersP2 = new Animation[]{
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 300, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 420, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 300, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 400, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 400, 300, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 400, 300, 1), 250)
         };
 
         // TODO Replace correct file names, Width & Height, adjust duration
-        animateHumans = new Animation[]{
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Human Display Sprite/Human 1 Sprite.jpg", 150, 150, 1), 250)
+        animateHumansP1 = new Animation[]{
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250)
         };
 
+        animateHumansP2 = new Animation[]{
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 150, 150, 1), 250)
+        };
 
         // TODO Replace with correct files and names
         imagesHumans1x1 = new Image[]{
@@ -255,52 +275,52 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             if (p1Picking) {    // if player 1's turn to pick
                 if (pressedEnter) {
-                    animateP1Monster = animateMonsters[caseMonsterAnimation - 1];
-                    animateP1Human = animateHumans[caseMonsterAnimation - 1];
+                    animateP1Monster = animateMonstersP1[caseMonsterAnimation - 1];
+                    animateP1Human = animateHumansP1[caseMonsterAnimation - 1];
 
                     // TODO Gaming part
                     // TODO Monster object representing monster's unique capabilities
                     if (caseMonsterAnimation == 1) {
-                        monsterP1 = new Monster1_BigBlue();
-                    } else if (caseMonsterAnimation == 2) {
-                        monsterP1 = new Monster2();
-                    } else if (caseMonsterAnimation == 3) {
-                        monsterP1 = new Monster3();
-                    } else if (caseMonsterAnimation == 4) {
-                        monsterP1 = new Monster4();
-                    } else if (caseMonsterAnimation == 5) {
-                        monsterP1 = new Monster5();
-                    } else if (caseMonsterAnimation == 6) {
-                        monsterP1 = new Monster6();
+                        monsterP1 = new Monster1_BigBlue(1);
                     }
+//                    else if (caseMonsterAnimation == 2) {
+//                        monsterP1 = new Monster2(1);
+//                    } else if (caseMonsterAnimation == 3) {
+//                        monsterP1 = new Monster3(1);
+//                    } else if (caseMonsterAnimation == 4) {
+//                        monsterP1 = new Monster4(1);
+//                    } else if (caseMonsterAnimation == 5) {
+//                        monsterP1 = new Monster5(1);
+//                    } else if (caseMonsterAnimation == 6) {
+//                        monsterP1 = new Monster6(1);
+//                    }
                     pressedEnter = false;
                     p1Picking = false;
                     p2Picking = true;       // p2's turn to pick
                 }
             } else if (p2Picking) {    // if player 2's turn to pick
 
-                animateMonsters[caseMonsterAnimation - 1].update(delta);
-                animateHumans[caseMonsterAnimation - 1].update(delta);
-
                 if (pressedEnter) {
-                    animateP2Monster = animateMonsters[caseMonsterAnimation - 1];
-                    animateP2Human = animateHumans[caseMonsterAnimation - 1];
+
+                    animateP2Monster = animateMonstersP2[caseMonsterAnimation - 1];
+                    animateP2Human = animateHumansP2[caseMonsterAnimation - 1];
 
                     // TODO Gaming part
                     // TODO Monster object representing monster's unique capabilities
                     if (caseMonsterAnimation == 1) {
-                        monsterP2 = new Monster1_BigBlue();
-                    } else if (caseMonsterAnimation == 2) {
-                        monsterP2 = new Monster2();
-                    } else if (caseMonsterAnimation == 3) {
-                        monsterP2 = new Monster3();
-                    } else if (caseMonsterAnimation == 4) {
-                        monsterP2 = new Monster4();
-                    } else if (caseMonsterAnimation == 5) {
-                        monsterP2 = new Monster5();
-                    } else if (caseMonsterAnimation == 6) {
-                        monsterP2 = new Monster6();
+                        monsterP2 = new Monster1_BigBlue(2);
                     }
+//                    else if (caseMonsterAnimation == 2) {
+//                        monsterP2 = new Monster2(2);
+//                    } else if (caseMonsterAnimation == 3) {
+//                        monsterP2 = new Monster3(2);
+//                    } else if (caseMonsterAnimation == 4) {
+//                        monsterP2 = new Monster4(2);
+//                    } else if (caseMonsterAnimation == 5) {
+//                        monsterP2 = new Monster5(2);
+//                    } else if (caseMonsterAnimation == 6) {
+//                        monsterP2 = new Monster6(2);
+//                    }
                     pressedEnter = false;
                     monsterPicking = false;
                     p1Picking = false;
@@ -312,8 +332,6 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         } else if (songPicking) {    // song picking
 //            MainMenuState.pauseMusic();
-            animateP2Human.update(delta);
-            animateP2Monster.update(delta);
 
             // Play Audio according to selection scanning
             for (int i = 0; i < musicSongChoices.length; i++) {
@@ -335,8 +353,6 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }
         } else { // if monsterPicking and songPicking is false
             if (pressedEnter) {     // game button pressed
-                animateP2Human.update(delta);
-                animateP2Monster.update(delta);
 
                 // stop playing preview of songs
                 for (int i = 0; i < musicSongChoices.length; i++) {
@@ -376,13 +392,14 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             if (p1Picking) {
                 g.drawString("Player 1 pick", (displayWidth / 2) - 10, 10);     // temp instruction display. to be improved
 
-                animateMonsters[caseMonsterAnimation - 1].draw(coordP1Monster.getX(), coordP1Monster.getY());
-                animateHumans[caseMonsterAnimation - 1].draw(coordP1Human.getX(), coordP1Human.getY());
+                animateMonstersP1[caseMonsterAnimation - 1].draw(coordP1Monster.getX(), coordP1Monster.getY());
+                animateHumansP1[caseMonsterAnimation - 1].draw(coordP1Human.getX(), coordP1Human.getY());
+
             } else if (p2Picking) {
                 g.drawString("Player 2 pick", (displayWidth / 2) - 10, 10);
 
-                animateMonsters[caseMonsterAnimation - 1].getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Monster.getX(), coordP2Monster.getY());
-                animateHumans[caseMonsterAnimation - 1].getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Human.getX(), coordP2Human.getY());
+                animateMonstersP2[caseMonsterAnimation - 1].draw(coordP2Monster.getX(), coordP2Monster.getY());
+                animateHumansP2[caseMonsterAnimation - 1].draw(coordP2Human.getX(), coordP2Human.getY());
 
                 animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());        // draw preview P1's selected monster
                 animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
@@ -400,8 +417,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
 
-            animateP2Monster.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Monster.getX(), coordP2Monster.getY());
-            animateP2Human.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Human.getX(), coordP2Human.getY());
+            animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
+            animateP2Human.draw(coordP2Human.getX(), coordP2Human.getY());
 
             // draw song art of the song being hovered at
             imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
@@ -415,8 +432,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
             animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
             animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
-            animateP2Monster.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Monster.getX(), coordP2Monster.getY());
-            animateP2Human.getCurrentFrame().getFlippedCopy(true, false).draw(coordP2Human.getX(), coordP2Human.getY());
+            animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
+            animateP2Human.draw(coordP2Human.getX(), coordP2Human.getY());
 
             imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
             imageBtnGame.draw( ((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50));
