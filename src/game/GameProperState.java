@@ -209,26 +209,22 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
         // Detect if notes reach the ending y pos
-//        for (int i = 0; i < notesP1.size(); i++) {
-            if (notesP1.size() != 0) {  // notesP1 size == notesP2 size
-                if (notesP1.get(0).getY() > endingYPos) {
-                    // play music
-                    if (!gameMusic.playing()) {
-                        gameMusic.play();
-                    }
-
-                    comboP1 = 0;
-                    notesP1.remove(0);
+        if (notesP1.size() != 0) {  // notesP1 size == notesP2 size
+            if (notesP1.get(0).getY() > endingYPos) {
+                // play music
+                if (!gameMusic.playing()) {
+                    gameMusic.play();
                 }
 
-                if (notesP2.get(0).getY() > endingYPos) {
-                    comboP2 = 0;
-                    notesP2.remove(0);
-                }
+//                    comboP1 = 0;
+                notesP1.remove(0);
             }
-//        }
 
-
+            if (notesP2.get(0).getY() > endingYPos) {
+//                    comboP2 = 0;
+                notesP2.remove(0);
+            }
+        }
 
 
         musicPosition = gameMusic.getPosition();
@@ -295,32 +291,31 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
 
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
-        g.drawString("Curr NoteBars : " + notesP1.size() + "  " + notesP2.size(), (displayWidth / 2) - 10, 50);
-
         // For testing purposes
-        g.drawString("P1 Pressed Red: " + monsterP1.getResourceRed(), p1x4 + 150, displayHeight - 150);
-        g.drawString("P1 Pressed Green: " + monsterP1.getResourceGreen(), p1x4 + 150, displayHeight - 140);
-        g.drawString("P1 Pressed Blue: " + monsterP1.getResourceBlue(), p1x4 + 150, displayHeight - 130);
-        g.drawString("P1 Pressed Yellow: " + monsterP1.getResourceYellow(), p1x4 + 150, displayHeight - 120);
+        g.drawString("R " + monsterP1.getResourceRed(), p1x4 + 150, displayHeight - 150);
+        g.drawString("G " + monsterP1.getResourceGreen(), p1x4 + 200, displayHeight - 150);
+        g.drawString("B " + monsterP1.getResourceBlue(), p1x4 + 250, displayHeight - 150);
+        g.drawString("Y " + monsterP1.getResourceYellow(), p1x4 + 300, displayHeight - 150);
 
-        g.drawString("P2 Pressed Red: " + monsterP2.getResourceRed(), (displayWidth / 2) + 50, displayHeight - 150);
-        g.drawString("P2 Pressed Green: " + monsterP2.getResourceGreen(), (displayWidth / 2) + 50, displayHeight - 140);
-        g.drawString("P2 Pressed Blue: " + monsterP2.getResourceBlue(), (displayWidth / 2) + 50, displayHeight - 130);
-        g.drawString("P2 Pressed Yellow: " + monsterP2.getResourceYellow(), (displayWidth / 2) + 50, displayHeight - 120);
+        g.drawString("R " + monsterP2.getResourceRed(), (displayWidth / 2) + 50, displayHeight - 150);
+        g.drawString("G " + monsterP2.getResourceGreen(), (displayWidth / 2) + 100, displayHeight - 150);
+        g.drawString("B " + monsterP2.getResourceBlue(), (displayWidth / 2) + 150, displayHeight - 150);
+        g.drawString("Y " + monsterP2.getResourceYellow(), (displayWidth / 2) + 200, displayHeight - 150);
+
 
 
 //        if (comboP1 > 5) {
-            g.drawString("Combo! " +comboP1, p1x1, 100);
+        g.drawString("" +comboP1, p1x2, 100);
 //        }
 //        if (comboP2 > 5) {
-            g.drawString("Combo! " +comboP2, p2x1, 100);
+        g.drawString("" +comboP2, p2x2, 100);
 //        }
 
 
-
-        g.drawString("DELTA = " + delta, 100, 50);
-
+        //
+        g.drawString("DELTA = " + delta, displayWidth / 2 - 100, 50);
+        g.drawString("Curr NoteBars : " + notesP1.size() + "  " + notesP2.size(), (displayWidth / 2) - 10, 80);
+        g.drawString("X = " + xMouse + " Y = " + yMouse, displayWidth / 2 - 200, 110);
 
 
         // TODO fix skill animation
@@ -479,7 +474,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
 
 
-
         // FIXME
         // negative values
         // Cooldown
@@ -489,7 +483,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         /*** Start of Skills ***/
         // checkResources (red, green, blue, yellow)
         if (key == Input.KEY_Z) {
-            if(monsterP1.checkResources(monsterP1.getCostSkill1())){   //monsters has resources, go atk
+            if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
                 skill1P1 = true;
                 monsterP1.skill1();
@@ -517,7 +511,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_COMMA) {
 
-            if(monsterP2.checkResources(monsterP2.getCostSkill1())){//monsters has resources, go atk
+            if (monsterP2.checkResources(monsterP2.getCostSkill1())) {//monsters has resources, go atk
                 skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
                 skill1P2 = true;
                 monsterP2.skill1();
@@ -556,7 +550,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     // method for slowing things down
     // accepts duration in MS
-    public void skillCast(int duration){
+    public void skillCast(int duration) {
         // match pitch loss and map read speed loss
         slowDuration = duration;
         skillCast = true;   // flag for handling of slow in update() method
