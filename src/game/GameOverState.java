@@ -11,9 +11,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameOverState extends BasicGameState {
 
-    private static Monster monsterP1;
-    private static Monster monsterP2;
-
     @Override
     public int getID() {
         return BeatBitBeatMain.getGameOver();
@@ -21,18 +18,20 @@ public class GameOverState extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
     }
-    
+
     public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
 
     }
-    
+
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setColor(Color.white);
         g.drawString("Game over!", 300, 300);
+        System.out.println(GameProperState.monsterP1.getResourceBlue());
+        g.drawString("Player 1: Max combo" + GameProperState.monsterP1.getMaxCombo(), 300, 500);
 
     }
-
+/*
     public static void setMonsterP1(Monster monsterP1) {
         GameOverState.monsterP1 = monsterP1;
     }
@@ -41,5 +40,5 @@ public class GameOverState extends BasicGameState {
         GameOverState.monsterP2 = monsterP2;
     }
 
-    
+    */
 }

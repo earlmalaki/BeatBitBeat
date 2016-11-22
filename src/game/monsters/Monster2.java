@@ -63,29 +63,28 @@ public class Monster2 extends Monster {
     private SkillCost currResources;
     // TODO enter proper duration of skill animation when sprites are done
     private static final int skill1Duration = 3000;
-    private static final int skill2Duration = 3000;
-    private static final int skillUltDuration = 3000;
+    private static final int skill2Duration = 5000;
+    private static final int skillUltDuration = 6000;
 
 
     public Monster2(int playerNumber) throws SlickException {
         super();
 
         if (playerNumber == 1) {
-            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 1), 250);
-            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 600, 300, 1), 250);
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 1), 250);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 1), 200);
 
-            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 1 Blistol P1.png", 600, 300, 1), 250);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling P1.png", 600, 300, 1), 250);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P1.png", 600, 300, 1), 250);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P1.png", 600, 300, 1), 250);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P1.png", 600, 300, 1), 250);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P1.png", 600, 300, 1), 250);
 
-            // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
-//        } else if (playerNumber == 2) {
-//            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 1), 250);
-//            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 600, 300, 1), 250);
+        } else if (playerNumber == 2) {
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 1), 250);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 1), 200);
 
-//            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 1 Blistol P2.png", 600, 300, 1), 250);
-//            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 2 Gatling P2.png", 600, 300, 1), 250);
-//            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 3 Bluezooka P2.png", 600, 300, 1), 250);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P2.png", 600, 300, 1), 250);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P2.png", 600, 300, 1), 250);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P2.png", 600, 300, 1), 250);
         }
 
     }
@@ -115,81 +114,58 @@ public class Monster2 extends Monster {
 
     @Override
     public int getDurationSkill1() {
-        return 0;
+        return skill1Duration;
     }
 
     @Override
     public int getDurationSkill2() {
-        return 0;
+        return skill2Duration;
     }
 
     @Override
     public int getDurationSkillUlt() {
-        return 0;
+        return skillUltDuration;
     }
 
     @Override
     public Animation getAnimationIdle() {
-        return null;
+        return animationIdle;
     }
 
     @Override
     public Animation getAnimationHumanIdle() {
-        return null;
+        return animationHumanIdle;
     }
 
     @Override
     public Animation getAnimationSkill1() {
-        return null;
+        return animationSkill1;
     }
 
     @Override
     public Animation getAnimationSkill2() {
-        return null;
+        return animationSkill2;
     }
 
     @Override
     public Animation getAnimationSkillUlt() {
-        return null;
+        return animationSkillUlt;
     }
 
     @Override
     public SkillCost getCostSkill1() {
-        return null;
+        return costSkill1;
     }
 
     @Override
     public SkillCost getCostSkill2() {
-        return null;
+        return costSkill2;
     }
 
     @Override
     public SkillCost getCostSkillUlt() {
-        return null;
+        return costSkillUlt;
     }
 
-    public int getSkill1Duration() {
-        return skill1Duration;
-    }
-
-    public int getSkill2Duration() {
-        return skill2Duration;
-    }
-
-    public int getSkillUltDuration() {
-        return skillUltDuration;
-    }
-
-    public Animation getSkill1Animation() {
-        return animationSkill1;
-    }
-
-    public Animation getSkill2Animation() {
-        return animationSkill2;
-    }
-
-    public Animation getSkillUltAnimation() {
-        return animationSkillUlt;
-    }
 
 }
