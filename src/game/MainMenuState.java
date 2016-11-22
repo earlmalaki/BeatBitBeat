@@ -87,7 +87,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         };
 
         // TODO: Replace correct file for background spritesheet
-        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", 1280, 800, 1); //ref, tw, th, spacing
+        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", 1280, 800, 0); //ref, tw, th, spacing
         animateSpriteBG = new Animation(spriteBG, 250);     // spritesheet, duration
 
 
@@ -120,7 +120,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         if (enterPressed) {
             enterPressed = false;
 
-            int indexOfSelectedState = 1;
+            int indexOfSelectedState = 0;
             if (yIndicator == coordsArrows[0].getY()) {    // if indicator is pointing to Start btn
                 indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get fixed ID for state
             } else if (yIndicator == coordsArrows[1].getY()) {     // if indicator is pointing to options btn

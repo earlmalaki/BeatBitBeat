@@ -517,7 +517,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // TODO improve skill resource cost management. Change for code upgradability
         /*** Start of Skills ***/
         // checkResources (red, green, blue, yellow)
-        if (key == Input.KEY_Z) {
+        if (key == Input.KEY_X) {
             if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
                 skill1P1 = true;
@@ -526,7 +526,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (key == Input.KEY_X) {
+        if (key == Input.KEY_C) {
             if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P1 = true;
@@ -535,7 +535,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (key == Input.KEY_C) {
+        if (key == Input.KEY_V) {
             if (monsterP1.checkResources(monsterP1.getCostSkillUlt())) { //monsters has resources, go atk
                 skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                 skillUltP1 = true;
@@ -544,7 +544,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (key == Input.KEY_COMMA) {
+        if (key == Input.KEY_N) {
 
             if (monsterP2.checkResources(monsterP2.getCostSkill1())) {//monsters has resources, go atk
                 skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
@@ -554,7 +554,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (key == Input.KEY_PERIOD) {
+        if (key == Input.KEY_M) {
             if (monsterP2.checkResources(monsterP2.getCostSkill2())) { //monsters has resources, go atk
                 skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
                 skill2P2 = true;
@@ -563,7 +563,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (key == Input.KEY_BACKSLASH) {
+        if (key == Input.KEY_COMMA) {
             if (monsterP2.checkResources(monsterP2.getCostSkillUlt())) { //monsters has resources, go atk
                 skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                 skillUltP2 = true;

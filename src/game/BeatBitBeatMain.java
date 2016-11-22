@@ -40,6 +40,9 @@ public class BeatBitBeatMain extends StateBasedGame {
     private static int displayWidth = 1280;
     private static int displayHeight = 800;
 
+    //Options
+    private static int volumeSFX = 9;
+
     // Constructor
     public BeatBitBeatMain(String gameName) {
         super(gameName);
@@ -85,7 +88,9 @@ public class BeatBitBeatMain extends StateBasedGame {
     }
 
 
-    /** SO Getters **/
+    /**
+     * SO Getters
+     **/
     public static int getMainMenu() {
         return mainMenu;
     }
@@ -121,6 +126,15 @@ public class BeatBitBeatMain extends StateBasedGame {
     public static int getVersusPreview() {
         return versusPreview;
     }
+
+    public static int getVolumeSFX() {
+        return volumeSFX;
+    }
+
+    public static void setVolumeSFX(int volumeSFX) {
+        BeatBitBeatMain.volumeSFX = volumeSFX;
+    }
+
     /** EO Getters **/
 }
 
