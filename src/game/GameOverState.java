@@ -28,7 +28,7 @@ public class GameOverState extends BasicGameState {
         g.setColor(Color.white);
         g.drawString("Game over!", 300, 300);
         System.out.println(GameProperState.monsterP1.getResourceBlue());
-        g.drawString("" + GameProperState.monsterP1.getMaxCombo(), 300, 500);
+        g.drawString("Player 1: Max combo" + GameProperState.monsterP1.getMaxCombo(), 300, 500);
 
     }
 /*
