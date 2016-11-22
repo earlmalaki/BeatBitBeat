@@ -120,7 +120,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         if (enterPressed) {
             enterPressed = false;
 
-            int indexOfSelectedState = 0;
+            int indexOfSelectedState = 1;
             if (yIndicator == coordsArrows[0].getY()) {    // if indicator is pointing to Start btn
                 indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get fixed ID for state
             } else if (yIndicator == coordsArrows[1].getY()) {     // if indicator is pointing to options btn
@@ -134,6 +134,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
             // enter state indicated by indexOfSelectedState
             sbg.enterState(indexOfSelectedState, new FadeOutTransition(), new FadeInTransition());
         }   // end of if (enterPressed)
+
 
     }
 
@@ -159,7 +160,9 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     @Override
     public void keyPressed(int key, char pressedKey) {
         if (key == Input.KEY_UP) {
-            soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+            if (BeatBitBeatMain.isSFXOn()) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+            }
 
             if (yIndicator != coordsArrows[0].getY()) {    // if indicator is inside bounds
                 indexSelection--;
@@ -169,7 +172,10 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
         }
         if (key == Input.KEY_DOWN) {
-            soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+            if (BeatBitBeatMain.isSFXOn()) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+            }
+
 
             if (yIndicator != coordsArrows[3].getY()) {
                 indexSelection++;
@@ -177,7 +183,10 @@ public class MainMenuState extends BasicGameState implements KeyListener {
             }
         }
         if (key == Input.KEY_ENTER) {
-            soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+            if (BeatBitBeatMain.isSFXOn()) {
+                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+            }
+
             enterPressed = true;
 
         }
@@ -196,6 +205,10 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     public static void resumeMusic() {
         audioMusicMainMenu.resume();
+    }
+
+    public static void playMusic() {
+        audioMusicMainMenu.play();
     }
 
 

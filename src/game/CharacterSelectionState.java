@@ -259,7 +259,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 }
             }
 
-            MainMenuState.resumeMusic();
+            MainMenuState.playMusic();
             sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
         }
 
@@ -331,7 +331,6 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }   // EO (p2Picking)
 
         } else if (songPicking) {    // song picking
-            MainMenuState.pauseMusic();
 
             // Play Audio according to selection scanning
             for (int i = 0; i < musicSongChoices.length; i++) {

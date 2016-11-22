@@ -42,6 +42,8 @@ public class BeatBitBeatMain extends StateBasedGame {
 
     //Options
     private static int volumeSFX = 9;
+    private static boolean menuMusicOn = true;
+    private static boolean SFXOn = true;
 
     // Constructor
     public BeatBitBeatMain(String gameName) {
@@ -133,6 +135,22 @@ public class BeatBitBeatMain extends StateBasedGame {
 
     public static void setVolumeSFX(int volumeSFX) {
         BeatBitBeatMain.volumeSFX = volumeSFX;
+    }
+
+    public static boolean isMenuMusicOn() {
+        return menuMusicOn;
+    }
+
+    public static void setMenuMusicOn(boolean menuMusicOn) {
+        BeatBitBeatMain.menuMusicOn = menuMusicOn;
+    }
+
+    public static boolean isSFXOn() {
+        return SFXOn;
+    }
+
+    public static void setSFXOn(boolean SFXOn) {
+        BeatBitBeatMain.SFXOn = SFXOn;
     }
 
     /** EO Getters **/

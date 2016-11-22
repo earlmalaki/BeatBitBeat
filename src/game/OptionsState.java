@@ -16,9 +16,6 @@ public class OptionsState extends BasicGameState implements KeyListener{
     private boolean pressedEsc = false;
     private int indexIndicator = 0;
 
-    private boolean toggleSFXOn = true;
-    private boolean toggleMusicOn = true;
-
     private Image imageBG;
     private Image imageCheck;
     private Image imageIndicator;
@@ -63,19 +60,21 @@ public class OptionsState extends BasicGameState implements KeyListener{
             switch (indexIndicator) {
                 case 0:
                     // menu music toggle
-                    if (toggleMusicOn) {
-                        toggleMusicOn = false;
+                    if (BeatBitBeatMain.isMenuMusicOn()) {
+                        BeatBitBeatMain.setMenuMusicOn(false);
+                        MainMenuState.pauseMusic();
                     } else {
-                        toggleMusicOn = true;
+                        BeatBitBeatMain.setMenuMusicOn(true);
+                        MainMenuState.resumeMusic();
                     }
 
                     break;
                 case 1:
                     // Sfx toggle
-                    if (toggleSFXOn) {
-                        toggleSFXOn = false;
+                    if (BeatBitBeatMain.isSFXOn()) {
+                        BeatBitBeatMain.setSFXOn(false);
                     } else {
-                        toggleSFXOn = true;
+                        BeatBitBeatMain.setSFXOn(true);
                     }
 
                     break;
@@ -95,11 +94,11 @@ public class OptionsState extends BasicGameState implements KeyListener{
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         imageBG.draw();
 
-        if (toggleMusicOn) {
+        if (BeatBitBeatMain.isMenuMusicOn()) {
             imageCheck.draw(coordsOptions[0].getX(), coordsOptions[0].getY());
         }
 
-        if (toggleSFXOn) {
+        if (BeatBitBeatMain.isSFXOn()) {
             imageCheck.draw(coordsOptions[1].getX(), coordsOptions[1].getY());
         }
 
