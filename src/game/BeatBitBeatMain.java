@@ -40,6 +40,11 @@ public class BeatBitBeatMain extends StateBasedGame {
     private static int displayWidth = 1280;
     private static int displayHeight = 800;
 
+    //Options
+    private static int volumeSFX = 9;
+    private static boolean menuMusicOn = true;
+    private static boolean SFXOn = true;
+
     // Constructor
     public BeatBitBeatMain(String gameName) {
         super(gameName);
@@ -85,7 +90,9 @@ public class BeatBitBeatMain extends StateBasedGame {
     }
 
 
-    /** SO Getters **/
+    /**
+     * SO Getters
+     **/
     public static int getMainMenu() {
         return mainMenu;
     }
@@ -121,6 +128,31 @@ public class BeatBitBeatMain extends StateBasedGame {
     public static int getVersusPreview() {
         return versusPreview;
     }
+
+    public static int getVolumeSFX() {
+        return volumeSFX;
+    }
+
+    public static void setVolumeSFX(int volumeSFX) {
+        BeatBitBeatMain.volumeSFX = volumeSFX;
+    }
+
+    public static boolean isMenuMusicOn() {
+        return menuMusicOn;
+    }
+
+    public static void setMenuMusicOn(boolean menuMusicOn) {
+        BeatBitBeatMain.menuMusicOn = menuMusicOn;
+    }
+
+    public static boolean isSFXOn() {
+        return SFXOn;
+    }
+
+    public static void setSFXOn(boolean SFXOn) {
+        BeatBitBeatMain.SFXOn = SFXOn;
+    }
+
     /** EO Getters **/
 }
 
