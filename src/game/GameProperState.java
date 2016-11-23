@@ -240,12 +240,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     gameMusic.play();
                 }
 
-//                    comboP1 = 0;
                 notesP1.remove(0);
-            }
-
-            if (notesP2.get(0).getY() > endingYPos) {
-//                    comboP2 = 0;
                 notesP2.remove(0);
             }
         }
@@ -504,60 +499,63 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
 
         /*** Start of Skills ***/
-        if (key == Input.KEY_X) {
-            if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
-                skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
-                skill1P1 = true;
-                monsterP1.skill1();
-                monsterP1.attack(monsterP2);
+        if (skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2) {     // disable casting skill while a skill is ongoing
+            if (key == Input.KEY_X) {
+                if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
+                    skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
+                    skill1P1 = true;
+                    monsterP1.skill1();
+                    monsterP1.attack(monsterP2);
+                }
+            }
+
+            if (key == Input.KEY_C) {
+                if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
+                    skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
+                    skill2P1 = true;
+                    monsterP1.skill2();
+                    monsterP1.attack(monsterP2);
+                }
+            }
+
+            if (key == Input.KEY_V) {
+                if (monsterP1.checkResources(monsterP1.getCostSkillUlt())) { //monsters has resources, go atk
+                    skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
+                    skillUltP1 = true;
+                    monsterP1.skillUlt();
+                    monsterP1.attack(monsterP2);
+                }
+            }
+
+            if (key == Input.KEY_B) {
+
+                if (monsterP2.checkResources(monsterP2.getCostSkill1())) {//monsters has resources, go atk
+                    skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
+                    skill1P2 = true;
+                    monsterP2.skill1();
+                    monsterP2.attack(monsterP1);
+                }
+            }
+
+            if (key == Input.KEY_N) {
+                if (monsterP2.checkResources(monsterP2.getCostSkill2())) { //monsters has resources, go atk
+                    skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
+                    skill2P2 = true;
+                    monsterP2.skill2();
+                    monsterP2.attack(monsterP1);
+                }
+            }
+
+            if (key == Input.KEY_M) {
+                if (monsterP2.checkResources(monsterP2.getCostSkillUlt())) { //monsters has resources, go atk
+                    skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
+                    skillUltP2 = true;
+                    monsterP2.skillUlt();
+                    monsterP2.attack(monsterP1);
+                }
             }
         }
 
-        if (key == Input.KEY_C) {
-            if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
-                skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
-                skill2P1 = true;
-                monsterP1.skill2();
-                monsterP1.attack(monsterP2);
-            }
-        }
-
-        if (key == Input.KEY_V) {
-            if (monsterP1.checkResources(monsterP1.getCostSkillUlt())) { //monsters has resources, go atk
-                skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
-                skillUltP1 = true;
-                monsterP1.skillUlt();
-                monsterP1.attack(monsterP2);
-            }
-        }
-
-        if (key == Input.KEY_B) {
-
-            if (monsterP2.checkResources(monsterP2.getCostSkill1())) {//monsters has resources, go atk
-                skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
-                skill1P2 = true;
-                monsterP2.skill1();
-                monsterP2.attack(monsterP1);
-            }
-        }
-
-        if (key == Input.KEY_N) {
-            if (monsterP2.checkResources(monsterP2.getCostSkill2())) { //monsters has resources, go atk
-                skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
-                skill2P2 = true;
-                monsterP2.skill2();
-                monsterP2.attack(monsterP1);
-            }
-        }
-
-        if (key == Input.KEY_M) {
-            if (monsterP2.checkResources(monsterP2.getCostSkillUlt())) { //monsters has resources, go atk
-                skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
-                skillUltP2 = true;
-                monsterP2.skillUlt();
-                monsterP2.attack(monsterP1);
-            }
-        }
 
         /*** End of Skills ***/
 
