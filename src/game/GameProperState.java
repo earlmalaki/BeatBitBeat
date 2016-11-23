@@ -345,11 +345,11 @@ testing
         }
 
 
-        if (comboP1 > 5) {
-            fontCombo.drawString(92, 110, "" + comboP1);
+        if (monsterP1.getCombo() > 5) {
+            fontCombo.drawString(92, 110, "" + monsterP1.getCombo());
         }
-        if (comboP2 > 5) {
-            fontCombo.drawString(1147, 110, "" + comboP2);
+        if (monsterP2.getCombo() > 5) {
+            fontCombo.drawString(1147, 110, "" + monsterP2.getCombo());
         }
 
         // Print resources
