@@ -52,12 +52,13 @@ public class BeatBitBeatMain extends StateBasedGame {
 
 
     public static void main(String[] args) throws SlickException {
-        AppGameContainer app = new AppGameContainer(new BeatBitBeatMain(gameName));
 //        displayWidth = app.getScreenWidth();
 //        displayHeight = app.getScreenHeight();
 
+        AppGameContainer app = new AppGameContainer(new BeatBitBeatMain(gameName));
+
         app.setTitle("BeatBitBeat");                // Title for top bar
-        app.setDisplayMode(displayWidth, displayHeight, false);     // fullscreen false for now
+        app.setDisplayMode(displayWidth, displayHeight, true);     // fullscreen false for now
         app.setVSync(true);                         // matches monitor refresh rate. or use app.setTargetFrameRate(60);
         app.setMinimumLogicUpdateInterval(15);      // minimum delta of 15 ms
         app.setMaximumLogicUpdateInterval(15);      // maximum delta of 15 ms
