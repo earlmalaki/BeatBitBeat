@@ -26,9 +26,30 @@ public class GameOverState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         g.setColor(Color.white);
-        g.drawString("Game over!", 300, 300);
-        System.out.println(GameProperState.monsterP1.getResourceBlue());
-        g.drawString("Player 1: Max combo" + GameProperState.monsterP1.getMaxCombo(), 300, 500);
+        if(GameProperState.monsterP1.isAlive()) {
+            g.drawString("Player 2 wins!", 900, 300);
+            g.drawString("Player 1 lost!", 100, 300);
+        } else if(GameProperState.monsterP2.isAlive()) {
+            g.drawString("Player 1 wins!", 100, 300);
+            g.drawString("Player 2 lost!", 900, 300);
+        }
+        else{
+            g.drawString("Player 1 wins/lost!", 100, 300);
+            g.drawString("Player 2 wins/lost!", 900, 300);
+            g.drawString("WOW DRWAWAWAWAWAW", 600, 300);
+        }
+        g.drawString("Player 1: ", 100, 300);
+        g.drawString("Player 2: ", 900, 300);
+        g.drawString("Max combo: " + GameProperState.monsterP1.getMaxCombo(), 100, 580);
+        g.drawString("Max combo: " + GameProperState.monsterP2.getMaxCombo(), 900, 580);
+        g.drawString("Total blue resources: " + GameProperState.monsterP1.getTotalResourceBlue(), 100, 600);
+        g.drawString("Total red resources: " + GameProperState.monsterP1.getTotalResourceRed(), 100, 620);
+        g.drawString("Total yellow resources: " + GameProperState.monsterP1.getTotalResourceYellow(), 100, 640);
+        g.drawString("Total green resources: " + GameProperState.monsterP1.getTotalResourceGreen(), 100, 660);
+        g.drawString("Total blue resources: " + GameProperState.monsterP2.getTotalResourceBlue(), 900, 600);
+        g.drawString("Total red resources: " + GameProperState.monsterP2.getTotalResourceRed(), 900, 620);
+        g.drawString("Total yellow resources: " + GameProperState.monsterP2.getTotalResourceYellow(), 900, 640);
+        g.drawString("Total green resources: " + GameProperState.monsterP2.getTotalResourceGreen(), 900, 660);
 
     }
 /*
