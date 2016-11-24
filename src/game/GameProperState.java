@@ -160,7 +160,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         xMouse = input.getMouseX();
         yMouse = input.getMouseY();
 
-
         // adjust pitch loss and map read speed loss accordingly
         // slow music and read map
         if (skillCast) {
@@ -232,13 +231,49 @@ public class GameProperState extends BasicGameState implements KeyListener {
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
 
+        if (skill1P1 || timePassedSinceSkill1P1 > 0) {
+            timePassedSinceSkill1P1 += delta;
+            if (timePassedSinceSkill1P1 >= monsterP1.getCooldownSkill1()) {
+                timePassedSinceSkill1P1 = 0;
+                skill1P1 = false;
+            }
+        }
+        if (skill2P1 || timePassedSinceSkill2P1 > 0) {
+            timePassedSinceSkill2P1 += delta;
+            if (timePassedSinceSkill2P1 >= monsterP1.getCooldownSkill2()) {
+                timePassedSinceSkill2P1 = 0;
+                skill2P1 = false;
+            }
+        }
+        if (skillUltP1 || timePassedSinceSkillUltP1 > 0) {
+            timePassedSinceSkillUltP1 += delta;
+            if (timePassedSinceSkillUltP1 >= monsterP1.getCooldownSkillUlt()) {
+                timePassedSinceSkillUltP1 = 0;
+                skillUltP1 = false;
+            }
+        }
 
-//        timePassedSinceSkill1P1
-//        timePassedSinceSkill2P1
-//        timePassedSinceSkillUltP1
-//        timePassedSinceSkill1P2
-//        timePassedSinceSkill2P2
-//        timePassedSinceSkillUltP2
+        if (skill1P2 || timePassedSinceSkill1P2 > 0) {
+            timePassedSinceSkill1P2 += delta;
+            if (timePassedSinceSkill1P2 >= monsterP2.getCooldownSkill1()) {
+                timePassedSinceSkill1P2 = 0;
+                skill1P2 = false;
+            }
+        }
+        if (skill2P2 || timePassedSinceSkill2P2 > 0) {
+            timePassedSinceSkill2P2 += delta;
+            if (timePassedSinceSkill2P2 >= monsterP2.getCooldownSkill2()) {
+                timePassedSinceSkill2P2 = 0;
+                skill2P2 = false;
+            }
+        }
+        if (skillUltP2 || timePassedSinceSkillUltP2 > 0) {
+            timePassedSinceSkillUltP2 += delta;
+            if (timePassedSinceSkillUltP2 >= monsterP2.getCooldownSkillUlt()) {
+                timePassedSinceSkillUltP2 = 0;
+                skillUltP2 = false;
+            }
+        }
     }
 
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
@@ -285,6 +320,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (skill1P1) {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
             monsterP1.getAnimationSkill1().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+
         } else if (skill2P1) {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
             monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
@@ -315,7 +351,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (monsterP2.getCombo() > 5) {
             fontCombo.drawString(1147, 110, "" + monsterP2.getCombo());
         }
-
+        g.drawString("" + timePassedSinceSkill1P1, 350, 700);
+        g.drawString("" + timePassedSinceSkill2P1, 450, 700);
+        g.drawString("" + timePassedSinceSkillUltP1, 550, 700);
+        g.drawString("" + timePassedSinceSkill1P2, 700, 700);
+        g.drawString("" + timePassedSinceSkill2P2, 800, 700);
+        g.drawString("" + timePassedSinceSkillUltP2, 900, 700);
         // Print resources
         fontResources.drawString(255, 684, "" + monsterP1.getResourceRed());
         fontResources.drawString(255, 706, "" + monsterP1.getResourceGreen());
@@ -498,8 +539,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
         /*** Start of Skills ***/
         if (!(skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2)) {     // disable casting skill while a skill is ongoing
 
+
             if (key == Input.KEY_X) {
-                if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
+                if (monsterP1.checkResources(monsterP1.getCostSkill1()) && timePassedSinceSkill1P1 == 0) {   //monsters has resources and skill cooldowned alrdy, go atk
                     skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
                     skill1P1 = true;
                     monsterP1.skill1();
@@ -508,7 +550,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
 
             if (key == Input.KEY_C) {
-                if (monsterP1.checkResources(monsterP1.getCostSkill2())) { //monsters has resources, go atk
+                if (monsterP1.checkResources(monsterP1.getCostSkill2()) && timePassedSinceSkill2P1 == 0) { //monsters has resources, go atk
                     skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                     skill2P1 = true;
                     monsterP1.skill2();
@@ -517,7 +559,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
 
             if (key == Input.KEY_V) {
-                if (monsterP1.checkResources(monsterP1.getCostSkillUlt())) { //monsters has resources, go atk
+                if (monsterP1.checkResources(monsterP1.getCostSkillUlt()) && timePassedSinceSkillUltP1 == 0) { //monsters has resources, go atk
                     skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                     skillUltP1 = true;
                     monsterP1.skillUlt();
@@ -527,7 +569,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
             if (key == Input.KEY_B) {
 
-                if (monsterP2.checkResources(monsterP2.getCostSkill1())) {//monsters has resources, go atk
+                if (monsterP2.checkResources(monsterP2.getCostSkill1()) && timePassedSinceSkill1P2 == 0) {//monsters has resources, go atk
                     skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
                     skill1P2 = true;
                     monsterP2.skill1();
@@ -536,7 +578,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
 
             if (key == Input.KEY_N) {
-                if (monsterP2.checkResources(monsterP2.getCostSkill2())) { //monsters has resources, go atk
+                if (monsterP2.checkResources(monsterP2.getCostSkill2()) && timePassedSinceSkill2P2 == 0) { //monsters has resources, go atk
                     skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
                     skill2P2 = true;
                     monsterP2.skill2();
@@ -545,7 +587,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
 
             if (key == Input.KEY_M) {
-                if (monsterP2.checkResources(monsterP2.getCostSkillUlt())) { //monsters has resources, go atk
+                if (monsterP2.checkResources(monsterP2.getCostSkillUlt()) && timePassedSinceSkillUltP2 == 0) { //monsters has resources, go atk
                     skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                     skillUltP2 = true;
                     monsterP2.skillUlt();
@@ -560,9 +602,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         // Pause
         // TODO pause game
-        if (key == Input.KEY_ESCAPE) {
+        if (key == Input.KEY_ESCAPE)
+
+        {
             pressedEscape = true;
         }
+
     }   // end of keypress method
 
 
@@ -660,8 +705,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     }
 
     public static void resetGameProperState() {
-        notesP1 =  new ArrayList<>();
-        notesP2 =  new ArrayList<>();
+        notesP1 = new ArrayList<>();
+        notesP2 = new ArrayList<>();
 
         skill1P1 = false;
         skill2P1 = false;
