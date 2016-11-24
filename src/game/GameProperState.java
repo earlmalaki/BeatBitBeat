@@ -7,27 +7,6 @@
  * BSCS - II | UP - Cebu
  * CMSC22 - OOP
  * Final Project
- * <p>
- * <p>
- * /**
- * Done:
- * - Key Listener for receiving bars (ASDF, HJKL)
- * - Image handler for background
- * - Music player
- * - Randomized dropping of notes
- * <p>
- * To Do:
- * - Put wallpaper file
- * - Put receiving bar, vertical bar, and note graphic files
- * - finalize positioning of elements after putting in final graphics
- * - Music beat map making and reading
- * - Dropping notes according to beat map
- * - Better receiving bar accuracy
- * - GAME PART. Monster objects, hp, skills, resources, etc.
- * - End of game state
- * <p>
- * game.Note:
- * - Prioritize MVP first.
  */
 
 package game;
@@ -50,8 +29,8 @@ public class GameProperState extends BasicGameState implements KeyListener {
     public static Monster monsterP1;
     public static Monster monsterP2;
 
-    private ArrayList<Note> notesP1 = new ArrayList<>();
-    private ArrayList<Note> notesP2 = new ArrayList<>();
+    private static ArrayList<Note> notesP1 = new ArrayList<>();
+    private static ArrayList<Note> notesP2 = new ArrayList<>();
 
     private Image[] imagesNotes;
     private Image[] imagesPressedHitbox;
@@ -75,21 +54,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private float perfectYPos = 635f;
     private float endingYPos = 660;    // miss
 
-    private boolean badHitP1;
-    private boolean badHitP2;
-    private boolean goodHitP1;
-    private boolean goodHitP2;
-    private boolean perfectHitP1;
-    private boolean perfectHitP2;
-    private boolean missHitP1;
-    private boolean missHitP2;
-
-    private boolean skill1P1 = false;
-    private boolean skill2P1 = false;
-    private boolean skillUltP1 = false;
-    private boolean skill1P2 = false;
-    private boolean skill2P2 = false;
-    private boolean skillUltP2 = false;
+    private static boolean skill1P1 = false;
+    private static boolean skill2P1 = false;
+    private static boolean skillUltP1 = false;
+    private static boolean skill1P2 = false;
+    private static boolean skill2P2 = false;
+    private static boolean skillUltP2 = false;
 
     private static Music gameMusic;
     private Coordinate coordMonsterP1 = new Coordinate((displayWidth / 2) - 400, 100);
@@ -97,20 +67,19 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private Coordinate coordHumanP1 = new Coordinate((displayWidth / 2) - 350, 350);
     private Coordinate coordHumanP2 = new Coordinate((displayWidth - 450), 350);
 
-    private static Animation animationPlayer1;
-    private static Animation animationPlayer2;
 
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private static final int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
     // Music position
     private float musicPosition = 00.00f;
+    private float musicTimeLeft = 00.00f;
     private String musicPositionString = "";
 
-    private float speedNoteDrop = 4f;
-    private int timePassed = 0;     // in milliseconds
-    private boolean skillCast = false;
-    private int slowDuration = 0;  // 3000ms == 3s
+    private static float speedNoteDrop = 4f;
+    private static int timePassed = 0;     // in milliseconds
+    private static boolean skillCast = false;
+    private static int slowDuration = 0;  // 3000ms == 3s
 
     private static BufferedReader br;
     private boolean pressedEscape = false;
@@ -126,6 +95,14 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private boolean pressedI = false;
     private boolean pressedO = false;
     private boolean pressedP = false;
+
+    private static int timePassedSinceSkill1P1 = 0;
+    private static int timePassedSinceSkill2P1 = 0;
+    private static int timePassedSinceSkillUltP1 = 0;
+    // TODO implement cooldown
+    private static int timePassedSinceSkill1P2 = 0;
+    private static int timePassedSinceSkill2P2 = 0;
+    private static int timePassedSinceSkillUltP2 = 0;
 
     // Create a font with the size of 20, and not bold or italic.
     UnicodeFont fontCombo;
@@ -184,11 +161,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
         yMouse = input.getMouseY();
 
 
-        // TODO adjust pitch. match pitch loss and map read speed loss
+        // adjust pitch loss and map read speed loss accordingly
         // slow music and read map
         if (skillCast) {
             timePassed += delta;
-            if (timePassed >= slowDuration) {
+            if (timePassed >= slowDuration) {   // Skill animation done
                 skillCast = false;
                 timePassed = 0;
                 speedNoteDrop = 4f;
@@ -242,28 +219,32 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         }
 
-
         musicPosition = gameMusic.getPosition();
 
-        if (monsterP1.getHp() <= 0) {
-            sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
-        } else if (monsterP2.getHp() <= 0) {
+        if (monsterP1.getHp() <= 0 || monsterP2.getHp() <= 0) {
+            MainMenuState.resumeMusic();
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
 
-        if(pressed1){
+        // temporary
+        if (pressed1) {
+            pressed1 = false;
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
+
+
+//        timePassedSinceSkill1P1
+//        timePassedSinceSkill2P1
+//        timePassedSinceSkillUltP1
+//        timePassedSinceSkill1P2
+//        timePassedSinceSkill2P2
+//        timePassedSinceSkillUltP2
     }
 
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 
         imageBG.draw();
-/*
-        // Game Screen borders
-        g.drawLine(0, endingYPos, displayWidth, endingYPos);
-testing
-*/
+
         // render falling notes
         for (int i = 0; i < notesP1.size(); i++) {
             if (notesP1.get(i).getY() < perfectYPos) {
@@ -271,16 +252,7 @@ testing
                 notesP2.get(i).getImage().draw(notesP2.get(i).getX(), notesP2.get(i).getY());
             }
         }
-/*
-        g.setColor(Color.white);
-        g.drawString("Time", (displayWidth / 2) - 5, 5);
-        String strMusicPosition = null;
-        if (gameMusic.playing()) {
-            strMusicPosition = String.valueOf(musicPosition);
-            g.drawString(strMusicPosition, (displayWidth / 2) - (strMusicPosition.length()), 20);
 
-        }
-*/
         // Hitbox feedback
         // Draw glowing hitbox if corresponding key is pressed
         if (pressedQ) {
@@ -308,10 +280,7 @@ testing
         if (pressedP) {
             imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 15);
         }
-        /*
 
-*/
-        // TODO fix skill animation
         // Draw player character animations
         if (skill1P1) {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
@@ -371,12 +340,23 @@ testing
         g.setColor(Color.white);
         g.drawString("DELTA = " + delta, 10, 30);
         g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+
+        g.setColor(Color.black);
+        g.fillRect(300.0f, 10.0f, 200.0f, 20.0f);    // P1 healthbar bg
+        g.fillRect(700.0f, 10.0f, 200.0f, 20.0f);    // P2 healthbar bg
+
+        g.setColor(Color.green);
+        g.fillRect(300.0f, 10.0f, (float) monsterP1.getHp() * 2, 20.0f);     // healthbar progress p1
+        g.fillRect(700.0f, 10.0f, (float) monsterP2.getHp() * 2, 20.0f);     // healthbar progress p2
+
+        g.setColor(Color.white);
+
     }
 
     @Override
     public void keyPressed(int key, char pressedKey) {
         // Key listener
-        if(key == Input.KEY_1){
+        if (key == Input.KEY_1) {
             pressed1 = true;
         }
         if (key == Input.KEY_Q) {
@@ -516,7 +496,8 @@ testing
 
 
         /*** Start of Skills ***/
-        if (skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2) {     // disable casting skill while a skill is ongoing
+        if (!(skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2)) {     // disable casting skill while a skill is ongoing
+
             if (key == Input.KEY_X) {
                 if (monsterP1.checkResources(monsterP1.getCostSkill1())) {   //monsters has resources, go atk
                     skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
@@ -670,19 +651,36 @@ testing
     }
 
 
-    public static void setAnimationPlayer1(Animation animation) {
-        animationPlayer1 = animation;
-    }
-
-    public static void setAnimationPlayer2(Animation animation) {
-        animationPlayer2 = animation;
-    }
-
     public static void setMonsterP1(Monster monsterp1) {
         monsterP1 = monsterp1;
     }
 
     public static void setMonsterP2(Monster monsterp2) {
         monsterP2 = monsterp2;
+    }
+
+    public static void resetGameProperState() {
+        notesP1 =  new ArrayList<>();
+        notesP2 =  new ArrayList<>();
+
+        skill1P1 = false;
+        skill2P1 = false;
+        skillUltP1 = false;
+        skill1P2 = false;
+        skill2P2 = false;
+        skillUltP2 = false;
+
+        speedNoteDrop = 4f;
+        timePassed = 0;
+        skillCast = false;
+        slowDuration = 0;
+
+        timePassedSinceSkill1P1 = 0;
+        timePassedSinceSkill2P1 = 0;
+        timePassedSinceSkillUltP1 = 0;
+
+        timePassedSinceSkill1P2 = 0;
+        timePassedSinceSkill2P2 = 0;
+        timePassedSinceSkillUltP2 = 0;
     }
 } // END OF CLASS

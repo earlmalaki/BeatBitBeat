@@ -130,7 +130,7 @@ public abstract class Monster {
     }
 
     public boolean isAlive(){
-        return hp <= 0? true : false;
+        return hp >= 0;
     }
 
     public void setDamage(int damage) {
@@ -234,6 +234,11 @@ public abstract class Monster {
 
     public abstract int getDurationSkillUlt();
 
+    public abstract int getCooldownSkill1();
+
+    public abstract int getCooldownSkill2();
+
+    public abstract int getCooldownSkillUlt();
 
     public abstract Animation getAnimationIdle();
 

@@ -194,15 +194,6 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
 
         }
 
-//        if (key == Input.KEY_RIGHT) {
-//            if (music.playing()) {
-//                music.setPosition(music.getPosition() + 2f);
-//            } else {
-//                music.resume();
-//                music.setPosition(music.getPosition() + 2f);
-//                music.pause();
-//            }
-//        }
 
     }
 

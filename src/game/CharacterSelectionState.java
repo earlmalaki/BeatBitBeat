@@ -105,11 +105,11 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private int indexImageSongArt;          // index holder for song art
 
     // Flags
-    private boolean pressedEnter = false;
-    private boolean monsterPicking = true;
-    private boolean songPicking = false;
-    private boolean p1Picking = true;
-    private boolean p2Picking = false;
+    private static boolean pressedEnter = false;
+    private static boolean monsterPicking = true;
+    private static boolean songPicking = false;
+    private static boolean p1Picking = true;
+    private static boolean p2Picking = false;
 
 
     private boolean pressedEscape = false;
@@ -135,40 +135,40 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         // TODO Replace correct file names, Width & Height, adjust duration
         animateMonstersP1 = new Animation[]{
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 0), Monster1.getFrameDurationMonsterIdle()),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), Monster2.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 600, 300, 0), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Idle P1.png", 600, 300, 0), 250),        // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250)
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Idle P1.png", 600, 300, 0), 250)         // coming soon
         };
 
         animateMonstersP2 = new Animation[]{
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 0), Monster1.getFrameDurationMonsterIdle()),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), Monster2.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Idle P2.png", 600, 300, 0), 250),        // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250)
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Idle P2.png", 600, 300, 0), 250)         // coming soon
         };
 
         // TODO Replace correct file names, Width & Height, adjust duration
         animateHumansP1 = new Animation[]{
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), 300),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), 300),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), Monster1.getFrameDurationHumanIdle()),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), Monster2.getFrameDurationHumanIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P1.png", 150, 150, 0), 300),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Human P1.png", 150, 150, 0), 300),       // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), 300),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), 300),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), 300)
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Human P1.png", 150, 150, 0), 300)        // coming soon
         };
 
         animateHumansP2 = new Animation[]{
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), 300),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 0), 300),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), Monster1.getFrameDurationHumanIdle()),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 0), Monster2.getFrameDurationHumanIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 0), 300),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Human P2.png", 150, 150, 0), 300),       // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), 300),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), 300),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), 300)
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Human P2.png", 150, 150, 0), 300)        // coming soon
         };
 
         // TODO Replace with correct files and names
@@ -376,10 +376,10 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
                 GameProperState.setMonsterP1(monsterP1);
                 GameProperState.setMonsterP2(monsterP2);
-                GameProperState.setAnimationPlayer1(animateP1Monster);
-                GameProperState.setAnimationPlayer2(animateP2Monster);
                 // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
+
+
             }
 
         }
@@ -485,7 +485,13 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 }
             } else if (key == Input.KEY_ENTER) {
                 soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-                pressedEnter = true;
+
+                // disable bottom left(monster 4) and bottom right monsters(monster 6)
+                // for coming soon characters
+                if (!((indexXHumanIndicator == 0 && indexYHumanIndicator == 1) ||  // monster bottom left
+                (indexXHumanIndicator == 2 && indexYHumanIndicator == 1))) {    // monster bottom right
+                    pressedEnter = true;
+                }
             }
         } else if (songPicking) {
             if (key == Input.KEY_LEFT) {
@@ -518,6 +524,14 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     @Override
     public void keyReleased(int key, char pressedKey) {
 
+    }
+
+    public static void resetCharSelStateFlags() {
+        pressedEnter = false;
+        monsterPicking = true;
+        songPicking = false;
+        p1Picking = true;
+        p2Picking = false;
     }
 
 }

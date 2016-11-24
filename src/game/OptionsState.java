@@ -6,7 +6,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class OptionsState extends BasicGameState implements KeyListener{
+public class OptionsState extends BasicGameState implements KeyListener {
 
     private Coordinate[] coordsOptions;
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
@@ -32,7 +32,7 @@ public class OptionsState extends BasicGameState implements KeyListener{
         imageBG = new Image("Assets/Graphics/Options/Options BG.png");
         imageCheck = new Image("Assets/Graphics/Options/Check.png");
         imageIndicator = new Image("Assets/Graphics/Options/Indicator.png");
-        imageSFXVolume = new Image[] {
+        imageSFXVolume = new Image[]{
                 new Image("Assets/Graphics/Options/Volume 0.png"),
                 new Image("Assets/Graphics/Options/Volume 1.png"),
                 new Image("Assets/Graphics/Options/Volume 2.png"),
@@ -45,10 +45,11 @@ public class OptionsState extends BasicGameState implements KeyListener{
                 new Image("Assets/Graphics/Options/Volume 9.png"),
         };
 
-        coordsOptions = new Coordinate[] {
-                new Coordinate(200, 200),
-                new Coordinate(200, 250),
-                new Coordinate(200, 300)
+        coordsOptions = new Coordinate[]{
+                new Coordinate((displayWidth / 2) - 35, 150),
+                new Coordinate((displayWidth / 2) - 35, 260),
+                new Coordinate((displayWidth / 2) - 35, 370),
+                new Coordinate((displayWidth / 2) - 35, 480)
         };
 
     }
@@ -78,6 +79,13 @@ public class OptionsState extends BasicGameState implements KeyListener{
                     }
 
                     break;
+                case 2:
+                    if (!gameContainer.isFullscreen()) {
+                        gameContainer.setFullscreen(true);
+                    } else {
+                        gameContainer.setFullscreen(false);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -102,13 +110,7 @@ public class OptionsState extends BasicGameState implements KeyListener{
             imageCheck.draw(coordsOptions[1].getX(), coordsOptions[1].getY());
         }
 
-        if (indexIndicator == 0) {
-            imageIndicator.draw(coordsOptions[0].getX(), coordsOptions[0].getY());
-        } else if (indexIndicator == 1) {
-            imageIndicator.draw(coordsOptions[1].getX(), coordsOptions[1].getY());
-        } else if (indexIndicator == 2) {
-            imageIndicator.draw(coordsOptions[2].getX(), coordsOptions[2].getY());
-        }
+        imageIndicator.draw(coordsOptions[indexIndicator].getX(), coordsOptions[indexIndicator].getY());
 
         switch (BeatBitBeatMain.getVolumeSFX()) {
             case 0:
@@ -151,13 +153,13 @@ public class OptionsState extends BasicGameState implements KeyListener{
     public void keyPressed(int key, char pressedKey) {
         if (key == Input.KEY_UP) {
             if (indexIndicator != 0) {
-                indexIndicator --;
+                indexIndicator--;
             }
         }
 
         if (key == Input.KEY_DOWN) {
             if (indexIndicator != coordsOptions.length - 1) {
-                indexIndicator ++;
+                indexIndicator++;
             }
         }
 
@@ -166,7 +168,7 @@ public class OptionsState extends BasicGameState implements KeyListener{
         }
 
         // if at sfx volume rocker
-        if (indexIndicator == 2) {
+        if (indexIndicator == 3) {
 
             if (key == Input.KEY_LEFT) {
                 // decrease sfx volume

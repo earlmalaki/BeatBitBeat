@@ -57,7 +57,9 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
 
     // Animation for background
-    private Animation animateSpriteBG;
+    private Animation animateBGFire;
+
+    private Image imageBG;
 
     // Audio declaration
     private static Music audioMusicMainMenu;
@@ -80,15 +82,17 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         };
 
         coordsArrows = new Coordinate[]{
-                new Coordinate((displayWidth / 2) - 180, 463),
-                new Coordinate((displayWidth / 2) - 180, 529),
-                new Coordinate((displayWidth / 2) - 180, 594),
-                new Coordinate((displayWidth / 2) - 180, 659)
+                new Coordinate((displayWidth / 2) - 180, 423),
+                new Coordinate((displayWidth / 2) - 180, 487),
+                new Coordinate((displayWidth / 2) - 180, 555),
+                new Coordinate((displayWidth / 2) - 180, 618)
         };
 
+
+        imageBG = new Image("Assets/Graphics/Main Menu/Main Menu BG.png");
         // TODO: Replace correct file for background spritesheet
-        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", 1280, 800, 0); //ref, tw, th, spacing
-        animateSpriteBG = new Animation(spriteBG, 250);     // spritesheet, duration
+//        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Fire.png", 1280, 800, 0); //ref, tw, th, spacing
+//        animateBGFire = new Animation(spriteBG, 250);     // spritesheet, duration
 
 
         try {
@@ -139,20 +143,13 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        animateSpriteBG.draw(0, 0);
+        imageBG.draw();
+//        animateBGFire.draw(0, 0);
 
-        if (indexSelection == 0) {    // if indicator is pointing to Start btn
-            imagesArrows[0].draw(coordsArrows[0].getX(), coordsArrows[0].getY());
-        } else if (indexSelection == 1) {     // if indicator is pointing to options btn
-            imagesArrows[1].draw(coordsArrows[1].getX(), coordsArrows[1].getY());
-        } else if (indexSelection == 2) {     // if indicator is pointing to credits btn
-            imagesArrows[2].draw(coordsArrows[2].getX(), coordsArrows[2].getY());
-        } else if (indexSelection == 3) {        // if indicator is pointing to exit btn
-            imagesArrows[3].draw(coordsArrows[3].getX(), coordsArrows[3].getY());
-        }
+        imagesArrows[indexSelection].draw(coordsArrows[indexSelection].getX(), coordsArrows[indexSelection].getY());
 
-//        g.drawString("DELTA = " + delta, 100, 100);
-//        g.drawString("X = " + xMouse + " Y = " + yMouse, 100, 130);
+        g.drawString("DELTA = " + delta, 10, 30);
+        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
 
     }
 

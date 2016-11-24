@@ -137,6 +137,21 @@ public class Monster4 extends Monster {
     }
 
     @Override
+    public int getCooldownSkill1() {
+        return 0;
+    }
+
+    @Override
+    public int getCooldownSkill2() {
+        return 0;
+    }
+
+    @Override
+    public int getCooldownSkillUlt() {
+        return 0;
+    }
+
+    @Override
     public Animation getAnimationIdle() {
         return null;
     }

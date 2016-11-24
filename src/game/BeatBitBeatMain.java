@@ -45,6 +45,7 @@ public class BeatBitBeatMain extends StateBasedGame {
     private static boolean menuMusicOn = true;
     private static boolean SFXOn = true;
 
+
     // Constructor
     public BeatBitBeatMain(String gameName) {
         super(gameName);

@@ -62,29 +62,35 @@ public class Monster2 extends Monster {
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private SkillCost currResources;
     // TODO enter proper duration of skill animation when sprites are done
-    private static final int skill1Duration = 3000;
-    private static final int skill2Duration = 5000;
+    private static final int skill1Duration = 3400;
+    private static final int skill2Duration = 2700;
     private static final int skillUltDuration = 6000;
+
+    private static final int frameDurationMonsterIdle = 260;
+    private static final int frameDurationHumanIdle = 300;
+    private static final int frameDurationSkill1 = 200;
+    private static final int frameDurationSkill2 = 100;
+    private static final int frameDurationSkillUlt = 250;
 
 
     public Monster2(int playerNumber) throws SlickException {
         super();
 
         if (playerNumber == 1) {
-            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250);
-            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), 200);
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
 
-            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P1.png", 600, 300, 0), 250);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P1.png", 600, 300, 0), 250);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P1.png", 600, 300, 0), 250);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P1.png", 600, 300, 0), frameDurationSkill1);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P1.png", 600, 300, 0), frameDurationSkill2);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P1.png", 600, 300, 0), frameDurationSkillUlt);
 
         } else if (playerNumber == 2) {
-            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250);
-            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 0), 200);
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
 
-            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P2.png", 600, 300, 0), 250);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P2.png", 600, 300, 0), 250);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P2.png", 600, 300, 0), 250);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P2.png", 600, 300, 0), frameDurationSkill1);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P2.png", 600, 300, 0), frameDurationSkill2);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
 
     }
@@ -98,8 +104,8 @@ public class Monster2 extends Monster {
 
     public void skill2() {
         super.setDamage(12);
-        super.setResourceRed(super.getResourceGreen() - 7);
-        super.setResourceYellow(super.getResourceBlue() - 7);
+        super.setResourceGreen(super.getResourceGreen() - 7);
+        super.setResourceBlue(super.getResourceBlue() - 7);
 
     }
 
@@ -125,6 +131,21 @@ public class Monster2 extends Monster {
     @Override
     public int getDurationSkillUlt() {
         return skillUltDuration;
+    }
+
+    @Override
+    public int getCooldownSkill1() {
+        return 0;
+    }
+
+    @Override
+    public int getCooldownSkill2() {
+        return 0;
+    }
+
+    @Override
+    public int getCooldownSkillUlt() {
+        return 0;
     }
 
     @Override
@@ -167,5 +188,11 @@ public class Monster2 extends Monster {
         return costSkillUlt;
     }
 
+    public static int getFrameDurationMonsterIdle() {
+        return frameDurationMonsterIdle;
+    }
 
+    public static int getFrameDurationHumanIdle() {
+        return frameDurationHumanIdle;
+    }
 }
