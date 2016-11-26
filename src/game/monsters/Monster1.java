@@ -43,6 +43,7 @@ package game.monsters;
 
 import game.SkillCost;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -59,7 +60,7 @@ public class Monster1 extends Monster {
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private SkillCost currResources;
-
+    private Image[] skillIcons;
     private static final int skill1Duration = 1400;
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 2000;
@@ -78,6 +79,11 @@ public class Monster1 extends Monster {
     public Monster1(int playerNumber) throws SlickException {
         super();
 
+        skillIcons = new Image[]{
+                new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 1 Blistol Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling Icon.png"),
+        };
+
         if (playerNumber == 1) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
@@ -94,6 +100,7 @@ public class Monster1 extends Monster {
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling P2.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
+
     }
 
     public void skill1() {
@@ -117,6 +124,10 @@ public class Monster1 extends Monster {
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
 
+    }
+
+    public Image[] getSkillIcons() {
+        return skillIcons;
     }
 
     @Override

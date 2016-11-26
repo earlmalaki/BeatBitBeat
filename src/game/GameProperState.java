@@ -279,7 +279,16 @@ public class GameProperState extends BasicGameState implements KeyListener {
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 
         imageBG.draw();
-
+        int xx = 0;
+        for(Image test : monsterP1.getSkillIcons()){
+            test.draw(312 + xx, 683);
+            xx += 104;
+        }
+        int xy = 0;
+        for(Image test : monsterP2.getSkillIcons()){
+            test.draw(668 + xy, 683);
+            xy += 104;
+        }
         // render falling notes
         for (int i = 0; i < notesP1.size(); i++) {
             if (notesP1.get(i).getY() < perfectYPos) {

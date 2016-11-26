@@ -43,6 +43,7 @@ package game.monsters;
 
 import game.SkillCost;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -53,7 +54,7 @@ public class Monster2 extends Monster {
     private Animation animationSkill1;
     private Animation animationSkill2;
     private Animation animationSkillUlt;
-
+    private Image[] skillIcons;
     // TODO enter proper duration of skill animation when sprites are done
     private Animation animationHumanIdle;
 
@@ -76,6 +77,10 @@ public class Monster2 extends Monster {
     public Monster2(int playerNumber) throws SlickException {
         super();
 
+        skillIcons = new Image[]{
+                new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release Icon.png"),
+        };
         if (playerNumber == 1) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
@@ -93,6 +98,11 @@ public class Monster2 extends Monster {
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
 
+    }
+
+    @Override
+    public Image[] getSkillIcons() {
+        return skillIcons;
     }
 
     public void skill1() {
