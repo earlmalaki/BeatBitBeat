@@ -320,7 +320,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (skill1P1) {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
             monsterP1.getAnimationSkill1().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-
         } else if (skill2P1) {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
             monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());

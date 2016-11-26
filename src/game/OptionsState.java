@@ -164,7 +164,10 @@ public class OptionsState extends BasicGameState implements KeyListener {
         }
 
         if (key == Input.KEY_ENTER) {
-            pressedEnter = true;
+            if (!(indexIndicator == 2)) {
+                pressedEnter = true;
+            }
+
         }
 
         // if at sfx volume rocker

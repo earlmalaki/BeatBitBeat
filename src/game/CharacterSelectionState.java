@@ -209,7 +209,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Songs/MechaTribe Assault/bn.png"),
                 new Image("Songs/Springtime/bn.png"),
                 new Image("Songs/Triton (Original Mix) - Dubvision/bn.png"),
-                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
+//                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
         };
 
         coordImageSongArt = new Coordinate((displayWidth / 2) - (imagesSongArt[0].getWidth() / 2), displayHeight - (imagesSongArt[0].getHeight() * 2));
@@ -226,7 +226,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     new Music("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg"),
                     new Music("Songs/Springtime/Kommisar - Springtime.ogg"),
                     new Music("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix).ogg"),
-                    new Music("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name.ogg"),
+//                    new Music("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name.ogg"),
             };
 
             fileSongBeatMaps = new File[]{
@@ -234,7 +234,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     new File("Songs/MechaTribe Assault/Mecha-Tribe Assault Beat Map.txt"),
                     new File("Songs/Springtime/Kommisar - Springtime Beat Map.txt"),
                     new File("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix) Beat Map.txt"),
-                    new File("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name Beat Map.txt")
+//                    new File("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name Beat Map.txt")
             };
 
         } catch (IOException e) {
@@ -487,12 +487,15 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     indexXHumanIndicator++;
                 }
             } else if (key == Input.KEY_ENTER) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
 
                 // disable bottom left(monster 4) and bottom right monsters(monster 6)
                 // for coming soon characters
                 if (!((indexXHumanIndicator == 0 && indexYHumanIndicator == 1) ||  // monster bottom left
-                (indexXHumanIndicator == 2 && indexYHumanIndicator == 1))) {    // monster bottom right
+                (indexXHumanIndicator == 2 && indexYHumanIndicator == 1) ||   // monster bottom right
+                (indexXHumanIndicator == 2 && indexYHumanIndicator == 0) || //  monster upper right
+                (indexXHumanIndicator == 1 && indexYHumanIndicator == 1)))  // monster lower center
+                {
                     pressedEnter = true;
                 }
             }
@@ -508,7 +511,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     indexImageSongArt++;
                 }
             } else if (key == Input.KEY_ENTER) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
                 pressedEnter = true;
             }
 
