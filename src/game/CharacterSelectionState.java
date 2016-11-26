@@ -208,6 +208,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Songs/Goin' Under/bn.png"),
                 new Image("Songs/MechaTribe Assault/bn.png"),
                 new Image("Songs/Springtime/bn.png"),
+                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png"),
                 new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
         };
 
@@ -224,14 +225,16 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     new Music("Songs/Goin' Under/Goin' Under.ogg"),
                     new Music("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg"),
                     new Music("Songs/Springtime/Kommisar - Springtime.ogg"),
-                    new Music("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix).ogg")
+                    new Music("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix).ogg"),
+                    new Music("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name.ogg"),
             };
 
             fileSongBeatMaps = new File[]{
                     new File("Songs/Goin' Under/Goin' Under Beat Map.txt"),
                     new File("Songs/MechaTribe Assault/Mecha-Tribe Assault Beat Map.txt"),
                     new File("Songs/Springtime/Kommisar - Springtime Beat Map.txt"),
-                    new File("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix) Beat Map.txt")
+                    new File("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix) Beat Map.txt"),
+                    new File("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name Beat Map.txt")
             };
 
         } catch (IOException e) {

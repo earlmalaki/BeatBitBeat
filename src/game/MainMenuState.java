@@ -89,10 +89,10 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         };
 
 
-        imageBG = new Image("Assets/Graphics/Main Menu/Main Menu BG.png");
+//        imageBG = new Image("Assets/Graphics/Main Menu/Main Menu BG.png");
         // TODO: Replace correct file for background spritesheet
-//        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Fire.png", 1280, 800, 0); //ref, tw, th, spacing
-//        animateBGFire = new Animation(spriteBG, 250);     // spritesheet, duration
+        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/anim fire.png", 1280, 800, 0); //ref, tw, th, spacing
+        animateBGFire = new Animation(spriteBG, 200);     // spritesheet, duration
 
 
         try {
@@ -143,8 +143,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        imageBG.draw();
-//        animateBGFire.draw(0, 0);
+//        imageBG.draw();
+        animateBGFire.draw(0, 0);
 
         imagesArrows[indexSelection].draw(coordsArrows[indexSelection].getX(), coordsArrows[indexSelection].getY());
 
@@ -181,7 +181,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         }
         if (key == Input.KEY_ENTER) {
             if (BeatBitBeatMain.isSFXOn()) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
             }
 
             enterPressed = true;
