@@ -81,12 +81,14 @@ package game.monsters;
 
 import game.SkillCost;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 
 public abstract class Monster {
 
     private int hp;
     private int damage;
 
+    private Image[] skillIcons;
     private int resourceBlue;
     private int resourceRed;
     private int resourceGreen;
@@ -184,6 +186,8 @@ public abstract class Monster {
     public int getTotalResourceYellow() {
         return totalResourceYellow;
     }
+
+
     public void addResourceBlue(int res) {
         resourceBlue += res;
         totalResourceBlue += res;
@@ -221,6 +225,7 @@ public abstract class Monster {
         return (resourceRed >= skillCost.getCostRed()) && (resourceGreen >= skillCost.getCostGreen()) && (resourceBlue >= skillCost.getCostBlue()) && (resourceYellow >= skillCost.getCostYellow());
     }
 
+    public abstract Image[] getSkillIcons();
 
     public abstract void skill1();
 
