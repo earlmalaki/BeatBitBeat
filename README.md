@@ -1,5 +1,5 @@
 # BeatBitBeat
-###### Project is still in its early stages -- 4 out of 10
+###### Project is still in its early stages -- 5 out of 10
 ###### Currently may contain various bugs and may have limited functionality
 ###### Functionality will be added and bugs be fixed as development progresses
 
@@ -7,6 +7,11 @@
 ### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
 ### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6SDF6OVpUa2NvTW8)
 #### Download and UNZIP. Run "Prototype.jar" (Mac) or "Proto_win.jar" (Windows)
+##
+### DOWNLOAD LINKS TO BETA:
+### Mac: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6dkczTWFRdER6SGM)
+### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6LXREcTVocjYxUTQ)
+#### Download and UNZIP. Run "BeatBitBeat Beta.jar".
 ##
 
 #### A Final Project in CMSC22 - Object Oriented Programming
