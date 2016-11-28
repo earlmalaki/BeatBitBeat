@@ -138,7 +138,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 0), Monster1.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), Monster2.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Idle P1.png", 600, 300, 0), 250),        // coming soon
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P1.png", 600, 300, 0), 250),        // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Idle P1.png", 600, 300, 0), 250)         // coming soon
         };
@@ -147,7 +147,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 0), Monster1.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), Monster2.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), 250),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Idle P2.png", 600, 300, 0), 250),        // coming soon
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), 250),        // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Idle P2.png", 600, 300, 0), 250)         // coming soon
         };

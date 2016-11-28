@@ -84,6 +84,7 @@ public class Monster2 extends Monster {
         skillIcons = new Image[]{
                 new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Ghost/G3rd.png"),
         };
         if (playerNumber == 1) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
@@ -110,21 +111,22 @@ public class Monster2 extends Monster {
     }
 
     public void skill1() {
-        super.setDamage(20);
+        super.setDamage(5);
         super.setResourceRed(super.getResourceRed() - 3);
         super.setResourceYellow(super.getResourceYellow() - 3);
 
     }
 
     public void skill2() {
-        super.setDamage(30);
+
+        super.setDamage(12);
         super.setResourceGreen(super.getResourceGreen() - 7);
         super.setResourceBlue(super.getResourceBlue() - 7);
 
     }
 
     public void skillUlt() {
-        super.setDamage(40);
+        super.setDamage(55);
         super.setResourceRed(super.getResourceRed() - 12);
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
