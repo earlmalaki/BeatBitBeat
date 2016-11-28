@@ -91,7 +91,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
 //        imageBG = new Image("Assets/Graphics/Main Menu/Main Menu BG.png");
         // TODO: Replace correct file for background spritesheet
-        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/anim fire.png", 1280, 800, 0); //ref, tw, th, spacing
+        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", 1280, 720, 0); //ref, tw, th, spacing
         animateBGFire = new Animation(spriteBG, 200);     // spritesheet, duration
 
 

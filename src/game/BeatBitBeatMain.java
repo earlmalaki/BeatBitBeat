@@ -37,8 +37,8 @@ public class BeatBitBeatMain extends StateBasedGame {
     private static final int credits = 6;
 
     // Display Resolution
-    private static int displayWidth = 1280;
-    private static int displayHeight = 800;
+    private static final int displayWidth = 1280;
+    private static final int displayHeight = 720;
 
     //Options
     private static int volumeSFX = 9;
@@ -53,10 +53,8 @@ public class BeatBitBeatMain extends StateBasedGame {
 
 
     public static void main(String[] args) throws SlickException {
-//        displayWidth = app.getScreenWidth();
-//        displayHeight = app.getScreenHeight();
-
         AppGameContainer app = new AppGameContainer(new BeatBitBeatMain(gameName));
+        System.setProperty(" org.lwjgl.opengl.Window.undecorated", "true");
         app.setTitle("BeatBitBeat");                // Title for top bar
         app.setDisplayMode(displayWidth, displayHeight, false);     // fullscreen false for now
         app.setVSync(true);                         // matches monitor refresh rate. or use app.setTargetFrameRate(60);
@@ -65,7 +63,7 @@ public class BeatBitBeatMain extends StateBasedGame {
 
         app.start();
 
-//        System.setProperty(" org.lwjgl.opengl.Window.undecorated", "true");
+
     }
 
     public void initStatesList(GameContainer gc) throws SlickException {
