@@ -54,13 +54,13 @@ public class Monster1 extends Monster {
     private Animation animationSkill2;
     private Animation animationSkillUlt;
 
+    private Image[] skillIcons;
     private Animation animationHumanIdle;
 
     private final SkillCost costSkill1 = new SkillCost(3, 0, 0, 3);
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private SkillCost currResources;
-    private Image[] skillIcons;
     private static final int skill1Duration = 1400;
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 2000;

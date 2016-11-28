@@ -67,6 +67,10 @@ public class Monster2 extends Monster {
     private static final int skill2Duration = 2700;
     private static final int skillUltDuration = 6000;
 
+    private static final int skill1Cooldown = 2000;
+    private static final int skill2Cooldown = 3000;
+    private static final int skillUltCooldown = 5000;
+
     private static final int frameDurationMonsterIdle = 260;
     private static final int frameDurationHumanIdle = 300;
     private static final int frameDurationSkill1 = 200;
@@ -114,6 +118,7 @@ public class Monster2 extends Monster {
     }
 
     public void skill2() {
+
         super.setDamage(12);
         super.setResourceGreen(super.getResourceGreen() - 7);
         super.setResourceBlue(super.getResourceBlue() - 7);
@@ -146,17 +151,17 @@ public class Monster2 extends Monster {
 
     @Override
     public int getCooldownSkill1() {
-        return 0;
+        return skill1Cooldown;
     }
 
     @Override
     public int getCooldownSkill2() {
-        return 0;
+        return skill2Cooldown;
     }
 
     @Override
     public int getCooldownSkillUlt() {
-        return 0;
+        return skillUltCooldown;
     }
 
     @Override
