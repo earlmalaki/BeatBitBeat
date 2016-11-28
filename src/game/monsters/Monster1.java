@@ -82,6 +82,7 @@ public class Monster1 extends Monster {
         skillIcons = new Image[]{
                 new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 1 Blistol Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/B3rd.png")
         };
 
         if (playerNumber == 1) {

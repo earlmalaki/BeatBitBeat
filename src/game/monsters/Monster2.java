@@ -80,6 +80,7 @@ public class Monster2 extends Monster {
         skillIcons = new Image[]{
                 new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Ghost/G3rd.png"),
         };
         if (playerNumber == 1) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
