@@ -137,7 +137,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         animateMonstersP1 = new Animation[]{
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 0), Monster1.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), Monster2.getFrameDurationMonsterIdle()),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 600, 300, 0), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 600, 300, 0), Monster3.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P1.png", 600, 300, 0), 250),        // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), 250),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Idle P1.png", 600, 300, 0), 250)         // coming soon
@@ -146,7 +146,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         animateMonstersP2 = new Animation[]{
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 0), Monster1.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), Monster2.getFrameDurationMonsterIdle()),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), 250),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), Monster3.getFrameDurationMonsterIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), 250),        // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), 250),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Idle P2.png", 600, 300, 0), 250)         // coming soon
@@ -156,7 +156,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         animateHumansP1 = new Animation[]{
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), Monster1.getFrameDurationHumanIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), Monster2.getFrameDurationHumanIdle()),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P1.png", 150, 150, 0), 300),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P1.png", 150, 150, 0), Monster3.getFrameDurationHumanIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Human P1.png", 150, 150, 0), 300),       // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.png", 150, 150, 0), 300),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Human P1.png", 150, 150, 0), 300)        // coming soon
@@ -165,7 +165,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         animateHumansP2 = new Animation[]{
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), Monster1.getFrameDurationHumanIdle()),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 0), Monster2.getFrameDurationHumanIdle()),
-                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 0), 300),
+                new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 0), Monster3.getFrameDurationHumanIdle()    ),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 4/Monster 4 - Human P2.png", 150, 150, 0), 300),       // coming soon
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), 300),
                 new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Monster 6/Monster 6 - Human P2.png", 150, 150, 0), 300)        // coming soon
@@ -176,18 +176,18 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 1.png"),
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 2.png"),
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 3.png"),
-                new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 4.png"),
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 5.png"),
+                new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 4.png"),
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 5.png")
         };
 
         coordsImagesHuman = new Coordinate[]{
-                new Coordinate(407, 129),
-                new Coordinate(567, 129),
-                new Coordinate(728, 129),
-                new Coordinate(407, 288),
-                new Coordinate(567, 288),
-                new Coordinate(728, 288)
+                new Coordinate(407, 108),
+                new Coordinate(567, 108),
+                new Coordinate(728, 108),
+                new Coordinate(407, 268),
+                new Coordinate(567, 268),
+                new Coordinate(728, 268)
         };
         coordHumanIndicator = coordsImagesHuman[1];
 
@@ -212,7 +212,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 //                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
         };
 
-        coordImageSongArt = new Coordinate((displayWidth / 2) - (imagesSongArt[0].getWidth() / 2), displayHeight - (imagesSongArt[0].getHeight() * 2));
+        coordImageSongArt = new Coordinate((393), 441);
 
         try {
             // TODO Replace with correct files

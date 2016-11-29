@@ -22,6 +22,12 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.io.*;
 import java.util.ArrayList;
 
+/*
+* - TODO catch errors after notes expires
+* - Cooldown in 2 digits
+* - FIXME Bug in slowmo not removing the note
+*/
+
 public class GameProperState extends BasicGameState implements KeyListener {
 
     private Image imageBG;
@@ -51,7 +57,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private float startingYPos = 0f;
     private float badYPos = 585f;
     private float goodYPos = 610f;
-    private float perfectYPos = 635f;
+    private float perfectYPos = 613f;
     private float endingYPos = 660;    // miss
 
     private static boolean skill1P1 = false;
@@ -99,7 +105,6 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private static int timePassedSinceSkill1P1 = 0;
     private static int timePassedSinceSkill2P1 = 0;
     private static int timePassedSinceSkillUltP1 = 0;
-    // TODO implement cooldown
     private static int timePassedSinceSkill1P2 = 0;
     private static int timePassedSinceSkill2P2 = 0;
     private static int timePassedSinceSkillUltP2 = 0;
@@ -280,14 +285,16 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         imageBG.draw();
         int xx = 0;
-        for(Image test : monsterP1.getSkillIcons()){
-            test.draw(312 + xx, 683);
-            xx += 104;
+
+        //320, 615
+        for (Image test : monsterP1.getSkillIcons()) {
+            test.draw(319 + xx, 614);
+            xx += 100;
         }
         int xy = 0;
-        for(Image test : monsterP2.getSkillIcons()){
-            test.draw(668 + xy, 683);
-            xy += 104;
+        for (Image test : monsterP2.getSkillIcons()) {
+            test.draw(669 + xy, 614);
+            xy += 100;
         }
         // render falling notes
         for (int i = 0; i < notesP1.size(); i++) {
@@ -300,29 +307,29 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Hitbox feedback
         // Draw glowing hitbox if corresponding key is pressed
         if (pressedQ) {
-            imagesPressedHitbox[0].draw(p1x1 - 19, perfectYPos - 15);
+            imagesPressedHitbox[0].draw(p1x1 - 19, perfectYPos - 22);
         }
         if (pressedW) {
-            imagesPressedHitbox[1].draw(p1x2 - 19, perfectYPos - 15);
+            imagesPressedHitbox[1].draw(p1x2 - 19, perfectYPos - 22);
         }
         if (pressedE) {
-            imagesPressedHitbox[2].draw(p1x3 - 19, perfectYPos - 15);
+            imagesPressedHitbox[2].draw(p1x3 - 19, perfectYPos - 22);
         }
         if (pressedR) {
-            imagesPressedHitbox[3].draw(p1x4 - 19, perfectYPos - 15);
+            imagesPressedHitbox[3].draw(p1x4 - 19, perfectYPos - 22);
         }
 
         if (pressedU) {
-            imagesPressedHitbox[0].draw(p2x1 - 19, perfectYPos - 15);
+            imagesPressedHitbox[0].draw(p2x1 - 19, perfectYPos - 22);
         }
         if (pressedI) {
-            imagesPressedHitbox[1].draw(p2x2 - 19, perfectYPos - 15);
+            imagesPressedHitbox[1].draw(p2x2 - 19, perfectYPos - 22);
         }
         if (pressedO) {
-            imagesPressedHitbox[2].draw(p2x3 - 19, perfectYPos - 15);
+            imagesPressedHitbox[2].draw(p2x3 - 19, perfectYPos - 22);
         }
         if (pressedP) {
-            imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 15);
+            imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 22);
         }
 
         // Draw player character animations

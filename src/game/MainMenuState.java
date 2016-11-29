@@ -82,10 +82,10 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         };
 
         coordsArrows = new Coordinate[]{
-                new Coordinate((displayWidth / 2) - 180, 423),
-                new Coordinate((displayWidth / 2) - 180, 487),
-                new Coordinate((displayWidth / 2) - 180, 555),
-                new Coordinate((displayWidth / 2) - 180, 618)
+                new Coordinate((displayWidth / 2) - 180, 368),
+                new Coordinate((displayWidth / 2) - 180, 430),
+                new Coordinate((displayWidth / 2) - 180, 495),
+                new Coordinate((displayWidth / 2) - 180, 563)
         };
 
 

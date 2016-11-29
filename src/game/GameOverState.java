@@ -120,22 +120,22 @@ public class GameOverState extends BasicGameState {
             fontStats.drawString(270, 600, "LOSER");        // P1
             fontStats.drawString(800, 600, "WINNER");       // P2
         } else {
-            fontStats.drawString(500, 650, "WOW DRAWAWAWAW");
+            fontStats.drawString(500, 650, "WOW DRAWWWWWWWWWWWWWWW WTAAAAF");
         }
 
-        fontStats.drawString(420, 221, "" + p1MaxCombo);
-        fontStats.drawString(420, 327, "" + p1MaxRed);
-        fontStats.drawString(420, 365, "" + p1MaxGreen);
-        fontStats.drawString(420, 400, "" + p1MaxBlue);
-        fontStats.drawString(420, 433, "" + p1MaxYellow);
-        fontStats.drawString(420, 500, "" + p1HPLeft);
+        fontStats.drawString(420, 170, "" + p1MaxCombo);
+        fontStats.drawString(420, 277, "" + p1MaxRed);
+        fontStats.drawString(420, 312, "" + p1MaxGreen);
+        fontStats.drawString(420, 357, "" + p1MaxBlue);
+        fontStats.drawString(420, 402, "" + p1MaxYellow);
+        fontStats.drawString(420, 454, "" + p1HPLeft);
 
-        fontStats.drawString(920, 221, "" + p2MaxCombo);
-        fontStats.drawString(920, 327, "" + p2MaxRed);
-        fontStats.drawString(920, 365, "" + p2MaxGreen);
-        fontStats.drawString(920, 400, "" + p2MaxBlue);
-        fontStats.drawString(920, 433, "" + p2MaxYellow);
-        fontStats.drawString(920, 500, "" + p2HPLeft);
+        fontStats.drawString(920, 170, "" + p2MaxCombo);
+        fontStats.drawString(920, 277, "" + p2MaxRed);
+        fontStats.drawString(920, 312, "" + p2MaxGreen);
+        fontStats.drawString(920, 357, "" + p2MaxBlue);
+        fontStats.drawString(920, 402, "" + p2MaxYellow);
+        fontStats.drawString(920, 454, "" + p2HPLeft);
 
     }
 
