@@ -105,21 +105,21 @@ public class Monster1 extends Monster {
     }
 
     public void skill1() {
-        super.setDamage(20);
+        super.setDamage(5);
         super.setResourceRed(super.getResourceRed() - 3);
         super.setResourceYellow(super.getResourceYellow() - 3);
 
     }
 
     public void skill2() {
-        super.setDamage(30);
+        super.setDamage(10);
         super.setResourceRed(super.getResourceGreen() - 7);
         super.setResourceYellow(super.getResourceBlue() - 7);
 
     }
 
     public void skillUlt() {
-        super.setDamage(40);
+        super.setDamage(15);
         super.setResourceRed(super.getResourceRed() - 12);
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
