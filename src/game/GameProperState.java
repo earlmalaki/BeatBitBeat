@@ -27,7 +27,7 @@ import java.util.ArrayList;
 * - Cooldown in 2 digits
 * - FIXME Bug in slowmo not removing the note
 */
-
+    
 public class GameProperState extends BasicGameState implements KeyListener {
 
     private Image imageBG;
