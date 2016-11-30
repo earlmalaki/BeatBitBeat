@@ -305,11 +305,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     animateP1Human = animateHumansP1[caseMonsterAnimation - 1];
 
                     if (caseMonsterAnimation == 1) {
-                        try {
                             monsterP1 = new Monster1(1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     } else if (caseMonsterAnimation == 2) {
                         monsterP1 = new Monster2(1);
                     } else if (caseMonsterAnimation == 3) {
@@ -333,11 +329,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     animateP2Human = animateHumansP2[caseMonsterAnimation - 1];
 
                     if (caseMonsterAnimation == 1) {
-                        try {
                             monsterP2 = new Monster1(2);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     } else if (caseMonsterAnimation == 2) {
                         monsterP2 = new Monster2(2);
                     } else if (caseMonsterAnimation == 3) {
@@ -388,7 +380,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 GameProperState.setMonsterP1(monsterP1);
                 GameProperState.setMonsterP2(monsterP2);
                 // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
-                sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
+                sbg.enterState(BeatBitBeatMain.getVersusPreview(), new FadeOutTransition(), new FadeInTransition());
+                //sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
 
 
             }

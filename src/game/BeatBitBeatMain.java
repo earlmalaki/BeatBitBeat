@@ -71,6 +71,7 @@ public class BeatBitBeatMain extends StateBasedGame {
         // Instantiate each state and add to the list of states
         this.addState(new MainMenuState());
         this.addState(new CharacterSelectionState());
+        this.addState(new VersusPreviewState());
         this.addState(new GameProperState());
         this.addState(new GameOverState());
         this.addState(new OptionsState());
