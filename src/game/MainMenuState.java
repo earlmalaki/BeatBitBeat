@@ -39,9 +39,10 @@ import java.io.IOException;
 
 public class MainMenuState extends BasicGameState implements KeyListener {
 
-    private float yIndicator = 400;
+    private float yIndicator;
 
     // Image array to contain png file for each arrow
+    // arrow color changes per selected button thus needing different files
     private Image[] imagesArrows;
 
     // coordinate set of arrows
@@ -59,12 +60,12 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     // Animation for background
     private Animation animateBGFire;
 
-    private Image imageBG;
-
     // Audio declaration
     private static Music audioMusicMainMenu;
     private Audio soundPressArrows;
     private Audio soundPressEnter;
+
+    private int indexOfSelectedState = 1;   // will hold the ID of the selected state. initialized to GameProperState ID
 
     // MainMenuState.java state ID = 0
     public int getID() {
@@ -73,14 +74,11 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        // load resources and initialize objects
-        imagesArrows = new Image[]{
-                new Image("Assets/Graphics/Main Menu/Start Arrow.png"),
-                new Image("Assets/Graphics/Main Menu/Options Arrow.png"),
-                new Image("Assets/Graphics/Main Menu/Credits Arrow.png"),
-                new Image("Assets/Graphics/Main Menu/Exit Arrow.png"),
-        };
+        initializeImagesAndAnimations();
+        initializeAudioAndMusic();
 
+        // coordinate array for indicator positions
+        // indicator positions are same with the positions of the 4 main buttons
         coordsArrows = new Coordinate[]{
                 new Coordinate((displayWidth / 2) - 180, 368),
                 new Coordinate((displayWidth / 2) - 180, 430),
@@ -88,26 +86,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
                 new Coordinate((displayWidth / 2) - 180, 563)
         };
 
-
-//        imageBG = new Image("Assets/Graphics/Main Menu/Main Menu BG.png");
-        // TODO: Replace correct file for background spritesheet
-        SpriteSheet spriteBG = new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", 1280, 720, 0); //ref, tw, th, spacing
-        animateBGFire = new Animation(spriteBG, 200);     // spritesheet, duration
-
-
-        try {
-            // TODO: Replace correct music and filename
-            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
-            audioMusicMainMenu.loop();
-
-            // TODO: Replace correct sound effects and filename
-            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));
-            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        // initialize indicator y position to the first button (start button)
+        yIndicator = coordsArrows[0].getY();
     }
 
     int delta;  // for printing. temporary
@@ -124,9 +104,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         if (enterPressed) {
             enterPressed = false;
 
-            int indexOfSelectedState = 1;
             if (yIndicator == coordsArrows[0].getY()) {    // if indicator is pointing to Start btn
-                indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get fixed ID for state
+                indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get  ID for state
             } else if (yIndicator == coordsArrows[1].getY()) {     // if indicator is pointing to options btn
                 indexOfSelectedState = BeatBitBeatMain.getOptions();
             } else if (yIndicator == coordsArrows[2].getY()) {     // if indicator is pointing to credits btn
@@ -143,57 +122,33 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-//        imageBG.draw();
         animateBGFire.draw(0, 0);
 
         imagesArrows[indexSelection].draw(coordsArrows[indexSelection].getX(), coordsArrows[indexSelection].getY());
 
         g.drawString("DELTA = " + delta, 10, 30);
         g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
-
     }
 
 
     @Override
     public void keyPressed(int key, char pressedKey) {
+        playSFXKeyPress(key);       // play SFX according to KEY indicated by key argument
         if (key == Input.KEY_UP) {
-            if (BeatBitBeatMain.isSFXOn()) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-            }
-
             if (yIndicator != coordsArrows[0].getY()) {    // if indicator is inside bounds
                 indexSelection--;
                 yIndicator = coordsArrows[indexSelection].getY();
             }
-
-
         }
         if (key == Input.KEY_DOWN) {
-            if (BeatBitBeatMain.isSFXOn()) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-            }
-
-
             if (yIndicator != coordsArrows[3].getY()) {
                 indexSelection++;
                 yIndicator = coordsArrows[indexSelection].getY();
             }
         }
         if (key == Input.KEY_ENTER) {
-            if (BeatBitBeatMain.isSFXOn()) {
-//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-            }
-
             enterPressed = true;
-
         }
-
-
-    }
-
-    @Override
-    public void keyReleased(int key, char pressedKey) {
-
     }
 
     public static void pauseMusic() {
@@ -206,6 +161,44 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     public static void playMusic() {
         audioMusicMainMenu.play();
+    }
+
+    private void initializeImagesAndAnimations() throws SlickException {
+        imagesArrows = new Image[]{
+                new Image("Assets/Graphics/Main Menu/Start Arrow.png"),
+                new Image("Assets/Graphics/Main Menu/Options Arrow.png"),
+                new Image("Assets/Graphics/Main Menu/Credits Arrow.png"),
+                new Image("Assets/Graphics/Main Menu/Exit Arrow.png"),
+        };
+
+        // load spritesheet and feed to Animation constructor
+        animateBGFire = new Animation(new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", displayWidth, displayHeight, 0), 200);     // spritesheet, duration
+    }
+
+    private void initializeAudioAndMusic() throws SlickException {
+        try {
+            // TODO: Replace correct music and filename
+            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
+//            audioMusicMainMenu.loop();  // play in loop the bg music
+
+            // TODO: Replace correct sound effects and filename
+            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));
+            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void playSFXKeyPress(int key) {
+        if (BeatBitBeatMain.isSFXOn()) {
+            if (key == Input.KEY_UP || key == Input.KEY_DOWN || key == Input.KEY_LEFT || key == Input.KEY_RIGHT) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+            }
+            if (key == Input.KEY_ENTER) {
+//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+            }
+        }
     }
 
 

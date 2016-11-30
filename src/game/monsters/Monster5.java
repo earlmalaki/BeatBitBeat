@@ -43,6 +43,15 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -72,6 +81,7 @@ public class Monster5 extends Monster {
     private Animation animationSkill2;
     private Animation animationSkillUlt;
 
+    private Image[] skillIcons;
     // TODO enter proper duration of skill animation when sprites are done
     private Animation animationHumanIdle;
 
@@ -79,51 +89,69 @@ public class Monster5 extends Monster {
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private SkillCost currResources;
+
     // TODO enter proper duration of skill animation when sprites are done
     private static final int skill1Duration = 3000;
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 3000;
+    private static final int skill1Cooldown = 2000;
+    private static final int skill2Cooldown = 3000;
+    private static final int skillUltCooldown = 5000;
+
+
+    private static final int frameDurationMonsterIdle = 260;
+    private static final int frameDurationHumanIdle = 300;
+    private static final int frameDurationSkill1 = 200;
+    private static final int frameDurationSkill2 = 100;
+    private static final int frameDurationSkillUlt = 250;
 
 
     public Monster5(int playerNumber) throws SlickException {
         super();
 
+        skillIcons = new Image[]{
+                new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - 2 Whip Icon.png"),
+                new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura Icon.png")
+        };
         if (playerNumber == 1) {
-            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 1), 250);
-            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P1.jpg", 600, 300, 1), 250);
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
 
-            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 1 Blistol P1.png", 600, 300, 1), 250);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling P1.png", 600, 300, 1), 250);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P1.png", 600, 300, 1), 250);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkill1);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkill2);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkillUlt);
 
             // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
-//        } else if (playerNumber == 2) {
-//            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 1), 250);
-//            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 600, 300, 1), 250);
+        } else if (playerNumber == 2) {
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
 
-//            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 1 Blistol P2.png", 600, 300, 1), 250);
-//            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 2 Gatling P2.png", 600, 300, 1), 250);
-//            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster Skills Sprites/Blueffy/Blueffy - 3 Bluezooka P2.png", 600, 300, 1), 250);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill1);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill2);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
 
     }
 
     @Override
     public Image[] getSkillIcons() {
-        return new Image[0];
+        return skillIcons;
     }
 
     public void skill1() {
         super.setDamage(5);
         super.setResourceRed(super.getResourceRed() - 3);
         super.setResourceYellow(super.getResourceYellow() - 3);
+        getAnimationSkill1().restart();
 
     }
 
     public void skill2() {
         super.setDamage(12);
-        super.setResourceRed(super.getResourceGreen() - 7);
-        super.setResourceYellow(super.getResourceBlue() - 7);
+        super.setResourceGreen(super.getResourceGreen() - 7);
+        super.setResourceBlue(super.getResourceBlue() - 7);
+        getAnimationSkill2().restart();
 
     }
 
@@ -133,101 +161,85 @@ public class Monster5 extends Monster {
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
+        getAnimationSkillUlt().restart();
 
     }
 
-    @Override
     public int getDurationSkill1() {
-        return 0;
+        return skill1Duration;
     }
 
     @Override
     public int getDurationSkill2() {
-        return 0;
+        return skill2Duration;
     }
 
     @Override
     public int getDurationSkillUlt() {
-        return 0;
+        return skillUltDuration;
     }
 
     @Override
     public int getCooldownSkill1() {
-        return 0;
+        return skill1Cooldown;
     }
 
     @Override
     public int getCooldownSkill2() {
-        return 0;
+        return skill2Cooldown;
     }
 
     @Override
     public int getCooldownSkillUlt() {
-        return 0;
+        return skillUltCooldown;
     }
 
     @Override
     public Animation getAnimationIdle() {
-        return null;
+        return animationIdle;
     }
 
     @Override
     public Animation getAnimationHumanIdle() {
-        return null;
+        return animationHumanIdle;
     }
 
     @Override
     public Animation getAnimationSkill1() {
-        return null;
+        return animationSkill1;
     }
 
     @Override
     public Animation getAnimationSkill2() {
-        return null;
+        return animationSkill2;
     }
 
     @Override
     public Animation getAnimationSkillUlt() {
-        return null;
+        return animationSkillUlt;
     }
 
     @Override
     public SkillCost getCostSkill1() {
-        return null;
+        return costSkill1;
     }
 
     @Override
     public SkillCost getCostSkill2() {
-        return null;
+        return costSkill2;
     }
 
     @Override
     public SkillCost getCostSkillUlt() {
-        return null;
+        return costSkillUlt;
     }
 
-    public int getSkill1Duration() {
-        return skill1Duration;
+
+    public static int getFrameDurationMonsterIdle() {
+        return frameDurationMonsterIdle;
     }
 
-    public int getSkill2Duration() {
-        return skill2Duration;
+    public static int getFrameDurationHumanIdle() {
+        return frameDurationHumanIdle;
     }
-
-    public int getSkillUltDuration() {
-        return skillUltDuration;
-    }
-
-    public Animation getSkill1Animation() {
-        return animationSkill1;
-    }
-
-    public Animation getSkill2Animation() {
-        return animationSkill2;
-    }
-
-    public Animation getSkillUltAnimation() {
-        return animationSkillUlt;
-    }
-
 }

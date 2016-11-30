@@ -83,12 +83,12 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     // Coordinates for monster preview animations
 
     // coord for the monster preview animation
-    private Coordinate coordP1Monster = new Coordinate( (float)(displayWidth * 0.03), (float)(displayHeight * 0.20));
-    private Coordinate coordP2Monster = new Coordinate( (float)(displayWidth - 600), (float)(displayHeight * 0.20));
+    private Coordinate coordP1Monster = new Coordinate((float) (displayWidth * 0.03), (float) (displayHeight * 0.20));
+    private Coordinate coordP2Monster = new Coordinate((float) (displayWidth - 600), (float) (displayHeight * 0.20));
 
     // coord for the human preview animation
-    private Coordinate coordP1Human = new Coordinate( (float)(displayWidth * 0.05), 360f);
-    private Coordinate coordP2Human = new Coordinate( (float)(displayWidth - 250), 360f);
+    private Coordinate coordP1Human = new Coordinate((float) (displayWidth * 0.05), 360f);
+    private Coordinate coordP2Human = new Coordinate((float) (displayWidth - 250), 360f);
 
     private Coordinate coordHumanIndicator;
     private Coordinate coordImageSongArt;
@@ -126,11 +126,161 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
+        initializeFonts();
+        initializeImagesAndAnimations();
+        initializeAudioAndMusic();
+
+        coordsImagesHuman = new Coordinate[]{
+                new Coordinate(406, 108),
+                new Coordinate(566, 108),
+                new Coordinate(726, 108),
+                new Coordinate(406, 266),
+                new Coordinate(566, 266),
+                new Coordinate(726, 266)
+        };
+        coordHumanIndicator = coordsImagesHuman[1];
+        coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
+
+        coordImageSongArt = new Coordinate((393), 441);
+    }
+
+
+    int delta;  // for printing. temporary
+    float xMouse;
+    float yMouse;
+
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+
+        this.delta = delta;  // for printing. temporary
+        Input input = gc.getInput();
+        xMouse = input.getMouseX();
+        yMouse = input.getMouseY();
+
+        // cancel/redo selection
+        // reset selections
+        // go back to main menu
+        if (pressedEscape) {
+            backToMainMenu(sbg);
+        }
+
+        updateCoordHumanIndicator();
+
+        if (monsterPicking) {
+            pickMonster();
+        } else if (songPicking) {
+            pickSong();
+        } else {    // if done picking monsters and song
+            if (pressedEnter) {     // game button pressed
+                proceedToGameProper(sbg);
+            }
+
+        }
+
+    }
+
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+
+        imageBackground.draw();
+
+        if (monsterPicking) {
+            renderMonsterPicking();
+        } else if (songPicking) {
+            renderSongPicking();
+        } else {   // character and music picking is done
+            renderDonePickingBoth();
+        }
+
+        g.drawString("DELTA = " + delta, 10, 30);
+        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+    }
+
+
+    @Override
+    public void keyPressed(int key, char pressedKey) {
+
+        if (monsterPicking) {
+            if (key == Input.KEY_UP) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+                if (indexYHumanIndicator != 0) {
+                    indexYHumanIndicator--;
+                }
+            } else if (key == Input.KEY_DOWN) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+                if (indexYHumanIndicator != 1) {
+                    indexYHumanIndicator++;
+                }
+            } else if (key == Input.KEY_LEFT) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+                if (indexXHumanIndicator != 0) {
+                    indexXHumanIndicator--;
+                }
+            } else if (key == Input.KEY_RIGHT) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+                if (indexXHumanIndicator != 2) {
+                    indexXHumanIndicator++;
+                }
+            } else if (key == Input.KEY_ENTER) {
+//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+
+                // disable bottom left(monster 4) and bottom right monsters(monster 6)
+                // for coming soon characters
+                if (!((indexXHumanIndicator == 0 && indexYHumanIndicator == 1) ||  // monster bottom left
+                        (indexXHumanIndicator == 2 && indexYHumanIndicator == 1)))   // monster bottom right
+//                        (indexXHumanIndicator == 2 && indexYHumanIndicator == 0) || //  monster upper right
+//                        (indexXHumanIndicator == 1 && indexYHumanIndicator == 1)))  // monster lower center
+                {
+                    pressedEnter = true;
+                }
+            }
+        } else if (songPicking) {
+            if (key == Input.KEY_LEFT) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+                if (indexImageSongArt != 0) {
+                    indexImageSongArt--;
+                }
+            } else if (key == Input.KEY_RIGHT) {
+                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
+                if (indexImageSongArt != imagesSongArt.length - 1) {
+                    indexImageSongArt++;
+                }
+            } else if (key == Input.KEY_ENTER) {
+//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+                pressedEnter = true;
+            }
+
+        } else {
+            if (key == Input.KEY_ENTER) {
+                pressedEnter = true;
+            }
+        }
+
+        if (key == Input.KEY_ESCAPE) {
+            pressedEscape = true;
+        }
+
+    }
+
+    @Override
+    public void keyReleased(int key, char pressedKey) {
+
+    }
+
+    public static void resetCharSelStateFlags() {
+        pressedEnter = false;
+        monsterPicking = true;
+        songPicking = false;
+        p1Picking = true;
+        p2Picking = false;
+    }
+
+    private void initializeFonts() throws SlickException {
         fontHeader = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 50, false, false);
         fontHeader.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontHeader.addAsciiGlyphs();
         fontHeader.loadGlyphs();
+    }
 
+    private void initializeImagesAndAnimations() throws SlickException {
         imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.png");
 
         // TODO Replace correct file names, Width & Height, adjust duration
@@ -181,25 +331,12 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Assets/Graphics/Character Selection/Human Pic 1x1/Human Pic 6.png")
         };
 
-        coordsImagesHuman = new Coordinate[]{
-                new Coordinate(407, 108),
-                new Coordinate(567, 108),
-                new Coordinate(728, 108),
-                new Coordinate(407, 268),
-                new Coordinate(567, 268),
-                new Coordinate(728, 268)
-        };
-        coordHumanIndicator = coordsImagesHuman[1];
-
         // TODO Replace with correct files and names
         animationHumanIndicator = new Animation(new SpriteSheet("Assets/Graphics/Character Selection/Indicator.png", 150, 150, 0), 100);
 
 
         imageBtnGame = new Image("Assets/Graphics/Character Selection/Play Button.png");
         imageBtnPickSong = new Image("Assets/Graphics/Character Selection/Choose Song Button.png");
-
-        coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
-
 
         // TODO Replace with correct music files and names
         // Image array to hold song arts. Order must be in sync with Audio array
@@ -211,9 +348,9 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                 new Image("Songs/Triton (Original Mix) - Dubvision/bn.png"),
 //                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
         };
+    }
 
-        coordImageSongArt = new Coordinate((393), 441);
-
+    private void initializeAudioAndMusic() throws SlickException {
         try {
             // TODO Replace with correct files
             soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));
@@ -240,41 +377,29 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    int delta;  // for printing. temporary
-    float xMouse;
-    float yMouse;
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+    private void backToMainMenu(StateBasedGame sbg) {
+        pressedEscape = false;
 
-        this.delta = delta;  // for printing. temporary
-        Input input = gc.getInput();
-        xMouse = input.getMouseX();
-        yMouse = input.getMouseY();
+        caseMonsterAnimation = 2;
+        pressedEnter = false;
+        monsterPicking = true;
+        songPicking = false;
+        p1Picking = true;
+        p2Picking = false;
 
-        // cancel/redo selection
-        // reset selections
-        if (pressedEscape) {
-            pressedEscape = false;
-
-            caseMonsterAnimation = 2;
-            pressedEnter = false;
-            monsterPicking = true;
-            songPicking = false;
-            p1Picking = true;
-            p2Picking = false;
-
-            for (Music music : musicSongChoices) {
-                if (music.playing()) {
-                    music.stop();
-                }
+        for (Music music : musicSongChoices) {
+            if (music.playing()) {
+                music.stop();
             }
-
-            MainMenuState.playMusic();
-            sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
         }
 
+        MainMenuState.playMusic();
+        sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
+    }
+
+    private void updateCoordHumanIndicator() {
         if (indexXHumanIndicator == 0 && indexYHumanIndicator == 0) {
             coordHumanIndicator = coordsImagesHuman[0];
         } else if (indexXHumanIndicator == 1 && indexYHumanIndicator == 0) {
@@ -288,257 +413,165 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         } else if (indexXHumanIndicator == 2 && indexYHumanIndicator == 1) {
             coordHumanIndicator = coordsImagesHuman[5];
         }
+    }
 
-
-        if (monsterPicking) {
-
-            for (int i = 0; i < coordsImagesHuman.length; i++) {
-                if (coordHumanIndicator.equalTo(coordsImagesHuman[i])) {
-                    caseMonsterAnimation = i + 1;       // index for casemonster starts at 1
-                }
+    private void pickMonster() throws SlickException {
+        for (int i = 0; i < coordsImagesHuman.length; i++) {
+            if (coordHumanIndicator.equalTo(coordsImagesHuman[i])) {
+                caseMonsterAnimation = i + 1;       // index for casemonster starts at 1
             }
+        }
 
+        if (p1Picking) {    // if player 1's turn to pick
+            if (pressedEnter) {
+                animateP1Monster = animateMonstersP1[caseMonsterAnimation - 1];
+                animateP1Human = animateHumansP1[caseMonsterAnimation - 1];
 
-            if (p1Picking) {    // if player 1's turn to pick
-                if (pressedEnter) {
-                    animateP1Monster = animateMonstersP1[caseMonsterAnimation - 1];
-                    animateP1Human = animateHumansP1[caseMonsterAnimation - 1];
+                monsterP1 = instantiateMonster(1);
 
-                    if (caseMonsterAnimation == 1) {
-                            monsterP1 = new Monster1(1);
-                    } else if (caseMonsterAnimation == 2) {
-                        monsterP1 = new Monster2(1);
-                    } else if (caseMonsterAnimation == 3) {
-                        monsterP1 = new Monster3(1);
-                    } else if (caseMonsterAnimation == 4) {
-                        monsterP1 = new Monster4(1);
-                    } else if (caseMonsterAnimation == 5) {
-                        monsterP1 = new Monster5(1);
-                    } else if (caseMonsterAnimation == 6) {
-                        monsterP1 = new Monster6(1);
-                    }
-                    pressedEnter = false;
-                    p1Picking = false;
-                    p2Picking = true;       // p2's turn to pick
-                }
-            } else if (p2Picking) {    // if player 2's turn to pick
-
-                if (pressedEnter) {
-
-                    animateP2Monster = animateMonstersP2[caseMonsterAnimation - 1];
-                    animateP2Human = animateHumansP2[caseMonsterAnimation - 1];
-
-                    if (caseMonsterAnimation == 1) {
-                            monsterP2 = new Monster1(2);
-                    } else if (caseMonsterAnimation == 2) {
-                        monsterP2 = new Monster2(2);
-                    } else if (caseMonsterAnimation == 3) {
-                        monsterP2 = new Monster3(2);
-                    } else if (caseMonsterAnimation == 4) {
-                        monsterP2 = new Monster4(2);
-                    } else if (caseMonsterAnimation == 5) {
-                        monsterP2 = new Monster5(2);
-                    } else if (caseMonsterAnimation == 6) {
-                        monsterP2 = new Monster6(2);
-                    }
-                    pressedEnter = false;
-                    monsterPicking = false;
-                    p1Picking = false;
-                    p2Picking = false;
-                    songPicking = true;     // pick a song
-                }
-
-            }   // EO (p2Picking)
-
-        } else if (songPicking) {    // song picking
-
-            // Play Audio according to selection scanning
-            for (int i = 0; i < musicSongChoices.length; i++) {
-                if (!musicSongChoices[indexImageSongArt].playing()) {
-                    musicSongChoices[indexImageSongArt].play();
-                }
-            }
-
-            if (pressedEnter) {     // song selected
                 pressedEnter = false;
-                songPicking = false;
-                for (int i = 0; i < musicSongChoices.length; i++) {
-                    if (musicSongChoices[i].playing()) {
-                        GameProperState.setGameMusic(musicSongChoices[i]);      // save selected song for GameProperState usage
-                        GameProperState.setBeatMap(fileSongBeatMaps[i]);
-                    }
+                p1Picking = false;
+                p2Picking = true;       // p2's turn to pick
+            }
+        } else if (p2Picking) {    // if player 2's turn to pick
+
+            if (pressedEnter) {
+
+                animateP2Monster = animateMonstersP2[caseMonsterAnimation - 1];
+                animateP2Human = animateHumansP2[caseMonsterAnimation - 1];
+
+                monsterP2 = instantiateMonster(2);
+
+                pressedEnter = false;
+                monsterPicking = false;
+                p1Picking = false;
+                p2Picking = false;
+                songPicking = true;     // pick a song
+            }
+
+        }   // EO (p2Picking)
+    }
+
+    private Monster instantiateMonster(int playerNumber) throws SlickException {
+        Monster monster = null;
+        if (caseMonsterAnimation == 1) {
+            try {
+                monster = new Monster1(playerNumber);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (caseMonsterAnimation == 2) {
+            monster = new Monster2(playerNumber);
+        } else if (caseMonsterAnimation == 3) {
+            monster = new Monster3(playerNumber);
+        } else if (caseMonsterAnimation == 4) {
+            monster = new Monster4(playerNumber);
+        } else if (caseMonsterAnimation == 5) {
+            monster = new Monster5(playerNumber);
+        } else if (caseMonsterAnimation == 6) {
+            monster = new Monster6(playerNumber);
+        }
+        return monster;
+    }
+
+    private void pickSong() {
+        // Play Audio according to selection scanning
+        for (int i = 0; i < musicSongChoices.length; i++) {
+            if (!musicSongChoices[indexImageSongArt].playing()) {
+                musicSongChoices[indexImageSongArt].play();
+            }
+        }
+
+        if (pressedEnter) {     // song selected
+            pressedEnter = false;
+            songPicking = false;
+            for (int i = 0; i < musicSongChoices.length; i++) {
+                if (musicSongChoices[i].playing()) {
+                    GameProperState.setGameMusic(musicSongChoices[i]);      // save selected song for GameProperState usage
+                    GameProperState.setBeatMap(fileSongBeatMaps[i]);
                 }
             }
-        } else { // if monsterPicking and songPicking is false
-            if (pressedEnter) {     // game button pressed
+        }
+    }
 
-                // stop playing preview of songs
-                for (int i = 0; i < musicSongChoices.length; i++) {
-                    musicSongChoices[i].stop();
-                }
+    private void proceedToGameProper(StateBasedGame sbg) {
+        // stop playing preview of songs
+        for (int i = 0; i < musicSongChoices.length; i++) {
+            musicSongChoices[i].stop();
+        }
 
                 GameProperState.setMonsterP1(monsterP1);
                 GameProperState.setMonsterP2(monsterP2);
                 // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
                 sbg.enterState(BeatBitBeatMain.getVersusPreview(), new FadeOutTransition(), new FadeInTransition());
-                //sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
 
 
             }
 
+    private void renderMonsterPicking() {
+        // render human selection icons
+        for (int i = 0; i < imagesHumans1x1.length; i++) {
+            imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY());
         }
 
-    }
-
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-
-        imageBackground.draw();
-
-        if (monsterPicking) {
-            // render human selection icons
-            for (int i = 0; i < imagesHumans1x1.length; i++) {
-                imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY());
-            }
-
-            animationHumanIndicator.draw(coordHumanIndicator.getX(), coordHumanIndicator.getY());
-            imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY(), Color.darkGray);
-            imageBtnGame.draw( ((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50), Color.darkGray);
+        animationHumanIndicator.draw(coordHumanIndicator.getX(), coordHumanIndicator.getY());
+        imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY(), Color.darkGray);
+        imageBtnGame.draw(((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50), Color.darkGray);
 
 
-            if (p1Picking) {
-                fontHeader.drawString( (displayWidth / 2) - (textPlayer1.length() * 20) / 2, 50, textPlayer1);
+        if (p1Picking) {
+            fontHeader.drawString((displayWidth / 2) - (textPlayer1.length() * 20) / 2, 50, textPlayer1);
 
-                animateMonstersP1[caseMonsterAnimation - 1].draw(coordP1Monster.getX(), coordP1Monster.getY());
-                animateHumansP1[caseMonsterAnimation - 1].draw(coordP1Human.getX(), coordP1Human.getY());
+            animateMonstersP1[caseMonsterAnimation - 1].draw(coordP1Monster.getX(), coordP1Monster.getY());
+            animateHumansP1[caseMonsterAnimation - 1].draw(coordP1Human.getX(), coordP1Human.getY());
 
-            } else if (p2Picking) {
-                fontHeader.drawString( (displayWidth / 2) - (textPlayer2.length() * 20) / 2, 50, textPlayer2);
+        } else if (p2Picking) {
+            fontHeader.drawString((displayWidth / 2) - (textPlayer2.length() * 20) / 2, 50, textPlayer2);
 
-                animateMonstersP2[caseMonsterAnimation - 1].draw(coordP2Monster.getX(), coordP2Monster.getY());
-                animateHumansP2[caseMonsterAnimation - 1].draw(coordP2Human.getX(), coordP2Human.getY());
+            animateMonstersP2[caseMonsterAnimation - 1].draw(coordP2Monster.getX(), coordP2Monster.getY());
+            animateHumansP2[caseMonsterAnimation - 1].draw(coordP2Human.getX(), coordP2Human.getY());
 
-                animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());        // draw preview P1's selected monster
-                animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
-
-            }
-
-        } else if (songPicking) {
-            fontHeader.drawString( (displayWidth / 2) - (textPickASong.length() * 20) / 2, 50, textPickASong);
-
-            // render human selection icons
-            for (int i = 0; i < imagesHumans1x1.length; i++) {
-                imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY(), Color.darkGray);
-            }
-
-            animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
+            animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());        // draw preview P1's selected monster
             animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
 
-            animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
-            animateP2Human.draw(coordP2Human.getX(), coordP2Human.getY());
+        }
+    }
 
-            // draw song art of the song being hovered at
-            imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
+    private void renderSongPicking() {
+        fontHeader.drawString((displayWidth / 2) - (textPickASong.length() * 20) / 2, 50, textPickASong);
+
+        // render human selection icons
+        for (int i = 0; i < imagesHumans1x1.length; i++) {
+            imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY(), Color.darkGray);
+        }
+
+        animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
+        animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
+
+        animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
+        animateP2Human.draw(coordP2Human.getX(), coordP2Human.getY());
+
+        // draw song art of the song being hovered at
+        imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
 //            imageBtnPickSong.draw( ((displayWidth / 2) - (imageBtnPickSong.getWidth() / 2)), (displayHeight - imageBtnPickSong.getHeight() - 50));
-            imageBtnGame.draw( ((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50), Color.darkGray);
-
-        } else {   // character and music picking is done
-            fontHeader.drawString( (displayWidth / 2) - (textGame.length() * 20) / 2, 50, textGame);
-
-            // render human selection icons
-            for (int i = 0; i < imagesHumans1x1.length; i++) {
-                imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY(), Color.darkGray);
-            }
-
-            animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
-            animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
-            animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
-            animateP2Human.draw(coordP2Human.getX(), coordP2Human.getY());
-
-            imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
-            imageBtnGame.draw( ((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50));
-        }
-
-        g.drawString("DELTA = " + delta, 10, 30);
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+        imageBtnGame.draw(((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50), Color.darkGray);
     }
 
+    private void renderDonePickingBoth() {
+        fontHeader.drawString((displayWidth / 2) - (textGame.length() * 20) / 2, 50, textGame);
 
-    @Override
-    public void keyPressed(int key, char pressedKey) {
-
-        if (monsterPicking) {
-            if (key == Input.KEY_UP) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (indexYHumanIndicator != 0) {
-                    indexYHumanIndicator--;
-                }
-            } else if (key == Input.KEY_DOWN) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (indexYHumanIndicator != 1) {
-                    indexYHumanIndicator++;
-                }
-            } else if (key == Input.KEY_LEFT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (indexXHumanIndicator != 0) {
-                    indexXHumanIndicator--;
-                }
-            } else if (key == Input.KEY_RIGHT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (indexXHumanIndicator != 2) {
-                    indexXHumanIndicator++;
-                }
-            } else if (key == Input.KEY_ENTER) {
-//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-
-                // disable bottom left(monster 4) and bottom right monsters(monster 6)
-                // for coming soon characters
-                if (!((indexXHumanIndicator == 0 && indexYHumanIndicator == 1) ||  // monster bottom left
-                (indexXHumanIndicator == 2 && indexYHumanIndicator == 1)))   // monster bottom right
-//                (indexXHumanIndicator == 2 && indexYHumanIndicator == 0)) || //  monster upper right
-//                (indexXHumanIndicator == 1 && indexYHumanIndicator == 1))  // monster lower center
-                {
-                    pressedEnter = true;
-                }
-            }
-        } else if (songPicking) {
-            if (key == Input.KEY_LEFT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (indexImageSongArt != 0) {
-                    indexImageSongArt--;
-                }
-            } else if (key == Input.KEY_RIGHT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-                if (indexImageSongArt != imagesSongArt.length - 1) {
-                    indexImageSongArt++;
-                }
-            } else if (key == Input.KEY_ENTER) {
-//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-                pressedEnter = true;
-            }
-
-        } else {
-            if (key == Input.KEY_ENTER) {
-                pressedEnter = true;
-            }
+        // render human selection icons
+        for (int i = 0; i < imagesHumans1x1.length; i++) {
+            imagesHumans1x1[i].draw(coordsImagesHuman[i].getX(), coordsImagesHuman[i].getY(), Color.darkGray);
         }
 
-        if (key == Input.KEY_ESCAPE) {
-            pressedEscape = true;
-        }
+        animateP1Monster.draw(coordP1Monster.getX(), coordP1Monster.getY());
+        animateP1Human.draw(coordP1Human.getX(), coordP1Human.getY());
+        animateP2Monster.draw(coordP2Monster.getX(), coordP2Monster.getY());
+        animateP2Human.draw(coordP2Human.getX(), coordP2Human.getY());
 
-    }
-
-    @Override
-    public void keyReleased(int key, char pressedKey) {
-
-    }
-
-    public static void resetCharSelStateFlags() {
-        pressedEnter = false;
-        monsterPicking = true;
-        songPicking = false;
-        p1Picking = true;
-        p2Picking = false;
+        imagesSongArt[indexImageSongArt].draw(coordImageSongArt.getX(), coordImageSongArt.getY());
+        imageBtnGame.draw(((displayWidth / 2) - (imageBtnGame.getWidth() / 2)), (displayHeight - imageBtnGame.getHeight() - 50));
     }
 
 }

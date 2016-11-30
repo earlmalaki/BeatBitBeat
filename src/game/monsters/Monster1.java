@@ -25,6 +25,26 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ */
+
+/**
+ * Done:
+ * - basic skeleton code for concrete monster
+ *
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -42,10 +62,12 @@
 package game.monsters;
 
 import game.SkillCost;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.io.IOException;
 
 public class Monster1 extends Monster {
 
@@ -57,10 +79,11 @@ public class Monster1 extends Monster {
     private Image[] skillIcons;
     private Animation animationHumanIdle;
 
+
     private final SkillCost costSkill1 = new SkillCost(3, 0, 0, 3);
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
-    private SkillCost currResources;
+    private Audio monsterSfx;
     private static final int skill1Duration = 1400;
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 2000;
@@ -72,11 +95,15 @@ public class Monster1 extends Monster {
     private static final int frameDurationMonsterIdle = 250;
     private static final int frameDurationHumanIdle = 200;
     private static final int frameDurationSkill1 = 200;
-    private static final int frameDurationSkill2 = 230;
+    private static final int frameDurationSkill2 = 320;
     private static final int frameDurationSkillUlt = 200;
 
+    private static final int damageSkill1 = 15;
+    private static final int damageSkill2 = 25;
+    private static final int damageSkillUlt = 35;
 
-    public Monster1(int playerNumber) throws SlickException {
+
+    public Monster1(int playerNumber) throws SlickException, IOException {
         super();
 
         skillIcons = new Image[]{
@@ -84,6 +111,15 @@ public class Monster1 extends Monster {
                 new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/B3rd.png")
         };
+
+//        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
+        //TODO replace with correct files
+        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3"));
+//        musicSongChoices = new Music[]{
+//                new Music("Assets/Sound Effects/pressEnterMainMenu.ogg")
+////                new Music("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3")
+//        };
+
 
         if (playerNumber == 1) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
@@ -102,28 +138,31 @@ public class Monster1 extends Monster {
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
 
+
+
     }
 
     public void skill1() {
-        super.setDamage(5);
-        super.setResourceRed(super.getResourceRed() - 3);
-        super.setResourceYellow(super.getResourceYellow() - 3);
+        super.setDamage(damageSkill1);
+        super.doSkillCost(costSkill1);
+        getAnimationSkill1().restart();
+//        monsterSfx.playAsSoundEffect(1.0f, 1.0f, true);
 
     }
 
     public void skill2() {
-        super.setDamage(10);
-        super.setResourceGreen(super.getResourceGreen() - 7);
-        super.setResourceBlue(super.getResourceBlue() - 7);
+        super.setDamage(damageSkill2);
+        super.doSkillCost(costSkill2);
+        getAnimationSkill2().restart();
+//        monsterSfx.playAsSoundEffect(1.0f, 1.0f, true);
 
     }
 
     public void skillUlt() {
-        super.setDamage(15);
-        super.setResourceRed(super.getResourceRed() - 12);
-        super.setResourceYellow(super.getResourceYellow() - 12);
-        super.setResourceGreen(super.getResourceGreen() - 12);
-        super.setResourceBlue(super.getResourceBlue() - 12);
+        super.setDamage(damageSkillUlt);
+        super.doSkillCost(costSkillUlt);
+        getAnimationSkillUlt().restart();
+        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
 
     }
 

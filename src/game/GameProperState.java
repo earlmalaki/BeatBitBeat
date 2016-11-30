@@ -236,13 +236,13 @@ public class GameProperState extends BasicGameState implements KeyListener {
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
 
-        if (skill1P1 || timePassedSinceSkill1P1 > 0) {
-            timePassedSinceSkill1P1 += delta;
-            if (timePassedSinceSkill1P1 >= monsterP1.getCooldownSkill1()) {
-                timePassedSinceSkill1P1 = 0;
-                skill1P1 = false;
-            }
-        }
+//        if (skill1P1 || timePassedSinceSkill1P1 > 0) {
+//            timePassedSinceSkill1P1 += delta;
+//            if (timePassedSinceSkill1P1 >= monsterP1.getCooldownSkill1()) {
+//                timePassedSinceSkill1P1 = 0;
+//                skill1P1 = false;
+//            }
+//        }
         if (skill2P1 || timePassedSinceSkill2P1 > 0) {
             timePassedSinceSkill2P1 += delta;
             if (timePassedSinceSkill2P1 >= monsterP1.getCooldownSkill2()) {
@@ -452,7 +452,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_E) {
             pressedE = true;
-            if (notesP1.get(0).getX() == p1x3 + 1) {
+           if (notesP1.get(0).getX() == p1x3 + 1) {
                 if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
 
                     monsterP1.setCombo(0);
@@ -561,6 +561,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     skill1P1 = true;
                     monsterP1.skill1();
                     monsterP1.attack(monsterP2);
+
                 }
             }
 
