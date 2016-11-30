@@ -10,7 +10,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class GameOverState extends BasicGameState {
 
-    private Image imageBG;
+    private Animation animateBG;
 
     private boolean pressedEnter = false;
 
@@ -33,6 +33,10 @@ public class GameOverState extends BasicGameState {
     private static int p2MaxYellow = 0;
     private static int p2HPLeft = 0;
 
+    private static Coordinate[] coordsIndicator;
+    private static int indexPosIndicator = 0;
+
+
     @Override
     public int getID() {
         return BeatBitBeatMain.getGameOver();
@@ -40,7 +44,25 @@ public class GameOverState extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        imageBG = new Image("Assets/Graphics/Game Over/Game Over BG.png");
+        Image imagesBG[] = new Image[] {
+                new Image ("Assets/Graphics/Game Over/Frames/GO0000.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0001.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0002.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0003.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0004.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0005.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0006.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0007.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0008.png"),
+                new Image ("Assets/Graphics/Game Over/Frames/GO0009.png"),
+        };
+
+        coordsIndicator = new Coordinate[] {
+                new Coordinate( (displayWidth / 2), 600),
+                new Coordinate( (displayWidth / 2), 620),
+        };
+
+        animateBG = new Animation(imagesBG, 200);
 
         fontStats = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 36, false, false);
         fontStats.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -55,7 +77,6 @@ public class GameOverState extends BasicGameState {
         Input input = gc.getInput();
         xMouse = input.getMouseX();
         yMouse = input.getMouseY();
-
 
         /*  Stepper effect on stats tally */
         if (p1MaxCombo < GameProperState.monsterP1.getMaxCombo())
@@ -103,45 +124,63 @@ public class GameOverState extends BasicGameState {
             GameProperState.resetGameProperState();
             GameOverState.resetGameOverState();
 
-            sbg.enterState(BeatBitBeatMain.getCharacterSelection(), new FadeOutTransition(), new FadeInTransition());
+            if (indexPosIndicator == 0) {
+                sbg.enterState(BeatBitBeatMain.getCharacterSelection(), new FadeOutTransition(), new FadeInTransition());
+            } else if (indexPosIndicator == 1) {
+                sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
+            }
+
         }
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        imageBG.draw();
+        animateBG.draw();
 
         g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
 
+        g.drawOval(coordsIndicator[indexPosIndicator].getX(), coordsIndicator[indexPosIndicator].getY(), 5, 5);
+
         if (GameProperState.monsterP1.isAlive()) {
-            fontStats.drawString(270, 600, "WINNER");       // P1
-            fontStats.drawString(800, 600, "LOSER");        // P2
+            GameProperState.monsterP1.getAnimationIdle().draw(470,50);
         } else if (GameProperState.monsterP2.isAlive()) {
-            fontStats.drawString(270, 600, "LOSER");        // P1
-            fontStats.drawString(800, 600, "WINNER");       // P2
+            GameProperState.monsterP2.getAnimationIdle().draw(155,50);
         } else {
-            fontStats.drawString(500, 650, "WOW DRAWWWWWWWWWWWWWWW WTAAAAF");
+
         }
 
-        fontStats.drawString(420, 170, "" + p1MaxCombo);
-        fontStats.drawString(420, 277, "" + p1MaxRed);
-        fontStats.drawString(420, 312, "" + p1MaxGreen);
-        fontStats.drawString(420, 357, "" + p1MaxBlue);
-        fontStats.drawString(420, 402, "" + p1MaxYellow);
-        fontStats.drawString(420, 454, "" + p1HPLeft);
+        fontStats.drawString(285, 520, "" + p1MaxCombo);
+        fontStats.drawString(150, 605, "" + p1MaxRed);
+        fontStats.drawString(240, 605, "" + p1MaxGreen);
+        fontStats.drawString(325, 605, "" + p1MaxBlue);
+        fontStats.drawString(410, 605, "" + p1MaxYellow);
+        fontStats.drawString(285, 650, "" + p1HPLeft);
 
-        fontStats.drawString(920, 170, "" + p2MaxCombo);
-        fontStats.drawString(920, 277, "" + p2MaxRed);
-        fontStats.drawString(920, 312, "" + p2MaxGreen);
-        fontStats.drawString(920, 357, "" + p2MaxBlue);
-        fontStats.drawString(920, 402, "" + p2MaxYellow);
-        fontStats.drawString(920, 454, "" + p2HPLeft);
+        fontStats.drawString(980, 520, "" + p2MaxCombo);
+        fontStats.drawString(850, 605, "" + p2MaxRed);
+        fontStats.drawString(940, 605, "" + p2MaxGreen);
+        fontStats.drawString(1025, 605, "" + p2MaxBlue);
+        fontStats.drawString(1110, 605, "" + p2MaxYellow);
+        fontStats.drawString(980, 650, "" + p2HPLeft);
 
     }
 
 
     @Override
     public void keyPressed(int key, char keyChar) {
+
+        if (key == Input.KEY_UP) {
+            if (indexPosIndicator != 0) {
+                indexPosIndicator--;
+            }
+        }
+
+        if (key == Input.KEY_DOWN) {
+            if (indexPosIndicator != 1) {
+                indexPosIndicator++;
+            }
+        }
+
         if (key == Input.KEY_ENTER) {
             pressedEnter = true;
         }
