@@ -84,17 +84,17 @@ public class Monster1 extends Monster {
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private Audio monsterSfx;
-    private static final int skill1Duration = 1400;
+    private static final int skill1Duration = 10000;
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 2000;
 
-    private static final int skill1Cooldown = 5000;
+    private static final int skill1Cooldown = 3000;
     private static final int skill2Cooldown = 7000;
     private static final int skillUltCooldown = 15000;
 
     private static final int frameDurationMonsterIdle = 250;
     private static final int frameDurationHumanIdle = 200;
-    private static final int frameDurationSkill1 = 200;
+    private static final int frameDurationSkill1 = 10;
     private static final int frameDurationSkill2 = 320;
     private static final int frameDurationSkillUlt = 200;
 
@@ -137,9 +137,6 @@ public class Monster1 extends Monster {
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling P2.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
-
-
-
     }
 
     public void skill1() {
@@ -162,7 +159,7 @@ public class Monster1 extends Monster {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
-        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
+//        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
 
     }
 
