@@ -115,6 +115,13 @@ public abstract class Monster {
         maxCombo = 0;
     }
 
+    public void doSkillCost(SkillCost skillCost) {
+        resourceRed -= skillCost.getCostRed();
+        resourceGreen -= skillCost.getCostGreen();
+        resourceBlue -= skillCost.getCostBlue();
+        resourceYellow -= skillCost.getCostYellow();
+    }
+
     public void takeDamage(int damage) {
         this.hp -= damage;
     }

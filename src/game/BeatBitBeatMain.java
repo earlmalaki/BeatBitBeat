@@ -25,7 +25,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class BeatBitBeatMain extends StateBasedGame {
 
-    private static final String gameName = "Beat Bit Beat";
+    private static final String gameName = "BeatBitBeat";
 
     // Game state IDs
     private static final int mainMenu = 0;
@@ -54,10 +54,18 @@ public class BeatBitBeatMain extends StateBasedGame {
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new BeatBitBeatMain(gameName));
-        System.setProperty(" org.lwjgl.opengl.Window.undecorated", "true");
-        app.setTitle("BeatBitBeat");                // Title for top bar
-        app.setDisplayMode(displayWidth, displayHeight, false);     // fullscreen false for now
-        app.setVSync(true);                         // matches monitor refresh rate. or use app.setTargetFrameRate(60);
+        app.setTitle(gameName);                // Title for top bar
+
+        if (((float) app.getScreenWidth() / (float) app.getScreenHeight()) == 1.77f) {
+            app.setDisplayMode(displayWidth, displayHeight, true);  // fullscreen true for displays with the same ratio from game graphics
+        } else {
+            app.setDisplayMode(displayWidth, displayHeight, false);  // fullscreen false for displays with different ratio from game graphics
+        }
+
+        app.setVSync(true);                         // match monitor refresh rate, usually 60hz. thus 60fps. or use app.setTargetFrameRate(60);
+
+        // fix delta, the time in between calls to update() method, to 15ms
+        // critical for beatmap reading
         app.setMinimumLogicUpdateInterval(15);      // minimum delta of 15 ms
         app.setMaximumLogicUpdateInterval(15);      // maximum delta of 15 ms
 
@@ -90,9 +98,7 @@ public class BeatBitBeatMain extends StateBasedGame {
     }
 
 
-    /**
-     * SO Getters
-     **/
+    /*** SO Getters ***/
     public static int getMainMenu() {
         return mainMenu;
     }
