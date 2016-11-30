@@ -86,7 +86,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
             music = new Music(fileDir);     // load selected music
 
             try {
-                File file = new File(fileDir.substring(0, fileDir.length() - fileName.length()) +fileName.substring(0, fileName.length() - 4) +" Beat Map.txt");
+                File file = new File("Beat Map.txt");
                 bw = new BufferedWriter(new FileWriter(file));
 
             } catch (IOException e) {

@@ -141,7 +141,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         coordHumanIndicator = coordsImagesHuman[1];
         coordBtnGame = new Coordinate((displayWidth / 2) - (imageBtnGame.getWidth() / 2), displayHeight - 200);
 
-        coordImageSongArt = new Coordinate((393), 441);
+        coordImageSongArt = new Coordinate((391), 440);
     }
 
 
@@ -342,11 +342,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         // Image array to hold song arts. Order must be in sync with Audio array
         indexImageSongArt = 0;
         imagesSongArt = new Image[]{
-                new Image("Songs/Goin' Under/bn.png"),
-                new Image("Songs/MechaTribe Assault/bn.png"),
-                new Image("Songs/Springtime/bn.png"),
-                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png"),
-//                new Image("Songs/Triton (Original Mix) - Dubvision/bn.png")
+                new Image("Songs/Rage Against The Machine/Killing In The Name/Song Art.png"),
+                new Image("Songs/Metallica/Master Of Puppets/Song Art.png"),
         };
     }
 
@@ -359,19 +356,13 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             // TODO Replace with correct files and names
             // Audio array to songs. Order must be in sync with song art Image array
             musicSongChoices = new Music[]{
-                    new Music("Songs/Goin' Under/Goin' Under.ogg"),
-                    new Music("Songs/MechaTribe Assault/Mecha-Tribe Assault.ogg"),
-                    new Music("Songs/Springtime/Kommisar - Springtime.ogg"),
-                    new Music("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix).ogg"),
-//                    new Music("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name.ogg"),
+                    new Music("Songs/Rage Against The Machine/Killing In The Name/Song.ogg"),
+                    new Music("Songs/Metallica/Master Of Puppets/Song.ogg"),
             };
 
             fileSongBeatMaps = new File[]{
-                    new File("Songs/Goin' Under/Goin' Under Beat Map.txt"),
-                    new File("Songs/MechaTribe Assault/Mecha-Tribe Assault Beat Map.txt"),
-                    new File("Songs/Springtime/Kommisar - Springtime Beat Map.txt"),
-                    new File("Songs/Triton (Original Mix) - Dubvision/Triton (Original Mix) Beat Map.txt"),
-//                    new File("Songs/Rage Against The Machine/Rage Against The Machine - Killing In The Name Beat Map.txt")
+                    new File("Songs/Rage Against The Machine/Killing In The Name/Beat Map.txt"),
+                    new File("Songs/Metallica/Master Of Puppets/Beat Map.txt"),
             };
 
         } catch (IOException e) {
@@ -451,7 +442,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         }   // EO (p2Picking)
     }
-    
+
     private Monster instantiateMonster(int playerNumber) throws SlickException {
         Monster monster = null;
         if (caseMonsterAnimation == 1) {
@@ -500,11 +491,13 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             musicSongChoices[i].stop();
         }
 
-        GameProperState.setMonsterP1(monsterP1);
-        GameProperState.setMonsterP2(monsterP2);
-        // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
-        sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
-    }
+                GameProperState.setMonsterP1(monsterP1);
+                GameProperState.setMonsterP2(monsterP2);
+                // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
+                sbg.enterState(BeatBitBeatMain.getVersusPreview(), new FadeOutTransition(), new FadeInTransition());
+
+
+            }
 
     private void renderMonsterPicking() {
         // render human selection icons

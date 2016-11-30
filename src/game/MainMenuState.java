@@ -171,8 +171,21 @@ public class MainMenuState extends BasicGameState implements KeyListener {
                 new Image("Assets/Graphics/Main Menu/Exit Arrow.png"),
         };
 
+        Image[] imagesBG = new Image[] {
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0000.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0001.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0002.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0003.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0004.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0005.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0006.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0007.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0008.png"),
+                new Image("Assets/Graphics/Main Menu/Frames/Home Screen0009.png"),
+        };
+
         // load spritesheet and feed to Animation constructor
-        animateBGFire = new Animation(new SpriteSheet("Assets/Graphics/Main Menu/Main Menu BG.png", displayWidth, displayHeight, 0), 200);     // spritesheet, duration
+        animateBGFire = new Animation(imagesBG, 200);     // spritesheet, duration
     }
 
     private void initializeAudioAndMusic() throws SlickException {
