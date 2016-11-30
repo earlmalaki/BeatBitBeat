@@ -92,7 +92,7 @@ public class Monster2 extends Monster {
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P1.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P1.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P1.png", 600, 300, 0), frameDurationSkillUlt);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Portal Out P1.png", 600, 300, 0), frameDurationSkillUlt);
 
         } else if (playerNumber == 2) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
@@ -100,7 +100,7 @@ public class Monster2 extends Monster {
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P2.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 3 Release P2.png", 600, 300, 0), frameDurationSkillUlt);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost 3Portal Out P2.png", 600, 300, 0), frameDurationSkillUlt);
         }
 
     }
@@ -114,6 +114,7 @@ public class Monster2 extends Monster {
         super.setDamage(5);
         super.setResourceRed(super.getResourceRed() - 3);
         super.setResourceYellow(super.getResourceYellow() - 3);
+        getAnimationSkill1().restart();
 
     }
 
@@ -122,6 +123,7 @@ public class Monster2 extends Monster {
         super.setDamage(10);
         super.setResourceGreen(super.getResourceGreen() - 7);
         super.setResourceBlue(super.getResourceBlue() - 7);
+        getAnimationSkill2().restart();
 
     }
 
@@ -131,7 +133,7 @@ public class Monster2 extends Monster {
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
-
+        getAnimationSkillUlt().restart();
     }
 
     @Override

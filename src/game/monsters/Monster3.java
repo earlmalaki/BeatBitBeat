@@ -43,6 +43,15 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -90,9 +99,10 @@ public class Monster3 extends Monster {
 
     private static final int frameDurationMonsterIdle = 260;
     private static final int frameDurationHumanIdle = 300;
-    private static final int frameDurationSkill1 = 200;
-    private static final int frameDurationSkill2 = 100;
-    private static final int frameDurationSkillUlt = 250;
+    //    private static final int frameDurationSkill1 = 210;
+    private static final int frameDurationSkill1 = 285;
+    private static final int frameDurationSkill2 = 300;
+    private static final int frameDurationSkillUlt = 405;
 
     //fire
     public Monster3(int playerNumber) throws SlickException {
@@ -104,20 +114,20 @@ public class Monster3 extends Monster {
                 new Image("Assets/Graphics/Monster and Human Sprites/Flame/X-Burner.png")
         };
         if (playerNumber == 1) {
-            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 600, 300, 1), frameDurationMonsterIdle);
-            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P1.png", 150, 150, 1), frameDurationHumanIdle);
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
 
-            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P1.png", 600, 300, 1), frameDurationSkill1);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/x-burn.png", 600, 300, 1), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P1.png", 600, 300, 1), frameDurationSkillUlt);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P1.png", 600, 300, 0), frameDurationSkill1);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P1.png", 600, 300, 0), frameDurationSkillUlt);
 
         } else if (playerNumber == 2) {
-            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 1), frameDurationMonsterIdle);
-            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 1), frameDurationHumanIdle);
+            animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
 
-            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P2.png", 600, 300, 1), frameDurationSkill1);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P2.png", 600, 300, 1), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/x-burn.png", 600, 300, 1), frameDurationSkillUlt);
+            animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - 1 Fire Fist P2.png", 600, 300, 0), frameDurationSkill1);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/X-burner P1.png", 600, 300, 0), frameDurationSkillUlt);
         }
 
     }
@@ -131,6 +141,7 @@ public class Monster3 extends Monster {
         super.setDamage(5);
         super.setResourceRed(super.getResourceRed() - 3);
         super.setResourceYellow(super.getResourceYellow() - 3);
+        getAnimationSkill1().restart();
 
     }
 
@@ -138,6 +149,7 @@ public class Monster3 extends Monster {
         super.setDamage(10);
         super.setResourceGreen(super.getResourceGreen() - 7);
         super.setResourceBlue(super.getResourceBlue() - 7);
+        getAnimationSkill2().restart();
     }
 
 
@@ -147,6 +159,8 @@ public class Monster3 extends Monster {
         super.setResourceYellow(super.getResourceYellow() - 12);
         super.setResourceGreen(super.getResourceGreen() - 12);
         super.setResourceBlue(super.getResourceBlue() - 12);
+        getAnimationSkillUlt().restart();
+
 
     }
 
