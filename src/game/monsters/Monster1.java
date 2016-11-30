@@ -62,10 +62,11 @@
 package game.monsters;
 
 import game.SkillCost;
-import org.newdawn.slick.*;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.openal.AudioLoader;
-import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
 
@@ -114,7 +115,7 @@ public class Monster1 extends Monster {
 
 //        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
         //TODO replace with correct files
-        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3"));
+//        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3"));
 //        musicSongChoices = new Music[]{
 //                new Music("Assets/Sound Effects/pressEnterMainMenu.ogg")
 ////                new Music("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3")
@@ -162,7 +163,7 @@ public class Monster1 extends Monster {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
-        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
+//        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
 
     }
 

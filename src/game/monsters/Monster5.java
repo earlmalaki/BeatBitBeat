@@ -52,6 +52,24 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
