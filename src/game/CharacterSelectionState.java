@@ -442,7 +442,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
         }   // EO (p2Picking)
     }
-    
+
     private Monster instantiateMonster(int playerNumber) throws SlickException {
         Monster monster = null;
         if (caseMonsterAnimation == 1) {
@@ -491,11 +491,13 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             musicSongChoices[i].stop();
         }
 
-        GameProperState.setMonsterP1(monsterP1);
-        GameProperState.setMonsterP2(monsterP2);
-        // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
-        sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
-    }
+                GameProperState.setMonsterP1(monsterP1);
+                GameProperState.setMonsterP2(monsterP2);
+                // TODO low prio. 3..2..1.. Countdown at GameProperState before music starts
+                sbg.enterState(BeatBitBeatMain.getVersusPreview(), new FadeOutTransition(), new FadeInTransition());
+
+
+            }
 
     private void renderMonsterPicking() {
         // render human selection icons
