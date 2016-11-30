@@ -14,7 +14,8 @@ public class GameOverState extends BasicGameState {
 
     private boolean pressedEnter = false;
 
-    UnicodeFont fontStats;
+    private UnicodeFont fontStats;
+    private UnicodeFont fontWinningPlayer;
 
     private int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private int displayHeight = BeatBitBeatMain.getDisplayHeight();
@@ -58,16 +59,21 @@ public class GameOverState extends BasicGameState {
         };
 
         coordsIndicator = new Coordinate[] {
-                new Coordinate( (displayWidth / 2), 600),
-                new Coordinate( (displayWidth / 2), 620),
+                new Coordinate( 537, 595),
+                new Coordinate( 537, 680),
         };
 
         animateBG = new Animation(imagesBG, 200);
 
-        fontStats = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 36, false, false);
+        fontStats = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 24, false, false);
         fontStats.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontStats.addAsciiGlyphs();
         fontStats.loadGlyphs();
+
+        fontWinningPlayer = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 32, false, false);
+        fontWinningPlayer.getEffects().add(new ColorEffect(java.awt.Color.white));
+        fontWinningPlayer.addAsciiGlyphs();
+        fontWinningPlayer.loadGlyphs();
     }
 
     float xMouse;
@@ -139,29 +145,40 @@ public class GameOverState extends BasicGameState {
 
         g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
 
-        g.drawOval(coordsIndicator[indexPosIndicator].getX(), coordsIndicator[indexPosIndicator].getY(), 5, 5);
+        g.setColor(Color.gray);
+        g.fillRect(coordsIndicator[indexPosIndicator].getX(), coordsIndicator[indexPosIndicator].getY(), 207f, 3f);
 
-        if (GameProperState.monsterP1.isAlive()) {
+        if (GameProperState.monsterP1.getHp() > GameProperState.monsterP2.getHp()) {
             GameProperState.monsterP1.getAnimationIdle().draw(470,50);
-        } else if (GameProperState.monsterP2.isAlive()) {
-            GameProperState.monsterP2.getAnimationIdle().draw(155,50);
+            GameProperState.monsterP1.getAnimationHumanIdle().draw(520,220);
+            fontWinningPlayer.drawString(580, 472, "PLAYER 1");
+        } else if (GameProperState.monsterP1.getHp() < GameProperState.monsterP2.getHp()) {
+            GameProperState.monsterP2.getAnimationIdle().draw(210,50);
+            GameProperState.monsterP2.getAnimationHumanIdle().draw(550,220);
+            fontWinningPlayer.drawString(580, 472, "PLAYER 2");
         } else {
+            GameProperState.monsterP1.getAnimationIdle().draw(190,150);
+            GameProperState.monsterP2.getAnimationIdle().draw(480,150);
 
+            GameProperState.monsterP1.getAnimationHumanIdle().draw(510,220);
+            GameProperState.monsterP2.getAnimationHumanIdle().draw(610,220);
+
+            fontWinningPlayer.drawString(600, 472, "DRAW");
         }
 
-        fontStats.drawString(285, 520, "" + p1MaxCombo);
+        fontStats.drawString(285, 538, "" + p1MaxCombo);
         fontStats.drawString(150, 605, "" + p1MaxRed);
         fontStats.drawString(240, 605, "" + p1MaxGreen);
         fontStats.drawString(325, 605, "" + p1MaxBlue);
         fontStats.drawString(410, 605, "" + p1MaxYellow);
-        fontStats.drawString(285, 650, "" + p1HPLeft);
+        fontStats.drawString(285, 658, "" + p1HPLeft);
 
-        fontStats.drawString(980, 520, "" + p2MaxCombo);
+        fontStats.drawString(980, 538, "" + p2MaxCombo);
         fontStats.drawString(850, 605, "" + p2MaxRed);
         fontStats.drawString(940, 605, "" + p2MaxGreen);
         fontStats.drawString(1025, 605, "" + p2MaxBlue);
         fontStats.drawString(1110, 605, "" + p2MaxYellow);
-        fontStats.drawString(980, 650, "" + p2HPLeft);
+        fontStats.drawString(980, 658, "" + p2HPLeft);
 
     }
 
