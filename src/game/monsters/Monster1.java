@@ -43,6 +43,17 @@
  * To Do:
  * - add specific identity/behaviour (skills, capabilities, etc.)
  * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ */
+
+/**
+ * Done:
+ * - basic skeleton code for concrete monster
+ *
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
  *
  * game.Note:
  *
