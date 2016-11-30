@@ -65,9 +65,9 @@ public class Monster1 extends Monster {
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 2000;
 
-    private static final int skill1Cooldown = 2000;
-    private static final int skill2Cooldown = 3000;
-    private static final int skillUltCooldown = 5000;
+    private static final int skill1Cooldown = 5000;
+    private static final int skill2Cooldown = 7000;
+    private static final int skillUltCooldown = 15000;
 
     private static final int frameDurationMonsterIdle = 250;
     private static final int frameDurationHumanIdle = 200;
@@ -113,8 +113,8 @@ public class Monster1 extends Monster {
 
     public void skill2() {
         super.setDamage(10);
-        super.setResourceRed(super.getResourceGreen() - 7);
-        super.setResourceYellow(super.getResourceBlue() - 7);
+        super.setResourceGreen(super.getResourceGreen() - 7);
+        super.setResourceBlue(super.getResourceBlue() - 7);
 
     }
 
