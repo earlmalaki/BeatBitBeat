@@ -33,6 +33,10 @@ public class GameOverState extends BasicGameState {
     private static int p2MaxYellow = 0;
     private static int p2HPLeft = 0;
 
+    private static Coordinate[] coordsIndicator;
+    private static int indexPosIndicator = 0;
+
+
     @Override
     public int getID() {
         return BeatBitBeatMain.getGameOver();
@@ -53,6 +57,11 @@ public class GameOverState extends BasicGameState {
                 new Image ("Assets/Graphics/Game Over/Frames/GO0009.png"),
         };
 
+        coordsIndicator = new Coordinate[] {
+                new Coordinate( (displayWidth / 2), 600),
+                new Coordinate( (displayWidth / 2), 620),
+        };
+
         animateBG = new Animation(imagesBG, 200);
 
         fontStats = new UnicodeFont("Assets/Fonts/Disposable Droid/DisposableDroidBB.ttf", 36, false, false);
@@ -68,7 +77,6 @@ public class GameOverState extends BasicGameState {
         Input input = gc.getInput();
         xMouse = input.getMouseX();
         yMouse = input.getMouseY();
-
 
         /*  Stepper effect on stats tally */
         if (p1MaxCombo < GameProperState.monsterP1.getMaxCombo())
@@ -116,7 +124,12 @@ public class GameOverState extends BasicGameState {
             GameProperState.resetGameProperState();
             GameOverState.resetGameOverState();
 
-            sbg.enterState(BeatBitBeatMain.getCharacterSelection(), new FadeOutTransition(), new FadeInTransition());
+            if (indexPosIndicator == 0) {
+                sbg.enterState(BeatBitBeatMain.getCharacterSelection(), new FadeOutTransition(), new FadeInTransition());
+            } else if (indexPosIndicator == 1) {
+                sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
+            }
+
         }
     }
 
@@ -125,6 +138,8 @@ public class GameOverState extends BasicGameState {
         animateBG.draw();
 
         g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+
+        g.drawOval(coordsIndicator[indexPosIndicator].getX(), coordsIndicator[indexPosIndicator].getY(), 5, 5);
 
         if (GameProperState.monsterP1.isAlive()) {
             GameProperState.monsterP1.getAnimationIdle().draw(470,50);
@@ -155,11 +170,15 @@ public class GameOverState extends BasicGameState {
     public void keyPressed(int key, char keyChar) {
 
         if (key == Input.KEY_UP) {
-
+            if (indexPosIndicator != 0) {
+                indexPosIndicator--;
+            }
         }
 
         if (key == Input.KEY_DOWN) {
-
+            if (indexPosIndicator != 1) {
+                indexPosIndicator++;
+            }
         }
 
         if (key == Input.KEY_ENTER) {
