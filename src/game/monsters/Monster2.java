@@ -47,7 +47,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class Monster2 extends Monster {
+public class Monster2 extends Monster{
 
 
     private Animation animationIdle;

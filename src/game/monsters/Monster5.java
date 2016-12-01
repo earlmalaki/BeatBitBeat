@@ -97,6 +97,42 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -124,9 +160,8 @@ public class Monster5 extends Monster {
     private Animation animationIdle;
     private Animation animationSkill1;
     private Animation animationSkill2;
-    private Animation animationSkillUltP1;
-    private Animation animationSkillUltP2;
-    private Animation animationSkillUltP3;
+    private Animation animationSkillUlt;
+
 
     private Image[] skillIcons;
     // TODO enter proper duration of skill animation when sprites are done
@@ -138,9 +173,9 @@ public class Monster5 extends Monster {
     private SkillCost currResources;
 
     // TODO enter proper duration of skill animation when sprites are done
-    private static final int skill1Duration = 3000;
+    private static final int skill1Duration = 2600;
     private static final int skill2Duration = 3000;
-    private static final int skillUltDuration = 3000;
+    private static final int skillUltDuration = 5200;
     private static final int skill1Cooldown = 2000;
     private static final int skill2Cooldown = 3000;
     private static final int skillUltCooldown = 5000;
@@ -148,19 +183,28 @@ public class Monster5 extends Monster {
 
     private static final int frameDurationMonsterIdle = 260;
     private static final int frameDurationHumanIdle = 300;
-    private static final int frameDurationSkill1 = 200;
-    private static final int frameDurationSkill2 = 260;
+    private static final int frameDurationSkill1 = 150;
+    private static final int frameDurationSkill2 = 130;
+    private static final int frameDurationSkillUlt = 401;
     private static final int frameDurationSkillUltP1 = 100;
     private static final int frameDurationSkillUltP2 = 200;
     private static final int frameDurationSkillUltP3 = 100;
+    // ULT skill sequence duration
+//    private static final int skillUltADuration = 600;
+//    private static final int skillUltBDuration = 4000;
+//    private static final int skillUltDuration = 600;
 
     private static final int animationDurationSkillUltP1 = 600;
     private static final int animationDurationSkillUltP2 = 4000;
     private static final int animationDurationSkillUltP3 = 600;
+    // ULT skill sequence frame duration
+//    private static final int frameDurationSkillAUlt = 100;
+//    private static final int frameDurationSkillBUlt = 200;
+//    private static final int frameDurationSkillCUlt = 100;
 
     private static final int damageSkill1 = 15;
     private static final int damageSkill2 = 25;
-    private static final int damageSkillUlt = 35;
+    private static final int damageSkillUlt = -20;
 
 
     public Monster5(int playerNumber) throws SlickException {
@@ -176,31 +220,104 @@ public class Monster5 extends Monster {
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkill1);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 2 Whip P1.png", 720, 300, 0), frameDurationSkill2);
-            animationSkillUltP1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura1 P1.png", 720, 300, 0), frameDurationSkillUltP1);
-            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P1.png", 720, 300, 0), frameDurationSkillUltP2);
-            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P1.png", 720, 300, 0), frameDurationSkillUltP3);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/whip p1.png", 720, 300, 0), frameDurationSkill2);
+//            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
+//            animationSkillUltP1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura1 P1.png", 833, 585, 0), frameDurationSkillUltP1);
+//            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P1.png", 833, 585, 0), frameDurationSkillUltP2);
+//            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P1.png", 833, 585, 0), frameDurationSkillUltP3);
+            Image[] skillUlt = new Image[]{
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura00.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura01.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura02.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura03.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura04.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura05.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura06.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura07.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura08.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura09.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura10.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura11.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura12.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura13.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura14.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura15.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura16.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura17.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura18.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura19.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura20.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura21.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura22.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura23.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura24.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura25.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura26.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura27.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura28.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura29.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura30.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura31.png")
+            };
+
+            int[] duration = new int[]{
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100, //6
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200, //20
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+
+
+            };
+            animationSkillUlt = new Animation(skillUlt, duration);
 
 
             // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
-        } else if (playerNumber == 2) {
+        } else if (playerNumber == 2)
+
+        {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill1);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 2 Whip P2.png", 720, 300, 0), frameDurationSkill2);
-            animationSkillUltP1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura1 P2.png", 720, 300, 0), frameDurationSkillUltP1);
-            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P2.png", 720, 300, 0), frameDurationSkillUltP2);
-            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P2.png", 720, 300, 0), frameDurationSkillUltP3);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/whip p2.png", 720, 300, 0), frameDurationSkill2);
+//            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
 
         }
     }
 
 
-    @Override
-    public Image[] getSkillIcons() {
-        return skillIcons;
-    }
+        @Override
+        public Image[] getSkillIcons () {
+            return skillIcons;
+        }
 
     public void skill1() {
         super.setDamage(damageSkill1);
@@ -219,7 +336,6 @@ public class Monster5 extends Monster {
     public void skillUlt() {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
-        getAnimationSkillUlt().restart();
     }
 
     public int getDurationSkill1() {
@@ -274,20 +390,25 @@ public class Monster5 extends Monster {
 
     private int time = 0;
 
-    @Override
-    public Animation getAnimationSkillUlt() {
-//         if timespanned < duration of ult p1
-        // frameduration 1      frameduration 2         frameDuration 3
-        time += 15;
-        if (time > (frameDurationSkillUltP2 + frameDurationSkillUltP1) && time < frameDurationSkillUltP1 + frameDurationSkillUltP2 + frameDurationSkillUltP3) {
-            return animationSkillUltP3;
-        } else if (time > frameDurationSkillUltP1 && time < frameDurationSkillUltP1 + frameDurationSkillUltP2) {
-            return animationSkillUltP2;
-        } else if (time > 0 && time < frameDurationSkillUltP1) {
-            return animationSkillUltP1;
-        }
+    /*
+        @Override
+        public Animation getAnimationSkillUlt() {
+    //         if timespanned < duration of ult p1
+            // frameduration 1      frameduration 2         frameDuration 3
+            time += 15;
+            if (time > (animationDurationSkillUltP2 + animationDurationSkillUltP1) && time < animationDurationSkillUltP1 + animationDurationSkillUltP2 + animationDurationSkillUltP3) {
+                return animationSkillUltP3;
+            } else if (time > animationDurationSkillUltP1 && time < animationDurationSkillUltP1 + animationDurationSkillUltP2) {
+                return animationSkillUltP2;
+            } else if (time > 0 && time < animationDurationSkillUltP1) {
+                return animationSkillUltP1;
+            }
 
-        return animationIdle;
+            return animationIdle;
+        }*/
+    public Animation getAnimationSkillUlt() {
+
+        return animationSkillUlt;
     }
 
     @Override

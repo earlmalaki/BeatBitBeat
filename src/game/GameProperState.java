@@ -11,7 +11,10 @@
 
 package game;
 
+//import game.monsters.Globalable;
+
 import game.monsters.Monster;
+import game.monsters.Monster5;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -22,10 +25,13 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.io.*;
 import java.util.ArrayList;
 
-/*
-* - TODO catch errors after notes expires
-* - Cooldown in 2 digits
-* - FIXME Bug in slowmo not removing the note
+/* TODO
+* - spritesheet fix:
+* - flame x-burner
+* - flame firefly
+* - ghost 3
+* - root whip
+* - root sakura
 */
 
 public class GameProperState extends BasicGameState implements KeyListener {
@@ -229,7 +235,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             endOfGame = false;
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
-        if ((monsterP1.getHp() <= 0 || monsterP2.getHp() <= 0) && (!gameMusic.playing() && (monsterP1.getHp() == 100 && monsterP2.getHp() == 100))) {
+        if ((monsterP1.getHp() <= 0 || monsterP2.getHp() <= 0)) {
             MainMenuState.resumeMusic();
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
@@ -341,20 +347,47 @@ public class GameProperState extends BasicGameState implements KeyListener {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
             monsterP1.getAnimationSkill1().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
         } else if (skill2P1) {
-            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
-            monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            if (monsterP1 instanceof game.monsters.Monster3) {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            } else {
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            }
         } else if (skillUltP1) {
-            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
-            monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            if (monsterP2 instanceof game.monsters.Monster5) {
+                monsterP1.getAnimationSkillUlt().draw(212, 40);
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else {
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            }
         } else if (skill1P2) {
+
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
             monsterP2.getAnimationSkill1().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+
         } else if (skill2P2) {
-            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-            monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            if (monsterP2 instanceof game.monsters.Monster3) {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            }
         } else if (skillUltP2) {
-            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-            monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            if (monsterP2 instanceof game.monsters.Monster5) {
+//                monsterP2.getAnimationSkillUlt().draw(1057, 40);
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            }
+
 
         } else {    // Idle
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
@@ -557,88 +590,97 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     }
                 }
             }
-        }catch(IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             endOfGame = true;
         }
 
-            /*** Start of Skills ***/
-            if (!(skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2)) {     // disable casting skill while a skill is ongoing
+        /*** Start of Skills ***/
+        if (!(skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2)) {     // disable casting skill while a skill is ongoing
 
 
-                if (key == Input.KEY_X) {
-                    if (monsterP1.checkResources(monsterP1.getCostSkill1()) && timePassedSinceSkill1P1 == 0) {   //monsters has resources and skill cooldowned alrdy, go atk
-                        skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
-                        skill1P1 = true;
-                        monsterP1.skill1();
+            if (key == Input.KEY_X) {
+                if (monsterP1.checkResources(monsterP1.getCostSkill1()) && timePassedSinceSkill1P1 == 0) {   //monsters has resources and skill cooldowned alrdy, go atk
+                    skillCast(monsterP1.getDurationSkill1());       // call skillCast and pass duration of slow motion
+                    skill1P1 = true;
+                    monsterP1.skill1();
+                    monsterP1.attack(monsterP2);
+
+                }
+            }
+
+            if (key == Input.KEY_C) {
+                if (monsterP1.checkResources(monsterP1.getCostSkill2()) && timePassedSinceSkill2P1 == 0) { //monsters has resources, go atk
+                    skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
+                    skill2P1 = true;
+                    monsterP1.skill2();
+
+                    monsterP1.attack(monsterP2);
+                }
+            }
+
+            if (key == Input.KEY_V) {
+                if (monsterP1.checkResources(monsterP1.getCostSkillUlt()) && timePassedSinceSkillUltP1 == 0) { //monsters has resources, go atk
+                    skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
+                    skillUltP1 = true;
+                    monsterP1.skillUlt();
+                    if (monsterP2 instanceof game.monsters.Monster5) {
+                        monsterP1.attack(monsterP1);
+                    } else {
                         monsterP1.attack(monsterP2);
-
-                    }
-                }
-
-                if (key == Input.KEY_C) {
-                    if (monsterP1.checkResources(monsterP1.getCostSkill2()) && timePassedSinceSkill2P1 == 0) { //monsters has resources, go atk
-                        skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
-                        skill2P1 = true;
-                        monsterP1.skill2();
-                        monsterP1.attack(monsterP2);
-                    }
-                }
-
-                if (key == Input.KEY_V) {
-                    if (monsterP1.checkResources(monsterP1.getCostSkillUlt()) && timePassedSinceSkillUltP1 == 0) { //monsters has resources, go atk
-                        skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
-                        skillUltP1 = true;
-                        monsterP1.skillUlt();
-                        monsterP1.attack(monsterP2);
-                    }
-                }
-
-                if (key == Input.KEY_B) {
-
-                    if (monsterP2.checkResources(monsterP2.getCostSkill1()) && timePassedSinceSkill1P2 == 0) {//monsters has resources, go atk
-                        skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
-                        skill1P2 = true;
-                        monsterP2.skill1();
-                        monsterP2.attack(monsterP1);
-                    }
-                }
-
-                if (key == Input.KEY_N) {
-                    if (monsterP2.checkResources(monsterP2.getCostSkill2()) && timePassedSinceSkill2P2 == 0) { //monsters has resources, go atk
-                        skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
-                        skill2P2 = true;
-                        monsterP2.skill2();
-                        monsterP2.attack(monsterP1);
-                    }
-                }
-
-                if (key == Input.KEY_M) {
-                    if (monsterP2.checkResources(monsterP2.getCostSkillUlt()) && timePassedSinceSkillUltP2 == 0) { //monsters has resources, go atk
-                        skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
-                        skillUltP2 = true;
-                        monsterP2.skillUlt();
-                        monsterP2.attack(monsterP1);
                     }
                 }
             }
 
+            if (key == Input.KEY_B) {
 
-            /*** End of Skills ***/
-
-
-            // Pause
-            // TODO pause game
-            if (key == Input.KEY_ESCAPE)
-
-            {
-                pressedEscape = true;
+                if (monsterP2.checkResources(monsterP2.getCostSkill1()) && timePassedSinceSkill1P2 == 0) {//monsters has resources, go atk
+                    skillCast(monsterP2.getDurationSkill1());       // call skillCast and pass duration of slow motion
+                    skill1P2 = true;
+                    monsterP2.skill1();
+                    monsterP2.attack(monsterP1);
+                }
             }
 
-        }   // end of keypress method
+            if (key == Input.KEY_N) {
+                if (monsterP2.checkResources(monsterP2.getCostSkill2()) && timePassedSinceSkill2P2 == 0) { //monsters has resources, go atk
+                    skillCast(monsterP2.getDurationSkill2());       // call skillCast and pass duration of slow motion
+                    skill2P2 = true;
+                    monsterP2.skill2();
+                    monsterP2.attack(monsterP1);
+                }
+            }
+
+            if (key == Input.KEY_M) {
+                if (monsterP2.checkResources(monsterP2.getCostSkillUlt()) && timePassedSinceSkillUltP2 == 0) { //monsters has resources, go atk
+                    skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
+                    skillUltP2 = true;
+                    monsterP2.skillUlt();
+                    if (monsterP2 instanceof game.monsters.Monster5) {
+                        monsterP2.attack(monsterP2);
+                    } else {
+                        monsterP2.attack(monsterP1);
+                    }
+                }
+            }
+        }
 
 
-        // method for slowing things down
-        // accepts duration in MS
+        /*** End of Skills ***/
+
+
+        // Pause
+        // TODO pause game
+        if (key == Input.KEY_ESCAPE)
+
+        {
+            pressedEscape = true;
+        }
+
+    }   // end of keypress method
+
+
+    // method for slowing things down
+    // accepts duration in MS
 
     public void skillCast(int duration) {
         // match pitch loss and map read speed loss
