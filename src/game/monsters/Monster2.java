@@ -46,6 +46,11 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.io.IOException;
 
 public class Monster2 extends Monster{
 
@@ -71,7 +76,9 @@ public class Monster2 extends Monster{
 //    private static final int skillUltADuration = 2400;
 //    private static final int skillUltBDuration = 4760;
 //    private static final int skillUltCDuration = 2400;
-
+    private Audio monsterSfx1;
+    private Audio monsterSfx2;
+    private Audio monsterSfx3;
     private static final int skill1Cooldown = 5000;
     private static final int skill2Cooldown = 7000;
     private static final int skillUltCooldown = 15000;
@@ -95,6 +102,15 @@ public class Monster2 extends Monster{
                 new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Ghost/G3rd.png"),
         };
+        //TODO replace with correct files
+        try {
+            monsterSfx1 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Ghost/Spectral_Dagger_2.ogg")); //ish
+            monsterSfx2 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Ghost/Malefice.ogg")); //NOT SYNCED
+            monsterSfx3 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Ghost/Exorcism.ogg")); //    5/10
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (playerNumber == 1) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
@@ -123,13 +139,14 @@ public class Monster2 extends Monster{
         super.setDamage(damageSkill1);
         super.doSkillCost(costSkill1);
         getAnimationSkill1().restart();
-
+        monsterSfx1.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
     public void skill2() {
         super.setDamage(damageSkill2);
         super.doSkillCost(costSkill2);
         getAnimationSkill2().restart();
+        monsterSfx2.playAsSoundEffect(1.0f, 1.0f, false);
 
     }
 
@@ -137,6 +154,7 @@ public class Monster2 extends Monster{
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
+        monsterSfx3.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
     @Override
