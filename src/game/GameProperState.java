@@ -27,7 +27,7 @@ import java.util.ArrayList;
 * - Cooldown in 2 digits
 * - FIXME Bug in slowmo not removing the note
 */
-    
+
 public class GameProperState extends BasicGameState implements KeyListener {
 
     private Image imageBG;
@@ -351,6 +351,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
         } else if (skillUltP2) {
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
             monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+
         } else {    // Idle
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
@@ -452,7 +453,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (key == Input.KEY_E) {
             pressedE = true;
-           if (notesP1.get(0).getX() == p1x3 + 1) {
+            if (notesP1.get(0).getX() == p1x3 + 1) {
                 if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
 
                     monsterP1.setCombo(0);
