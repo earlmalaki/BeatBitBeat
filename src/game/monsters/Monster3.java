@@ -89,9 +89,9 @@ public class Monster3 extends Monster {
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private SkillCost currResources;
     // TODO enter proper duration of skill animation when sprites are done
-    private static final int skill1Duration = 3000;
+    private static final int skill1Duration = 2100;
     private static final int skill2Duration = 3000;
-    private static final int skillUltDuration = 3000;
+    private static final int skillUltDuration = 4050;
 
     private static final int skill1Cooldown = 5000;
     private static final int skill2Cooldown = 7000;
@@ -99,10 +99,9 @@ public class Monster3 extends Monster {
 
     private static final int frameDurationMonsterIdle = 260;
     private static final int frameDurationHumanIdle = 300;
-    //    private static final int frameDurationSkill1 = 210;
-    private static final int frameDurationSkill1 = 285;
-    private static final int frameDurationSkill2 = 300;
-    private static final int frameDurationSkillUlt = 405;
+    private static final int frameDurationSkill1 = 150;
+    private static final int frameDurationSkill2 = 250;
+    private static final int frameDurationSkillUlt = 150;
 
     //fire
     public Monster3(int playerNumber) throws SlickException {

@@ -85,8 +85,8 @@ public class Monster1 extends Monster {
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
     private Audio monsterSfx;
-    private static final int skill1Duration = 10000;
-    private static final int skill2Duration = 3000;
+    private static final int skill1Duration = 1400;
+    private static final int skill2Duration = 2990;
     private static final int skillUltDuration = 2000;
 
     private static final int skill1Cooldown = 3000;
@@ -95,8 +95,8 @@ public class Monster1 extends Monster {
 
     private static final int frameDurationMonsterIdle = 250;
     private static final int frameDurationHumanIdle = 200;
-    private static final int frameDurationSkill1 = 10;
-    private static final int frameDurationSkill2 = 320;
+    private static final int frameDurationSkill1 = 200;
+    private static final int frameDurationSkill2 = 230;
     private static final int frameDurationSkillUlt = 200;
 
     private static final int damageSkill1 = 15;
