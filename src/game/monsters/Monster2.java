@@ -67,6 +67,11 @@ public class Monster2 extends Monster {
     private static final int skill2Duration = 2700;
     private static final int skillUltDuration = 6000;
 
+    // ULT skill sequence duration
+//    private static final int skillUltADuration = 2400;
+//    private static final int skillUltBDuration = 4760;
+//    private static final int skillUltCDuration = 2400;
+
     private static final int skill1Cooldown = 5000;
     private static final int skill2Cooldown = 7000;
     private static final int skillUltCooldown = 15000;
