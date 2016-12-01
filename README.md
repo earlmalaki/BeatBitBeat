@@ -1,16 +1,17 @@
-# BeatBitBeat
-###### Project is still in its early stages -- 5 out of 10
-###### Currently may contain various bugs and may have limited functionality
-###### Functionality will be added and bugs be fixed as development progresses
+![BeatBitBeat Homescreen Preview](https://github.com/earlmalaki/BeatBitBeat/blob/master/Assets/Graphics/Homescreen%20Preview.png)
 
-### DOWNLOAD LINKS TO PROTOTYPE~~2~~ 1:
-### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
-### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6SDF6OVpUa2NvTW8)
+# BeatBitBeat
+###### Project is still in its early stages -- 6 out of 10
+
+##
+#### DOWNLOAD LINKS TO PROTOTYPE~~2~~ 1:
+#### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
+#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6SDF6OVpUa2NvTW8)
 #### Download and UNZIP. Run "Prototype.jar" (Mac) or "Proto_win.jar" (Windows)
 ##
-### DOWNLOAD LINKS TO BETA:
-### Mac: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6dkczTWFRdER6SGM)
-### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6LXREcTVocjYxUTQ)
+#### DOWNLOAD LINKS TO BETA:
+#### Mac: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6dkczTWFRdER6SGM)
+#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6LXREcTVocjYxUTQ)
 #### Download and UNZIP. Run "BeatBitBeat Beta.jar".
 ##
 
@@ -94,5 +95,10 @@ Victory is awarded to whoever Beat his opponent first using the bit notes in syn
 
 #### Spritesheet Maker: Stitches: An HTML5 sprite sheet generator
 #### Link = https://draeton.github.io/stitches/
+
+#### Audio File to OGG Converter
+####  - Audacity
+
+
 
 
