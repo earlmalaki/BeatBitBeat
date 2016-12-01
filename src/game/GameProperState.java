@@ -12,6 +12,7 @@
 package game;
 
 import game.monsters.Monster;
+import game.monsters.Monster5;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -22,10 +23,13 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.io.*;
 import java.util.ArrayList;
 
-/*
-* - TODO catch errors after notes expires
-* - Cooldown in 2 digits
-* - FIXME Bug in slowmo not removing the note
+/* TODO
+* - spritesheet fix:
+* - flame x-burner
+* - flame firefly
+* - ghost 3
+* - root whip
+* - root sakura
 */
 
 public class GameProperState extends BasicGameState implements KeyListener {
@@ -66,7 +70,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     private static boolean skill1P2 = false;
     private static boolean skill2P2 = false;
     private static boolean skillUltP2 = false;
-
+    private boolean endOfGame = false;
     private static Music gameMusic;
     private Coordinate coordMonsterP1 = new Coordinate((displayWidth / 2) - 400, 100);
     private Coordinate coordMonsterP2 = new Coordinate((displayWidth / 2) - 200, 100);
@@ -225,7 +229,23 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         musicPosition = gameMusic.getPosition();
 
-        if (monsterP1.getHp() <= 0 || monsterP2.getHp() <= 0) {
+        if (endOfGame) {
+            endOfGame = false;
+
+            skillCast = false;
+            timePassed = 0;
+            speedNoteDrop = 4f;
+            skill1P1 = false;
+            skill2P1 = false;
+            skillUltP1 = false;
+            skill1P2 = false;
+            skill2P2 = false;
+            skillUltP2 = false;
+            gameMusic.stop();
+            MainMenuState.playMusic();
+            sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
+        }
+        if ((monsterP1.getHp() <= 0 || monsterP2.getHp() <= 0)) {
             skillCast = false;
             timePassed = 0;
             speedNoteDrop = 4f;
@@ -359,20 +379,47 @@ public class GameProperState extends BasicGameState implements KeyListener {
             monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
             monsterP1.getAnimationSkill1().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
         } else if (skill2P1) {
-            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
-            monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            if (monsterP1 instanceof game.monsters.Monster3) {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            } else {
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            }
         } else if (skillUltP1) {
-            monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
-            monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            if (monsterP2 instanceof game.monsters.Monster5) {
+                monsterP1.getAnimationSkillUlt().draw(212, 40);
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else {
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+            }
         } else if (skill1P2) {
+
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
             monsterP2.getAnimationSkill1().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+
         } else if (skill2P2) {
-            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-            monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            if (monsterP2 instanceof game.monsters.Monster3) {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            }
         } else if (skillUltP2) {
-            monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-            monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            if (monsterP2 instanceof game.monsters.Monster5) {
+//                monsterP2.getAnimationSkillUlt().draw(1057, 40);
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            }
+
 
         } else {    // Idle
             monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
@@ -438,141 +485,146 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (key == Input.KEY_1) {
             pressed1 = true;
         }
-        if (key == Input.KEY_Q) {
-            pressedQ = true;
+        try {
 
-            // if note is for the corresponding note bar
-            if (notesP1.get(0).getX() == p1x1 + 1) {
 
-                // if note is near or within corresponding hit box
-                if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
-                    // combo will end if BAD HIT
-                    monsterP1.setCombo(0);
-                } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP1.addResourceRed(1);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
-                } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP1.addResourceRed(2);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
+            if (key == Input.KEY_Q) {
+                pressedQ = true;
+
+                // if note is for the corresponding note bar
+                if (notesP1.get(0).getX() == p1x1 + 1) {
+
+                    // if note is near or within corresponding hit box
+                    if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                        // combo will end if BAD HIT
+                        monsterP1.setCombo(0);
+                    } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP1.addResourceRed(1);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP1.addResourceRed(2);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    }
+                }
+
+            }
+            if (key == Input.KEY_W) {
+                pressedW = true;
+                if (notesP1.get(0).getX() == p1x2 + 1) {
+                    if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                        monsterP1.setCombo(0);
+                    } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP1.addResourceGreen(1);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP1.addResourceGreen(2);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    }
                 }
             }
 
-        }
-        if (key == Input.KEY_W) {
-            pressedW = true;
-            if (notesP1.get(0).getX() == p1x2 + 1) {
-                if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
-                    monsterP1.setCombo(0);
-                } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP1.addResourceGreen(1);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
-                } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP1.addResourceGreen(2);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
+            if (key == Input.KEY_E) {
+                pressedE = true;
+                if (notesP1.get(0).getX() == p1x3 + 1) {
+                    if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+
+                        monsterP1.setCombo(0);
+                    } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP1.addResourceBlue(1);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+
+                    } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP1.addResourceBlue(2);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    }
                 }
             }
-        }
 
-        if (key == Input.KEY_E) {
-            pressedE = true;
-            if (notesP1.get(0).getX() == p1x3 + 1) {
-                if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
-
-                    monsterP1.setCombo(0);
-                } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP1.addResourceBlue(1);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
-
-                } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP1.addResourceBlue(2);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
+            if (key == Input.KEY_R) {
+                pressedR = true;
+                if (notesP1.get(0).getX() == p1x4 + 1) {
+                    if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
+                        monsterP1.setCombo(0);
+                    } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP1.addResourceYellow(1);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP1.addResourceYellow(2);
+                        monsterP1.setCombo(monsterP1.getCombo() + 1);
+                    }
                 }
             }
-        }
 
-        if (key == Input.KEY_R) {
-            pressedR = true;
-            if (notesP1.get(0).getX() == p1x4 + 1) {
-                if (badYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= goodYPos) {    // bad hit
-                    monsterP1.setCombo(0);
-                } else if (goodYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP1.addResourceYellow(1);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
-                } else if (perfectYPos <= notesP1.get(0).getY() && notesP1.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP1.addResourceYellow(2);
-                    monsterP1.setCombo(monsterP1.getCombo() + 1);
+
+            if (key == Input.KEY_U) {
+                pressedU = true;
+                if (notesP2.get(0).getX() == p2x1 + 1) {
+                    if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                        monsterP2.setCombo(0);
+                    } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP2.addResourceRed(1);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+
+                    } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP2.addResourceRed(2);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    }
                 }
             }
-        }
 
-
-        if (key == Input.KEY_U) {
-            pressedU = true;
-            if (notesP2.get(0).getX() == p2x1 + 1) {
-                if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
-                    monsterP2.setCombo(0);
-                } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP2.addResourceRed(1);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
-
-                } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP2.addResourceRed(2);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
+            if (key == Input.KEY_I) {
+                pressedI = true;
+                if (notesP2.get(0).getX() == p2x2 + 1) {
+                    if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                        // no resource gain
+                        // display bad hit!
+                        monsterP2.setCombo(0);
+                    } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP2.addResourceGreen(1);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP2.addResourceGreen(2);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    }
                 }
             }
-        }
 
-        if (key == Input.KEY_I) {
-            pressedI = true;
-            if (notesP2.get(0).getX() == p2x2 + 1) {
-                if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
-                    // no resource gain
-                    // display bad hit!
-                    monsterP2.setCombo(0);
-                } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP2.addResourceGreen(1);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
-                } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP2.addResourceGreen(2);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
+            if (key == Input.KEY_O) {
+                pressedO = true;
+                if (notesP2.get(0).getX() == p2x3 + 1) {
+                    if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                        // no resource gain
+                        // display bad hit!
+                        monsterP2.setCombo(0);
+                    } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP2.addResourceBlue(1);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP2.addResourceBlue(2);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    }
                 }
             }
-        }
 
-        if (key == Input.KEY_O) {
-            pressedO = true;
-            if (notesP2.get(0).getX() == p2x3 + 1) {
-                if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
-                    // no resource gain
-                    // display bad hit!
-                    monsterP2.setCombo(0);
-                } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP2.addResourceBlue(1);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
-                } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP2.addResourceBlue(2);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
+            if (key == Input.KEY_P) {
+                pressedP = true;
+                if (notesP2.get(0).getX() == p2x4 + 1) {
+                    if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
+                        // no resource gain
+                        // display bad hit!
+                        monsterP2.setCombo(0);
+                    } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
+                        monsterP2.addResourceYellow(1);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
+                        monsterP2.addResourceYellow(2);
+                        monsterP2.setCombo(monsterP2.getCombo() + 1);
+                    }
                 }
             }
+        } catch (IndexOutOfBoundsException e) {
+            endOfGame = true;
         }
-
-        if (key == Input.KEY_P) {
-            pressedP = true;
-            if (notesP2.get(0).getX() == p2x4 + 1) {
-                if (badYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= goodYPos) {    // bad hit
-                    // no resource gain
-                    // display bad hit!
-                    monsterP2.setCombo(0);
-                } else if (goodYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= perfectYPos) {    // good hit
-                    monsterP2.addResourceYellow(1);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
-                } else if (perfectYPos <= notesP2.get(0).getY() && notesP2.get(0).getY() <= endingYPos) {    // perfect hit
-                    monsterP2.addResourceYellow(2);
-                    monsterP2.setCombo(monsterP2.getCombo() + 1);
-                }
-            }
-        }
-
 
         /*** Start of Skills ***/
         if (!(skill1P1 || skill2P1 || skillUltP1 || skill1P2 || skill2P2 || skillUltP2)) {     // disable casting skill while a skill is ongoing
@@ -593,6 +645,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     skillCast(monsterP1.getDurationSkill2());       // call skillCast and pass duration of slow motion
                     skill2P1 = true;
                     monsterP1.skill2();
+
                     monsterP1.attack(monsterP2);
                 }
             }
@@ -602,7 +655,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                     skillUltP1 = true;
                     monsterP1.skillUlt();
-                    monsterP1.attack(monsterP2);
+                    if (monsterP2 instanceof game.monsters.Monster5) {
+                        monsterP1.attack(monsterP1);
+                    } else {
+                        monsterP1.attack(monsterP2);
+                    }
                 }
             }
 
@@ -630,7 +687,11 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     skillCast(monsterP2.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                     skillUltP2 = true;
                     monsterP2.skillUlt();
-                    monsterP2.attack(monsterP1);
+                    if (monsterP2 instanceof game.monsters.Monster5) {
+                        monsterP2.attack(monsterP2);
+                    } else {
+                        monsterP2.attack(monsterP1);
+                    }
                 }
             }
         }
@@ -652,6 +713,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     // method for slowing things down
     // accepts duration in MS
+
     public void skillCast(int duration) {
         // match pitch loss and map read speed loss
         slowDuration = duration;

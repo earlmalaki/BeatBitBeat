@@ -104,14 +104,18 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         if (enterPressed) {
             enterPressed = false;
 
-            if (yIndicator == coordsArrows[0].getY()) {    // if indicator is pointing to Start btn
-                indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get  ID for state
-            } else if (yIndicator == coordsArrows[1].getY()) {     // if indicator is pointing to options btn
-                indexOfSelectedState = BeatBitBeatMain.getOptions();
-            } else if (yIndicator == coordsArrows[2].getY()) {     // if indicator is pointing to credits btn
-                indexOfSelectedState = BeatBitBeatMain.getCredits();
-            } else if (yIndicator == coordsArrows[3].getY()) {        // if indicator is pointing to exit btn
-                System.exit(0);
+            try {
+                if (yIndicator == coordsArrows[0].getY()) {    // if indicator is pointing to Start btn
+                    indexOfSelectedState = BeatBitBeatMain.getCharacterSelection();     // get  ID for state
+                } else if (yIndicator == coordsArrows[1].getY()) {     // if indicator is pointing to options btn
+                    indexOfSelectedState = BeatBitBeatMain.getOptions();
+                } else if (yIndicator == coordsArrows[2].getY()) {     // if indicator is pointing to credits btn
+                    indexOfSelectedState = BeatBitBeatMain.getCredits();
+                } else if (yIndicator == coordsArrows[3].getY()) {        // if indicator is pointing to exit btn
+                    System.exit(0);
+                }
+            } catch (ArrayIndexOutOfBoundsException e){
+
             }
 
             // enter state indicated by indexOfSelectedState

@@ -47,7 +47,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class Monster2 extends Monster {
+public class Monster2 extends Monster{
 
 
     private Animation animationIdle;
@@ -82,10 +82,9 @@ public class Monster2 extends Monster {
     private static final int frameDurationSkill2 = 100;
     private static final int frameDurationSkillUlt = 250;
 
-    // ULT skill sequence frame duration
-//    private static final int frameDurationSkillAUlt = 200;
-//    private static final int frameDurationSkillBUlt = 170;
-//    private static final int frameDurationSkillCUlt = 200;
+    private static final int damageSkill1 = 15;
+    private static final int damageSkill2 = 25;
+    private static final int damageSkillUlt = 35;
 
 
     public Monster2(int playerNumber) throws SlickException {
@@ -121,28 +120,22 @@ public class Monster2 extends Monster {
     }
 
     public void skill1() {
-        super.setDamage(5);
-        super.setResourceRed(super.getResourceRed() - 3);
-        super.setResourceYellow(super.getResourceYellow() - 3);
+        super.setDamage(damageSkill1);
+        super.doSkillCost(costSkill1);
         getAnimationSkill1().restart();
 
     }
 
     public void skill2() {
-
-        super.setDamage(10);
-        super.setResourceGreen(super.getResourceGreen() - 7);
-        super.setResourceBlue(super.getResourceBlue() - 7);
+        super.setDamage(damageSkill2);
+        super.doSkillCost(costSkill2);
         getAnimationSkill2().restart();
 
     }
 
     public void skillUlt() {
-        super.setDamage(25);
-        super.setResourceRed(super.getResourceRed() - 12);
-        super.setResourceYellow(super.getResourceYellow() - 12);
-        super.setResourceGreen(super.getResourceGreen() - 12);
-        super.setResourceBlue(super.getResourceBlue() - 12);
+        super.setDamage(damageSkillUlt);
+        super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
     }
 

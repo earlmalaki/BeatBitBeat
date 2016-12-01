@@ -268,4 +268,5 @@ public abstract class Monster {
 
     public abstract SkillCost getCostSkillUlt();
 
+
 }
