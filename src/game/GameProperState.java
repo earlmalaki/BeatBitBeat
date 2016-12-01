@@ -11,8 +11,6 @@
 
 package game;
 
-//import game.monsters.Globalable;
-
 import game.monsters.Monster;
 import game.monsters.Monster5;
 import org.newdawn.slick.*;
@@ -233,26 +231,60 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
         if (endOfGame) {
             endOfGame = false;
+
+            skillCast = false;
+            timePassed = 0;
+            speedNoteDrop = 4f;
+            skill1P1 = false;
+            skill2P1 = false;
+            skillUltP1 = false;
+            skill1P2 = false;
+            skill2P2 = false;
+            skillUltP2 = false;
+            gameMusic.stop();
+            MainMenuState.playMusic();
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
         if ((monsterP1.getHp() <= 0 || monsterP2.getHp() <= 0)) {
-            MainMenuState.resumeMusic();
+            skillCast = false;
+            timePassed = 0;
+            speedNoteDrop = 4f;
+            skill1P1 = false;
+            skill2P1 = false;
+            skillUltP1 = false;
+            skill1P2 = false;
+            skill2P2 = false;
+            skillUltP2 = false;
+            gameMusic.stop();
+            MainMenuState.playMusic();
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
 
         // temporary
         if (pressed1) {
             pressed1 = false;
+
+            skillCast = false;
+            timePassed = 0;
+            speedNoteDrop = 4f;
+            skill1P1 = false;
+            skill2P1 = false;
+            skillUltP1 = false;
+            skill1P2 = false;
+            skill2P2 = false;
+            skillUltP2 = false;
+            gameMusic.stop();
+            MainMenuState.playMusic();
             sbg.enterState(BeatBitBeatMain.getGameOver(), new FadeOutTransition(), new FadeInTransition());
         }
 
-//        if (skill1P1 || timePassedSinceSkill1P1 > 0) {
-//            timePassedSinceSkill1P1 += delta;
-//            if (timePassedSinceSkill1P1 >= monsterP1.getCooldownSkill1()) {
-//                timePassedSinceSkill1P1 = 0;
-//                skill1P1 = false;
-//            }
-//        }
+        if (skill1P1 || timePassedSinceSkill1P1 > 0) {
+            timePassedSinceSkill1P1 += delta;
+            if (timePassedSinceSkill1P1 >= monsterP1.getCooldownSkill1()) {
+                timePassedSinceSkill1P1 = 0;
+                skill1P1 = false;
+            }
+        }
         if (skill2P1 || timePassedSinceSkill2P1 > 0) {
             timePassedSinceSkill2P1 += delta;
             if (timePassedSinceSkill2P1 >= monsterP1.getCooldownSkill2()) {

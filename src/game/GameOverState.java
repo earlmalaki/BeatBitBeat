@@ -2,10 +2,15 @@ package game;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.io.IOException;
 
 
 public class GameOverState extends BasicGameState {
@@ -37,6 +42,8 @@ public class GameOverState extends BasicGameState {
     private static Coordinate[] coordsIndicator;
     private static int indexPosIndicator = 0;
 
+    private Audio scoreTallySFX;
+
 
     @Override
     public int getID() {
@@ -45,22 +52,22 @@ public class GameOverState extends BasicGameState {
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 
-        Image imagesBG[] = new Image[] {
-                new Image ("Assets/Graphics/Game Over/Frames/GO0000.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0001.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0002.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0003.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0004.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0005.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0006.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0007.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0008.png"),
-                new Image ("Assets/Graphics/Game Over/Frames/GO0009.png"),
+        Image imagesBG[] = new Image[]{
+                new Image("Assets/Graphics/Game Over/Frames/GO0000.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0001.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0002.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0003.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0004.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0005.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0006.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0007.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0008.png"),
+                new Image("Assets/Graphics/Game Over/Frames/GO0009.png"),
         };
 
-        coordsIndicator = new Coordinate[] {
-                new Coordinate( 537, 595),
-                new Coordinate( 537, 680),
+        coordsIndicator = new Coordinate[]{
+                new Coordinate(537, 595),
+                new Coordinate(537, 680),
         };
 
         animateBG = new Animation(imagesBG, 200);
@@ -74,6 +81,14 @@ public class GameOverState extends BasicGameState {
         fontWinningPlayer.getEffects().add(new ColorEffect(java.awt.Color.white));
         fontWinningPlayer.addAsciiGlyphs();
         fontWinningPlayer.loadGlyphs();
+
+
+        try {
+            scoreTallySFX = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Score Tally SFX.ogg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     float xMouse;
@@ -84,7 +99,27 @@ public class GameOverState extends BasicGameState {
         xMouse = input.getMouseX();
         yMouse = input.getMouseY();
 
+        if (!scoreTallySFX.isPlaying()) {
+            scoreTallySFX.playAsSoundEffect(1f, 1f, false);
+        }
+
         /*  Stepper effect on stats tally */
+        if (!(p1MaxCombo < GameProperState.monsterP1.getMaxCombo() ||
+                p1MaxRed < GameProperState.monsterP1.getTotalResourceRed() ||
+                p1MaxGreen < GameProperState.monsterP1.getTotalResourceGreen() ||
+                p1MaxBlue < GameProperState.monsterP1.getTotalResourceBlue() ||
+                p1MaxYellow < GameProperState.monsterP1.getTotalResourceYellow() ||
+                p1HPLeft < GameProperState.monsterP1.getHp() ||
+                p2MaxCombo < GameProperState.monsterP2.getMaxCombo() ||
+                p2MaxRed < GameProperState.monsterP2.getTotalResourceRed() ||
+                p2MaxGreen < GameProperState.monsterP2.getTotalResourceGreen() ||
+                p2MaxBlue < GameProperState.monsterP2.getTotalResourceBlue() ||
+                p2MaxYellow < GameProperState.monsterP2.getTotalResourceYellow() ||
+                p2HPLeft < GameProperState.monsterP2.getHp()
+        )) {
+            scoreTallySFX.stop();
+        }
+
         if (p1MaxCombo < GameProperState.monsterP1.getMaxCombo())
             p1MaxCombo++;
 
@@ -120,6 +155,7 @@ public class GameOverState extends BasicGameState {
 
         if (p2HPLeft < GameProperState.monsterP2.getHp())
             p2HPLeft++;
+
         /*  Stepper effect on stats tally */
 
 
@@ -149,19 +185,19 @@ public class GameOverState extends BasicGameState {
         g.fillRect(coordsIndicator[indexPosIndicator].getX(), coordsIndicator[indexPosIndicator].getY(), 207f, 3f);
 
         if (GameProperState.monsterP1.getHp() > GameProperState.monsterP2.getHp()) {
-            GameProperState.monsterP1.getAnimationIdle().draw(470,50);
-            GameProperState.monsterP1.getAnimationHumanIdle().draw(520,220);
+            GameProperState.monsterP1.getAnimationIdle().draw(470, 50);
+            GameProperState.monsterP1.getAnimationHumanIdle().draw(520, 220);
             fontWinningPlayer.drawString(580, 472, "PLAYER 1");
         } else if (GameProperState.monsterP1.getHp() < GameProperState.monsterP2.getHp()) {
-            GameProperState.monsterP2.getAnimationIdle().draw(210,50);
-            GameProperState.monsterP2.getAnimationHumanIdle().draw(550,220);
+            GameProperState.monsterP2.getAnimationIdle().draw(210, 50);
+            GameProperState.monsterP2.getAnimationHumanIdle().draw(550, 220);
             fontWinningPlayer.drawString(580, 472, "PLAYER 2");
         } else {
-            GameProperState.monsterP1.getAnimationIdle().draw(190,150);
-            GameProperState.monsterP2.getAnimationIdle().draw(480,150);
+            GameProperState.monsterP1.getAnimationIdle().draw(190, 150);
+            GameProperState.monsterP2.getAnimationIdle().draw(480, 150);
 
-            GameProperState.monsterP1.getAnimationHumanIdle().draw(510,220);
-            GameProperState.monsterP2.getAnimationHumanIdle().draw(610,220);
+            GameProperState.monsterP1.getAnimationHumanIdle().draw(510, 220);
+            GameProperState.monsterP2.getAnimationHumanIdle().draw(610, 220);
 
             fontWinningPlayer.drawString(600, 472, "DRAW");
         }

@@ -322,7 +322,6 @@ public class Monster5 extends Monster {
             };
             animationSkillUlt = new Animation(skillUlt, duration);
 
-
             // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
         } else if (playerNumber == 2)
 

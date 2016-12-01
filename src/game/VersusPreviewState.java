@@ -99,6 +99,7 @@ public class VersusPreviewState extends BasicGameState implements KeyListener{
 
         if (pressable){
             if (enterPressed){
+                enterPressed = false;
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
             }
         }

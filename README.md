@@ -4,6 +4,11 @@
 ###### Project is still in its early stages -- 6 out of 10
 
 ##
+#### DOWNLOAD LINKS TO BETA V2:
+#### Mac: [Click Here]()
+#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6YVZhMERhWk13RUk)
+#### Download and UNZIP. Run "BeatBitBeat Beta V2.jar".
+##
 #### DOWNLOAD LINKS TO PROTOTYPE~~2~~ 1:
 #### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
 #### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6SDF6OVpUa2NvTW8)

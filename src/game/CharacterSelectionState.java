@@ -220,7 +220,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     indexXHumanIndicator++;
                 }
             } else if (key == Input.KEY_ENTER) {
-//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
 
                 // disable bottom left(monster 4) and bottom right monsters(monster 6)
                 // for coming soon characters
@@ -244,12 +244,13 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
                     indexImageSongArt++;
                 }
             } else if (key == Input.KEY_ENTER) {
-//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
                 pressedEnter = true;
             }
 
         } else {
             if (key == Input.KEY_ENTER) {
+                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
                 pressedEnter = true;
             }
         }
@@ -386,7 +387,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }
         }
 
-        MainMenuState.playMusic();
+        MainMenuState.resumeMusic();
         sbg.enterState(BeatBitBeatMain.getMainMenu(), new FadeOutTransition(), new FadeInTransition());
     }
 
