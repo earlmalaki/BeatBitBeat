@@ -104,6 +104,10 @@ public class Monster3 extends Monster {
     private static final int frameDurationSkill2 = 300;
     private static final int frameDurationSkillUlt = 405;
 
+    private static final int damageSkill1 = 15;
+    private static final int damageSkill2 = 25;
+    private static final int damageSkillUlt = 35;
+
     //fire
     public Monster3(int playerNumber) throws SlickException {
         super();
@@ -138,31 +142,25 @@ public class Monster3 extends Monster {
     }
 
     public void skill1() {
-        super.setDamage(5);
-        super.setResourceRed(super.getResourceRed() - 3);
-        super.setResourceYellow(super.getResourceYellow() - 3);
+        super.setDamage(damageSkill1);
+        super.doSkillCost(costSkill1);
         getAnimationSkill1().restart();
 
     }
 
     public void skill2() {
-        super.setDamage(10);
-        super.setResourceGreen(super.getResourceGreen() - 7);
-        super.setResourceBlue(super.getResourceBlue() - 7);
+        super.setDamage(damageSkill2);
+        super.doSkillCost(costSkill2);
         getAnimationSkill2().restart();
-    }
 
+    }
 
     public void skillUlt() {
-        super.setDamage(25);
-        super.setResourceRed(super.getResourceRed() - 12);
-        super.setResourceYellow(super.getResourceYellow() - 12);
-        super.setResourceGreen(super.getResourceGreen() - 12);
-        super.setResourceBlue(super.getResourceBlue() - 12);
+        super.setDamage(damageSkillUlt);
+        super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
-
-
     }
+
 
 
     public int getDurationSkill1() {
