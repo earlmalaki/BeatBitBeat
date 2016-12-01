@@ -67,6 +67,11 @@ public class Monster2 extends Monster {
     private static final int skill2Duration = 2700;
     private static final int skillUltDuration = 6000;
 
+    // ULT skill sequence duration
+//    private static final int skillUltADuration = 2400;
+//    private static final int skillUltBDuration = 4760;
+//    private static final int skillUltCDuration = 2400;
+
     private static final int skill1Cooldown = 5000;
     private static final int skill2Cooldown = 7000;
     private static final int skillUltCooldown = 15000;
@@ -76,6 +81,11 @@ public class Monster2 extends Monster {
     private static final int frameDurationSkill1 = 200;
     private static final int frameDurationSkill2 = 100;
     private static final int frameDurationSkillUlt = 250;
+
+    // ULT skill sequence frame duration
+//    private static final int frameDurationSkillAUlt = 200;
+//    private static final int frameDurationSkillBUlt = 170;
+//    private static final int frameDurationSkillCUlt = 200;
 
 
     public Monster2(int playerNumber) throws SlickException {

@@ -70,6 +70,33 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -97,7 +124,9 @@ public class Monster5 extends Monster {
     private Animation animationIdle;
     private Animation animationSkill1;
     private Animation animationSkill2;
-    private Animation animationSkillUlt;
+    private Animation animationSkillUltP1;
+    private Animation animationSkillUltP2;
+    private Animation animationSkillUltP3;
 
     private Image[] skillIcons;
     // TODO enter proper duration of skill animation when sprites are done
@@ -120,8 +149,14 @@ public class Monster5 extends Monster {
     private static final int frameDurationMonsterIdle = 260;
     private static final int frameDurationHumanIdle = 300;
     private static final int frameDurationSkill1 = 200;
-    private static final int frameDurationSkill2 = 100;
-    private static final int frameDurationSkillUlt = 250;
+    private static final int frameDurationSkill2 = 260;
+    private static final int frameDurationSkillUltP1 = 100;
+    private static final int frameDurationSkillUltP2 = 200;
+    private static final int frameDurationSkillUltP3 = 100;
+
+    private static final int animationDurationSkillUltP1 = 600;
+    private static final int animationDurationSkillUltP2 = 4000;
+    private static final int animationDurationSkillUltP3 = 600;
 
 
     public Monster5(int playerNumber) throws SlickException {
@@ -137,8 +172,11 @@ public class Monster5 extends Monster {
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Human P1.png", 150, 150, 0), frameDurationHumanIdle);
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkill1);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkillUlt);
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 2 Whip P1.png", 720, 300, 0), frameDurationSkill2);
+            animationSkillUltP1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura1 P1.png", 720, 300, 0), frameDurationSkillUltP1);
+            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P1.png", 720, 300, 0), frameDurationSkillUltP2);
+            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P1.png", 720, 300, 0), frameDurationSkillUltP3);
+
 
             // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
         } else if (playerNumber == 2) {
@@ -146,11 +184,14 @@ public class Monster5 extends Monster {
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill1);
-            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkillUlt);
-        }
+            animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 2 Whip P2.png", 720, 300, 0), frameDurationSkill2);
+            animationSkillUltP1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura1 P2.png", 720, 300, 0), frameDurationSkillUltP1);
+            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P2.png", 720, 300, 0), frameDurationSkillUltP2);
+            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P2.png", 720, 300, 0), frameDurationSkillUltP3);
 
+        }
     }
+
 
     @Override
     public Image[] getSkillIcons() {
@@ -232,9 +273,23 @@ public class Monster5 extends Monster {
         return animationSkill2;
     }
 
+
+    private int time = 0;
+
     @Override
     public Animation getAnimationSkillUlt() {
-        return animationSkillUlt;
+//         if timespanned < duration of ult p1
+        // frameduration 1      frameduration 2         frameDuration 3
+        time += 15;
+        if (time > (frameDurationSkillUltP2 + frameDurationSkillUltP1) && time < frameDurationSkillUltP1 + frameDurationSkillUltP2 + frameDurationSkillUltP3) {
+            return animationSkillUltP3;
+        } else if (time > frameDurationSkillUltP1 && time < frameDurationSkillUltP1 + frameDurationSkillUltP2) {
+            return animationSkillUltP2;
+        } else if (time > 0 && time < frameDurationSkillUltP1) {
+            return animationSkillUltP1;
+        }
+
+        return animationIdle;
     }
 
     @Override
