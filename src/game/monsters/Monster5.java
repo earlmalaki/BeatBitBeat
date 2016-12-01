@@ -177,7 +177,6 @@ public class Monster5 extends Monster {
             animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P1.png", 720, 300, 0), frameDurationSkillUltP2);
             animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P1.png", 720, 300, 0), frameDurationSkillUltP3);
 
-
             // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
         } else if (playerNumber == 2) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
