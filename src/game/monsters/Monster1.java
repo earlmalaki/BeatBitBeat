@@ -114,7 +114,7 @@ public class Monster1 extends Monster {
 
 //        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
         //TODO replace with correct files
-        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3"));
+        //monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3"));
 //        musicSongChoices = new Music[]{
 //                new Music("Assets/Sound Effects/pressEnterMainMenu.ogg")
 ////                new Music("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3")
@@ -162,7 +162,7 @@ public class Monster1 extends Monster {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
-        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
+        //monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
 
     }
 
