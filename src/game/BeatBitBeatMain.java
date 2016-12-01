@@ -41,7 +41,9 @@ public class BeatBitBeatMain extends StateBasedGame {
     private static final int displayHeight = 720;
 
     //Options
-    private static int volumeSFX = 9;
+    private static float volumeSFX = 1;
+    private static float volumeMusic = 1;
+
     private static boolean menuMusicOn = true;
     private static boolean SFXOn = true;
 
@@ -68,6 +70,7 @@ public class BeatBitBeatMain extends StateBasedGame {
         // critical for beatmap reading
         app.setMinimumLogicUpdateInterval(15);      // minimum delta of 15 ms
         app.setMaximumLogicUpdateInterval(15);      // maximum delta of 15 ms
+        app.setAlwaysRender(true);
 
         app.start();
 
@@ -136,11 +139,11 @@ public class BeatBitBeatMain extends StateBasedGame {
         return versusPreview;
     }
 
-    public static int getVolumeSFX() {
+    public static float getVolumeSFX() {
         return volumeSFX;
     }
 
-    public static void setVolumeSFX(int volumeSFX) {
+    public static void setVolumeSFX(float volumeSFX) {
         BeatBitBeatMain.volumeSFX = volumeSFX;
     }
 
@@ -158,6 +161,14 @@ public class BeatBitBeatMain extends StateBasedGame {
 
     public static void setSFXOn(boolean SFXOn) {
         BeatBitBeatMain.SFXOn = SFXOn;
+    }
+
+    public static float getVolumeMusic() {
+        return volumeMusic;
+    }
+
+    public static void setVolumeMusic(float volumeMusic) {
+        BeatBitBeatMain.volumeMusic = volumeMusic;
     }
 
     /** EO Getters **/

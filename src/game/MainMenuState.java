@@ -191,7 +191,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
     private void initializeAudioAndMusic() throws SlickException {
         try {
             // TODO: Replace correct music and filename
-            audioMusicMainMenu = new Music("Assets/State Music/Down.ogg");
+            audioMusicMainMenu = new Music("Assets/State Music/Killing In The Name - Main Menu.ogg");
 //            audioMusicMainMenu.loop();  // play in loop the bg music
 
             // TODO: Replace correct sound effects and filename
@@ -209,7 +209,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
                 soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
             }
             if (key == Input.KEY_ENTER) {
-//                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
+                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
             }
         }
     }
