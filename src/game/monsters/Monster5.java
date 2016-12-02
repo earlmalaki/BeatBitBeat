@@ -133,6 +133,15 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -154,6 +163,11 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.io.IOException;
 
 public class Monster5 extends Monster {
 
@@ -180,6 +194,9 @@ public class Monster5 extends Monster {
     private static final int skill2Cooldown = 3000;
     private static final int skillUltCooldown = 5000;
 
+    private Audio monsterSfx1;
+    private Audio monsterSfx2;
+    private Audio monsterSfx3;
 
     private static final int frameDurationMonsterIdle = 260;
     private static final int frameDurationHumanIdle = 300;
@@ -211,7 +228,14 @@ public class Monster5 extends Monster {
 
     public Monster5(int playerNumber) throws SlickException {
         super();
+        try {
+            monsterSfx1 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Root/Moon_Glaive_attack.ogg")); //???
+            monsterSfx2 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Root/Inverse_Bayonet_Tidebringer_attack.ogg")); //x3
+            monsterSfx3 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Root/Tornado.ogg")); //NICE
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         skillIcons = new Image[]{
                 new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - 2 Whip Icon.png"),
@@ -314,15 +338,16 @@ public class Monster5 extends Monster {
     }
 
 
-        @Override
-        public Image[] getSkillIcons () {
-            return skillIcons;
-        }
+    @Override
+    public Image[] getSkillIcons() {
+        return skillIcons;
+    }
 
     public void skill1() {
         super.setDamage(damageSkill1);
         super.doSkillCost(costSkill1);
         getAnimationSkill1().restart();
+        monsterSfx1.playAsSoundEffect(1.0f, 1.0f, false);
 
     }
 
@@ -330,12 +355,17 @@ public class Monster5 extends Monster {
         super.setDamage(damageSkill2);
         super.doSkillCost(costSkill2);
         getAnimationSkill2().restart();
+        monsterSfx2.playAsSoundEffect(1.0f, 1.0f, false);
+        monsterSfx2.playAsSoundEffect(1.0f, 1.0f, false);
+        monsterSfx2.playAsSoundEffect(1.0f, 1.0f, false);
 
     }
 
     public void skillUlt() {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
+        monsterSfx3.playAsSoundEffect(1.0f, 1.0f, false);
+
     }
 
     public int getDurationSkill1() {

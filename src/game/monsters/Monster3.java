@@ -61,6 +61,15 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -82,6 +91,11 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.io.IOException;
 
 public class Monster3 extends Monster {
 
@@ -102,6 +116,10 @@ public class Monster3 extends Monster {
     private static final int skill2Duration = 3000;
     private static final int skillUltDuration = 4050;
 
+    private Audio monsterSfx1;
+    private Audio monsterSfx2;
+    private Audio monsterSfx3;
+
     private static final int skill1Cooldown = 5000;
     private static final int skill2Cooldown = 7000;
     private static final int skillUltCooldown = 15000;
@@ -121,7 +139,14 @@ public class Monster3 extends Monster {
     //fire
     public Monster3(int playerNumber) throws SlickException {
         super();
+        try {
+            monsterSfx1 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Flame/Breathe_Fire.ogg")); //DELAY
+            monsterSfx2 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Flame/Scorched_Earth.ogg")); //PWEDE
+            monsterSfx3 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Flame/Fireblast.ogg")); //NOPE
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         skillIcons = new Image[]{
                 new Image("Assets/Graphics/Monster and Human Sprites/Flame/Fire fist.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Flame/Firefly.png"),
@@ -159,6 +184,7 @@ public class Monster3 extends Monster {
         super.setDamage(damageSkill1);
         super.doSkillCost(costSkill1);
         getAnimationSkill1().restart();
+        monsterSfx1.playAsSoundEffect(1.0f, 1.0f, false);
 
     }
 
@@ -166,6 +192,7 @@ public class Monster3 extends Monster {
         super.setDamage(damageSkill2);
         super.doSkillCost(costSkill2);
         getAnimationSkill2().restart();
+        monsterSfx2.playAsSoundEffect(1.0f, 1.0f, false);
 
     }
 
@@ -173,6 +200,7 @@ public class Monster3 extends Monster {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
+        monsterSfx3.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
 

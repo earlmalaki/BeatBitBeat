@@ -67,6 +67,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
 
@@ -84,7 +86,9 @@ public class Monster1 extends Monster {
     private final SkillCost costSkill1 = new SkillCost(3, 0, 0, 3);
     private final SkillCost costSkill2 = new SkillCost(0, 7, 7, 0);
     private final SkillCost costSkillUlt = new SkillCost(12, 12, 12, 12);
-    private Audio monsterSfx;
+    private Audio monsterSfx1;
+    private Audio monsterSfx2;
+    private Audio monsterSfx3;
     private static final int skill1Duration = 1400;
     private static final int skill2Duration = 2990;
     private static final int skillUltDuration = 2000;
@@ -114,14 +118,11 @@ public class Monster1 extends Monster {
                 new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling Icon.png"),
                 new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/B3rd.png")
         };
-
-//        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
         //TODO replace with correct files
-//        monsterSfx = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3"));
-//        musicSongChoices = new Music[]{
-//                new Music("Assets/Sound Effects/pressEnterMainMenu.ogg")
-////                new Music("Assets/Sound Effects/Blueffy/BLUEZOOKA.mp3")
-//        };
+        monsterSfx1 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/Storm_Hammer.ogg")); //PWEDE PWEDE
+        monsterSfx2 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/Rocket_Barrage.ogg")); //NOT SYNC
+        monsterSfx3 = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/Blueffy/Reverse_Polarity.ogg")); //NOT SYNC
+
 
 
         if (playerNumber == 1) {
@@ -150,7 +151,9 @@ public class Monster1 extends Monster {
         super.setDamage(damageSkill1);
         super.doSkillCost(costSkill1);
         getAnimationSkill1().restart();
-//        monsterSfx.playAsSoundEffect(1.0f, 1.0f, true);
+        monsterSfx1.playAsSoundEffect(1.0f, 1.0f, false);
+
+//        monsterSfx1.playAsMusic(1.0f, 1.0f, true);
 
     }
 
@@ -158,16 +161,16 @@ public class Monster1 extends Monster {
         super.setDamage(damageSkill2);
         super.doSkillCost(costSkill2);
         getAnimationSkill2().restart();
-//        monsterSfx.playAsSoundEffect(1.0f, 1.0f, true);
-
+        monsterSfx2.playAsSoundEffect(1.0f, 1.0f, false);
+//        monsterSfx2.playAsMusic(1.0f, 1.0f, true);
     }
 
     public void skillUlt() {
         super.setDamage(damageSkillUlt);
         super.doSkillCost(costSkillUlt);
         getAnimationSkillUlt().restart();
-//        monsterSfx.playAsSoundEffect(1.0f, 5.0f, true);
-
+//        monsterSfx3.playAsMusic(1.0f, 1.0f, true);
+        monsterSfx3.playAsSoundEffect(1.0f, 1.0f, false);
     }
 
     public Image[] getSkillIcons() {
