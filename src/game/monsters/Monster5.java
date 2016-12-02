@@ -142,6 +142,15 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
+ * <p>
+ * Done:
+ * - basic skeleton code for concrete monster
+ * <p>
+ * To Do:
+ * - add specific identity/behaviour (skills, capabilities, etc.)
+ * - do this to the remaining monsters
+ * <p>
+ * game.Note:
  */
 
 /**
@@ -250,38 +259,38 @@ public class Monster5 extends Monster {
 //            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P1.png", 833, 585, 0), frameDurationSkillUltP2);
 //            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P1.png", 833, 585, 0), frameDurationSkillUltP3);
             Image[] skillUlt = new Image[]{
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura00.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura01.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura02.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura03.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura04.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura05.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura06.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura07.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura08.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura09.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura10.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura11.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura12.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura13.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura14.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura15.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura16.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura17.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura18.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura19.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura20.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura21.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura22.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura23.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura24.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura25.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura26.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura27.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura28.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura29.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura30.png"),
-                    new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura31.png")
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura00.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura01.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura02.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura03.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura04.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura05.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura06.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura07.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura08.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura09.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura10.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura11.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura12.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura13.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura14.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura15.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura16.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura17.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura18.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura19.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura20.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura21.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura22.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura23.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura24.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura25.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura26.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura27.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura28.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura29.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura30.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p1/sakura31.png")
             };
 
             int[] duration = new int[]{
@@ -332,7 +341,78 @@ public class Monster5 extends Monster {
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/whip p2.png", 720, 300, 0), frameDurationSkill2);
 //            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
+            Image[] skillUlt = new Image[]{
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura00.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura01.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura02.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura03.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura04.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura05.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura06.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura07.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura08.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura09.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura10.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura11.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura12.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura13.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura14.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura15.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura16.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura17.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura18.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura19.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura20.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura21.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura22.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura23.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura24.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura25.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura26.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura27.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura28.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura29.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura30.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Root/p2/sakura31.png")
+            };
 
+            int[] duration = new int[]{
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100, //6
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200,
+                    200, //20
+                    100,
+                    100,
+                    100,
+                    100,
+                    100,
+                    100
+
+
+            };
+            animationSkillUlt = new Animation(skillUlt, duration);
         }
     }
 
@@ -422,10 +502,10 @@ public class Monster5 extends Monster {
     /*
         @Override
         public Animation getAnimationSkillUlt() {
-    //         if timespanned < duration of ult p1
+    //         if timespanned < duration of ult p2
             // frameduration 1      frameduration 2         frameDuration 3
             time += 15;
-            if (time > (animationDurationSkillUltP2 + animationDurationSkillUltP1) && time < animationDurationSkillUltP1 + animationDurationSkillUltP2 + animationDurationSkillUltP3) {
+            if (time > (animationDurationSkillUltP2 + animationDurationSkillUltp2) && time < animationDurationSkillUltp2 + animationDurationSkillUltP2 + animationDurationSkillUltP3) {
                 return animationSkillUltP3;
             } else if (time > animationDurationSkillUltP1 && time < animationDurationSkillUltP1 + animationDurationSkillUltP2) {
                 return animationSkillUltP2;

@@ -156,15 +156,135 @@ public class Monster3 extends Monster {
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/firefist p1.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/X-burner P1.png", 600, 300, 0), frameDurationSkillUlt);
 
+            Image[] skillUlt = new Image[]{
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn00.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn01.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn02.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn03.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn04.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn05.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn06.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn07.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn08.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn09.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn10.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn11.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn12.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn13.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn14.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn15.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn16.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn17.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn18.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn19.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn20.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn21.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn22.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn23.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn24.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn25.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p1/xburn26.png"),
+            };
+
+            int[] duration = new int[]{
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150, //6
+                    150,
+                    150,
+                    150,
+                    150, //10
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150, //20
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150
+
+            };
+            animationSkillUlt = new Animation(skillUlt, duration);
         } else if (playerNumber == 2) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/firefist p2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/X-burner P1.png", 600, 300, 0), frameDurationSkillUlt);
+              Image[] skillUlt = new Image[]{
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn00.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn01.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn02.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn03.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn04.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn05.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn06.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn07.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn08.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn09.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn10.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn11.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn12.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn13.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn14.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn15.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn16.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn17.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn18.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn19.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn20.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn21.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn22.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn23.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn24.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn25.png"),
+                    new Image("Assets/Graphics/Monster and Human Sprites/Flame/p2/xburn26.png"),
+            };
+
+            int[] duration = new int[]{
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150, //6
+                    150,
+                    150,
+                    150,
+                    150, //10
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150, //20
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150,
+                    150
+
+            };
+            animationSkillUlt = new Animation(skillUlt, duration);
         }
 
     }

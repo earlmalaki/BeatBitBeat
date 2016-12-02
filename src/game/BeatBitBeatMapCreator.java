@@ -67,7 +67,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
         app.setDisplayMode(displayWidth, displayHeight, false);     // fullscreen false for now
         app.setVSync(true);                         // matches monitor refresh rate. or use app.setTargetFrameRate(60);
         app.setMinimumLogicUpdateInterval(15);      // minimum delta of 15 ms
-        app.setMaximumLogicUpdateInterval(15);      // maximum delta of 20 ms
+        app.setMaximumLogicUpdateInterval(15);      // maximum delta of 15 ms
 
         app.start();
     }
@@ -86,7 +86,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
             music = new Music(fileDir);     // load selected music
 
             try {
-                File file = new File("Beat Map.txt");
+                File file = new File("Beat Map 2.txt");
                 bw = new BufferedWriter(new FileWriter(file));
 
             } catch (IOException e) {
@@ -178,7 +178,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
             if (music.playing()) {
 
                 // check if can still backtrack by 2 seconds
-                if (music.getPosition() - 2 > 0 && beatMapLines.size() == 0) {
+                if (music.getPosition() - 2 >= 0 || beatMapLines.size() == 0) {
                     for (int i = 0; i <= 120; i ++) {
                         beatMapLines.remove(beatMapLines.size() - 1);
                     }
@@ -191,7 +191,7 @@ public class BeatBitBeatMapCreator extends BasicGame implements KeyListener {
 
             } else {
                 music.resume();
-                if (music.getPosition() - 2 > 0 && beatMapLines.size() == 0) {
+                if (music.getPosition() - 2 >= 0 || beatMapLines.size() == 0) {
                     for (int i = 0; i <= 120; i ++) {
                         beatMapLines.remove(beatMapLines.size() - 1);
                     }

@@ -143,7 +143,7 @@ public class Monster1 extends Monster {
 
     public void skill1() {
         super.setDamage(damageSkill1);
-        super.doSkillCost(costSkill1);
+        super.doSkillCost (costSkill1);
         getAnimationSkill1().restart();
         monsterSfx1.playAsSoundEffect(1.0f, 1.0f, false);
 

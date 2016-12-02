@@ -362,7 +362,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             };
 
             fileSongBeatMaps = new File[]{
-                    new File("Songs/Rage Against The Machine/Killing In The Name/Beat Map.txt"),
+                    new File("Songs/Rage Against The Machine/Killing In The Name/Beat Map 2.txt"),
                     new File("Songs/Metallica/Master Of Puppets/Beat Map.txt"),
             };
 
