@@ -89,7 +89,7 @@ public class OptionsState extends BasicGameState implements KeyListener {
 
         graphics.setColor(Color.white);
         graphics.fillRect(coordsOptions[indexIndicator].getX(), coordsOptions[indexIndicator].getY(), 125, 2);
-        graphics.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+//        graphics.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
     }
 
     @Override

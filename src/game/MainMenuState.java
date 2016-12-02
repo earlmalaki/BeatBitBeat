@@ -127,8 +127,8 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
         imagesArrows[indexSelection].draw(coordsArrows[indexSelection].getX(), coordsArrows[indexSelection].getY());
 
-        g.drawString("DELTA = " + delta, 10, 30);
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+//        g.drawString("DELTA = " + delta, 10, 30);
+//        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
     }
 
 
@@ -193,7 +193,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
         try {
             // TODO: Replace correct music and filename
             audioMusicMainMenu = new Music("Assets/State Music/Killing In The Name - Main Menu.ogg");
-//            audioMusicMainMenu.loop();  // play in loop the bg music
+            audioMusicMainMenu.loop();  // play in loop the bg music
 
             // TODO: Replace correct sound effects and filename
             BeatBitBeatMain.setSoundPressArrows(AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg")));

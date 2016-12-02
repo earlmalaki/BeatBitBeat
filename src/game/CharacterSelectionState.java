@@ -196,8 +196,8 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             renderDonePickingBoth();
         }
 
-        g.drawString("DELTA = " + delta, 10, 30);
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+//        g.drawString("DELTA = " + delta, 10, 30);
+//        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
     }
 
 

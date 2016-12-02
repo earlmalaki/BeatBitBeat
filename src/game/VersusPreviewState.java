@@ -115,7 +115,7 @@ public class VersusPreviewState extends BasicGameState implements KeyListener{
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 
         animateBG.draw();
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+//        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
 
         if (animateBG.getFrame() == frameCount - 1){
             animateBG.stop();

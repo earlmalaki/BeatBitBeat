@@ -19,7 +19,21 @@ public class CreditsState extends BasicGameState implements KeyListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        animateBG = new Animation(new SpriteSheet("Assets/Graphics/Credits/Credits roll.png", 1280, 800, 0), 50);
+
+        Image imageBg[] = new Image[]{
+                new Image("Assets/Graphics/Credits/Home Screen0000.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0001.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0002.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0003.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0004.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0005.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0006.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0007.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0008.png"),
+                new Image("Assets/Graphics/Credits/Home Screen0009.png"),
+        };
+
+        animateBG = new Animation(imageBg,200);
     }
 
     @Override

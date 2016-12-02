@@ -228,7 +228,6 @@ public class Monster3 extends Monster {
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/firefist p2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
-            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/X-burner P1.png", 600, 300, 0), frameDurationSkillUlt);
 
             imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Face Health Bar P2.png");
               Image[] skillUlt = new Image[]{

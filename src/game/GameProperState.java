@@ -446,6 +446,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
                 monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
                 monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+            } else if(monsterP2 instanceof game.monsters.Monster5){
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX() - 120, coordMonsterP2.getY());
             } else {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
                 monsterP2.getAnimationSkill2().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
@@ -459,7 +462,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             } else if (monsterP2 instanceof game.monsters.Monster3) {
 
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
-                monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX() - 200, coordMonsterP2.getY() + 100);
+                monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX() - 200, coordMonsterP2.getY());
 
             } else if (monsterP2 instanceof game.monsters.Monster2) {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP2.getY());
@@ -533,9 +536,9 @@ public class GameProperState extends BasicGameState implements KeyListener {
         g.fillRect(726, 30, (float) (2.55 * (100 - monsterP2.getHp())), 8);
 
 
-        g.setColor(Color.white);
-        g.drawString("DELTA = " + delta, 10, 30);
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+//        g.setColor(Color.white);
+//        g.drawString("DELTA = " + delta, 10, 30);
+//        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
 
     }
 
@@ -543,7 +546,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
     public void keyPressed(int key, char pressedKey) {
         // Key listener
         if (key == Input.KEY_1) {
-            pressed1 = true;
+//            pressed1 = true;
         }
         try {
 

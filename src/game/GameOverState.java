@@ -181,7 +181,7 @@ public class GameOverState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         animateBG.draw();
 
-        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
+//        g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
 
         g.setColor(Color.gray);
         g.fillRect(coordsIndicator[indexPosIndicator].getX(), coordsIndicator[indexPosIndicator].getY(), 207f, 3f);
