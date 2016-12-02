@@ -12,6 +12,7 @@
 package game;
 
 import game.monsters.Monster;
+import game.monsters.Monster2;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -423,10 +424,14 @@ public class GameProperState extends BasicGameState implements KeyListener {
                 monsterP1.getAnimationSkill2().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
             }
         } else if (skillUltP1) {
-            if (monsterP2 instanceof game.monsters.Monster5) {
-                monsterP1.getAnimationSkillUlt().draw(212, 40);
+            if (monsterP1 instanceof game.monsters.Monster5) {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
                 monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP1.getAnimationSkillUlt().draw(212, 40);
+            } else if (monsterP1 instanceof game.monsters.Monster2) {
+                monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                ((Monster2) monsterP1).getAnimationSpikes().draw(coordMonsterP2.getX() + 200, coordMonsterP2.getY() - 100);
             } else {
                 monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
                 monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
@@ -447,9 +452,20 @@ public class GameProperState extends BasicGameState implements KeyListener {
             }
         } else if (skillUltP2) {
             if (monsterP2 instanceof game.monsters.Monster5) {
-//                monsterP2.getAnimationSkillUlt().draw(1057, 40);
+
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
                 monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                monsterP2.getAnimationSkillUlt().draw(displayWidth / 2 - 400, 40);
+            } else if (monsterP2 instanceof game.monsters.Monster3) {
+
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
+                monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX() - 200, coordMonsterP2.getY() + 100);
+
+            } else if (monsterP2 instanceof game.monsters.Monster2) {
+                monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP2.getY());
+                monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
+                ((Monster2) monsterP2).getAnimationSpikes().draw(coordMonsterP1.getX() - 200, coordMonsterP1.getY() - 200);
+
             } else {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
                 monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
@@ -699,7 +715,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
                     skillCast(monsterP1.getDurationSkillUlt());       // call skillCast and pass duration of slow motion
                     skillUltP1 = true;
                     monsterP1.skillUlt();
-                    if (monsterP2 instanceof game.monsters.Monster5) {
+                    if (monsterP1 instanceof game.monsters.Monster5) {
                         monsterP1.attack(monsterP1);
                     } else {
                         monsterP1.attack(monsterP2);
