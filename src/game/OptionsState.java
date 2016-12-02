@@ -17,27 +17,38 @@ public class OptionsState extends BasicGameState implements KeyListener {
 
     private Image imageBG;
 
-    private Coordinate[] coordsOptions = new Coordinate[] {
-            new Coordinate(460, 570),
-            new Coordinate(697, 570),
+    private int indexVolSFX = 9;
+    private int indexVolMusic = 9;
+
+    private Coordinate[] coordsOptions = new Coordinate[]{
+            new Coordinate(460, 527),
+            new Coordinate(697, 527),
     };
 
-    private Coordinate[] coordsSFXVolume = new Coordinate[] {
-            new Coordinate(484,130),
-            new Coordinate(420,130),
-            new Coordinate(440,130),
-            new Coordinate(460,130),
-            new Coordinate(480,130),
-            new Coordinate(500,130),
-            new Coordinate(510,130),
-            new Coordinate(520,130),
-            new Coordinate(530,130),
-            new Coordinate(540,130),
-
+    private Coordinate[] coordsSFXVolume = new Coordinate[]{
+            new Coordinate(484, 160),
+            new Coordinate(484, 185),
+            new Coordinate(484, 210),
+            new Coordinate(484, 235),
+            new Coordinate(484, 260),
+            new Coordinate(484, 285),
+            new Coordinate(484, 310),
+            new Coordinate(484, 335),
+            new Coordinate(484, 360),
+            new Coordinate(484, 385),
     };
 
-    private Coordinate[] coordsMusicVolume = new Coordinate[] {
-            new Coordinate(660, 100),
+    private Coordinate[] coordsMusicVolume = new Coordinate[]{
+            new Coordinate(720, 160),
+            new Coordinate(720, 185),
+            new Coordinate(720, 210),
+            new Coordinate(720, 235),
+            new Coordinate(720, 260),
+            new Coordinate(720, 285),
+            new Coordinate(720, 310),
+            new Coordinate(720, 335),
+            new Coordinate(720, 360),
+            new Coordinate(720, 385),
     };
 
     @Override
@@ -47,55 +58,19 @@ public class OptionsState extends BasicGameState implements KeyListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
         imageBG = new Image("Assets/Graphics/Options/Options BG.png");
-
     }
 
 
     float xMouse;
     float yMouse;
+
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
         Input input = gameContainer.getInput();
         xMouse = input.getMouseX();
         yMouse = input.getMouseY();
-
-        if (pressedEnter) {
-            pressedEnter = false;
-            switch (indexIndicator) {
-                case 0:
-                    // menu music toggle
-                    if (BeatBitBeatMain.isMenuMusicOn()) {
-                        BeatBitBeatMain.setMenuMusicOn(false);
-                        MainMenuState.pauseMusic();
-                    } else {
-                        BeatBitBeatMain.setMenuMusicOn(true);
-                        MainMenuState.resumeMusic();
-                    }
-
-                    break;
-                case 1:
-                    // Sfx toggle
-                    if (BeatBitBeatMain.isSFXOn()) {
-                        BeatBitBeatMain.setSFXOn(false);
-                    } else {
-                        BeatBitBeatMain.setSFXOn(true);
-                    }
-
-                    break;
-                case 2:
-                    if (!gameContainer.isFullscreen()) {
-                        gameContainer.setFullscreen(true);
-                    } else {
-                        gameContainer.setFullscreen(false);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
 
         if (pressedEsc) {
             pressedEsc = false;
@@ -108,17 +83,13 @@ public class OptionsState extends BasicGameState implements KeyListener {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         imageBG.draw();
 
-        graphics.setColor(Color.lightGray);
+        graphics.setColor(Color.black);
+        graphics.fillRect(coordsSFXVolume[0].getX(), 130, 77, 410 - coordsSFXVolume[indexVolSFX].getY());
+        graphics.fillRect(coordsMusicVolume[0].getX(), 130, 77, 410 - coordsMusicVolume[indexVolMusic].getY());
 
-        graphics.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
-
-
-        graphics.fillRect(coordsSFXVolume[0].getX(), coordsSFXVolume[0].getY(), 75, coordsSFXVolume[(int) (BeatBitBeatMain.getVolumeSFX() * 1)].getY());
-
-//        graphics.fillRect(coordsMusicVolume[0].getX(), coordsMusicVolume[0].getY(), 75, coordsMusicVolume[(int) (BeatBitBeatMain.getVolumeMusic() * 1)].getY());
-
+        graphics.setColor(Color.white);
         graphics.fillRect(coordsOptions[indexIndicator].getX(), coordsOptions[indexIndicator].getY(), 125, 2);
-
+        graphics.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
     }
 
     @Override
@@ -136,30 +107,38 @@ public class OptionsState extends BasicGameState implements KeyListener {
             }
         }
 
-        if (indexIndicator == 0) {
+        if (indexIndicator == 0) {      // SFX vol rocker
             if (key == Input.KEY_DOWN) {
                 // decrease sfx volume
-                if (BeatBitBeatMain.getVolumeSFX() > 0) {
-                    BeatBitBeatMain.setVolumeSFX((float) (BeatBitBeatMain.getVolumeSFX() - 0.10));
+                if (indexVolSFX > 0) {
+                    BeatBitBeatMain.setVolumeSFX(BeatBitBeatMain.getVolumeSFX() - 0.10f);
+                    indexVolSFX--;
+                    System.out.println(indexVolSFX);
+                    System.out.println(BeatBitBeatMain.getVolumeSFX());
                 }
             }
             if (key == Input.KEY_UP) {
                 // increase sfx volume
-                if (BeatBitBeatMain.getVolumeSFX() < 9) {
-                    BeatBitBeatMain.setVolumeSFX((float) (BeatBitBeatMain.getVolumeSFX() + 0.10));
+                if (indexVolSFX < 9) {
+                    BeatBitBeatMain.setVolumeSFX(BeatBitBeatMain.getVolumeSFX() + 0.10f);
+                    indexVolSFX++;
+                    System.out.println(indexVolSFX);
+                    System.out.println(BeatBitBeatMain.getVolumeSFX());
                 }
             }
-        } else if (indexIndicator == 1) {
+        } else if (indexIndicator == 1) {   // music vol rocker
             if (key == Input.KEY_DOWN) {
-                // decrease sfx volume
-                if (BeatBitBeatMain.getVolumeMusic() > 0) {
-                    BeatBitBeatMain.setVolumeMusic((float) (BeatBitBeatMain.getVolumeMusic() - 0.10));
+                // decrease music volume
+                if (indexVolMusic > 0) {
+                    BeatBitBeatMain.setVolumeMusic(BeatBitBeatMain.getVolumeMusic() - 0.10f);
+                    indexVolMusic--;
                 }
             }
             if (key == Input.KEY_UP) {
-                // increase sfx volume
-                if (BeatBitBeatMain.getVolumeMusic() < 9) {
-                    BeatBitBeatMain.setVolumeMusic((float) (BeatBitBeatMain.getVolumeMusic() + 0.10));
+                // increase music volume
+                if (indexVolMusic < 9) {
+                    BeatBitBeatMain.setVolumeMusic(BeatBitBeatMain.getVolumeMusic() + 0.10f);
+                    indexVolMusic++;
                 }
             }
         }

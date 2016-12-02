@@ -116,6 +116,8 @@ public class Monster3 extends Monster {
     private static final int damageSkill2 = 25;
     private static final int damageSkillUlt = 35;
 
+    private Image imageFaceHealthBar;
+
     //fire
     public Monster3(int playerNumber) throws SlickException {
         super();
@@ -133,6 +135,8 @@ public class Monster3 extends Monster {
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/X-burner P1.png", 600, 300, 0), frameDurationSkillUlt);
 
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Face Health Bar P1.png");
+
         } else if (playerNumber == 2) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
@@ -140,6 +144,8 @@ public class Monster3 extends Monster {
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/firefist p2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/FireFlyAni.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Flame/X-burner P1.png", 600, 300, 0), frameDurationSkillUlt);
+
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Flame/Flame - Face Health Bar P2.png");
         }
 
     }
@@ -237,6 +243,11 @@ public class Monster3 extends Monster {
     @Override
     public SkillCost getCostSkillUlt() {
         return costSkillUlt;
+    }
+
+    @Override
+    public Image getImageFaceHealthBar() {
+        return imageFaceHealthBar;
     }
 
 

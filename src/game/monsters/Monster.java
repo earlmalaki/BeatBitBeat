@@ -268,5 +268,7 @@ public abstract class Monster {
 
     public abstract SkillCost getCostSkillUlt();
 
+    public abstract Image getImageFaceHealthBar();
+
 
 }

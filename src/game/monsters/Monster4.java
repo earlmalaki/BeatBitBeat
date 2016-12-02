@@ -230,6 +230,11 @@ public class Monster4 extends Monster {
         return costSkillUlt;
     }
 
+    @Override
+    public Image getImageFaceHealthBar() {
+        return null;
+    }
+
 
     public static int getFrameDurationMonsterIdle() {
         return frameDurationMonsterIdle;

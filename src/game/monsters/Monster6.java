@@ -206,6 +206,11 @@ public class Monster6 extends Monster {
         return null;
     }
 
+    @Override
+    public Image getImageFaceHealthBar() {
+        return null;
+    }
+
     public int getSkill1Duration() {
         return skill1Duration;
     }
