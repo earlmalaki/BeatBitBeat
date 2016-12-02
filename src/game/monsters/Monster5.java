@@ -221,7 +221,7 @@ public class Monster5 extends Monster {
 
     private static final int damageSkill1 = 15;
     private static final int damageSkill2 = 25;
-    private static final int damageSkillUlt = 20;
+    private static final int damageSkillUlt = -20;
 
     private Image imageFaceHealthBar;
 

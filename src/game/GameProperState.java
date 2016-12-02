@@ -431,7 +431,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             } else if (monsterP1 instanceof game.monsters.Monster2) {
                 monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
                 monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
-                ((Monster2) monsterP1).getAnimationSpikes().draw(coordMonsterP2.getX() + 200, coordMonsterP2.getY() - 100);
+                ((Monster2) monsterP1).getAnimationSpikes().draw(coordMonsterP2.getX() + 180, coordMonsterP2.getY() - 100);
             } else {
                 monsterP2.getAnimationIdle().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
                 monsterP1.getAnimationSkillUlt().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
@@ -464,7 +464,7 @@ public class GameProperState extends BasicGameState implements KeyListener {
             } else if (monsterP2 instanceof game.monsters.Monster2) {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP2.getY());
                 monsterP2.getAnimationSkillUlt().draw(coordMonsterP2.getX(), coordMonsterP2.getY());
-                ((Monster2) monsterP2).getAnimationSpikes().draw(coordMonsterP1.getX() - 200, coordMonsterP1.getY() - 200);
+                ((Monster2) monsterP2).getAnimationSpikes().draw(coordMonsterP1.getX() - 50, coordMonsterP1.getY() - 70);
 
             } else {
                 monsterP1.getAnimationIdle().draw(coordMonsterP1.getX(), coordMonsterP1.getY());
