@@ -12,7 +12,6 @@
 package game;
 
 import game.monsters.Monster;
-import game.monsters.Monster5;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -59,10 +58,10 @@ public class GameProperState extends BasicGameState implements KeyListener {
 
     // Significant Y axis positions
     private float startingYPos = 0f;
-    private float badYPos = 585f;
-    private float goodYPos = 610f;
-    private float perfectYPos = 613f;
-    private float endingYPos = 660;    // miss
+    private float badYPos = 557f;
+    private float goodYPos = 582f;
+    private float perfectYPos = 607f;
+    private float endingYPos = 632;    // miss
 
     private static boolean skill1P1 = false;
     private static boolean skill2P1 = false;
@@ -385,29 +384,29 @@ public class GameProperState extends BasicGameState implements KeyListener {
         // Hitbox feedback
         // Draw glowing hitbox if corresponding key is pressed
         if (pressedQ) {
-            imagesPressedHitbox[0].draw(p1x1 - 19, perfectYPos - 22);
+            imagesPressedHitbox[0].draw(p1x1 - 19, perfectYPos - 15);
         }
         if (pressedW) {
-            imagesPressedHitbox[1].draw(p1x2 - 19, perfectYPos - 22);
+            imagesPressedHitbox[1].draw(p1x2 - 19, perfectYPos - 15);
         }
         if (pressedE) {
-            imagesPressedHitbox[2].draw(p1x3 - 19, perfectYPos - 22);
+            imagesPressedHitbox[2].draw(p1x3 - 19, perfectYPos - 15);
         }
         if (pressedR) {
-            imagesPressedHitbox[3].draw(p1x4 - 19, perfectYPos - 22);
+            imagesPressedHitbox[3].draw(p1x4 - 19, perfectYPos - 15);
         }
 
         if (pressedU) {
-            imagesPressedHitbox[0].draw(p2x1 - 19, perfectYPos - 22);
+            imagesPressedHitbox[0].draw(p2x1 - 19, perfectYPos - 15);
         }
         if (pressedI) {
-            imagesPressedHitbox[1].draw(p2x2 - 19, perfectYPos - 22);
+            imagesPressedHitbox[1].draw(p2x2 - 19, perfectYPos - 15);
         }
         if (pressedO) {
-            imagesPressedHitbox[2].draw(p2x3 - 19, perfectYPos - 22);
+            imagesPressedHitbox[2].draw(p2x3 - 19, perfectYPos - 15);
         }
         if (pressedP) {
-            imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 22);
+            imagesPressedHitbox[3].draw(p2x4 - 19, perfectYPos - 15);
         }
 
         // Draw player character animations
@@ -479,12 +478,12 @@ public class GameProperState extends BasicGameState implements KeyListener {
 //        (float) -(2.55 * (100 - monsterP1.getHp())),8);
 //        g.fillRect(322, 620,87f, (float) (0.87 * (87 - timePassedSinceSkill1P1)));
 
-        g.drawString("" + timePassedSinceSkill1P1, 350, 700);
-        g.drawString("" + timePassedSinceSkill2P1, 450, 700);
-        g.drawString("" + timePassedSinceSkillUltP1, 550, 700);
-        g.drawString("" + timePassedSinceSkill1P2, 700, 700);
-        g.drawString("" + timePassedSinceSkill2P2, 800, 700);
-        g.drawString("" + timePassedSinceSkillUltP2, 900, 700);
+//        g.drawString("" + timePassedSinceSkill1P1, 350, 700);
+//        g.drawString("" + timePassedSinceSkill2P1, 450, 700);
+//        g.drawString("" + timePassedSinceSkillUltP1, 550, 700);
+//        g.drawString("" + timePassedSinceSkill1P2, 700, 700);
+//        g.drawString("" + timePassedSinceSkill2P2, 800, 700);
+//        g.drawString("" + timePassedSinceSkillUltP2, 900, 700);
 
 
         // Print resources
@@ -507,20 +506,20 @@ public class GameProperState extends BasicGameState implements KeyListener {
             fontTime.drawString((displayWidth / 2) - 35, 30, "00.00");
         }
 
-        //
+        monsterP1.getImageFaceHealthBar().draw(243, 14);
+        monsterP2.getImageFaceHealthBar().draw(717, 14);
+
+        g.setColor(Color.darkGray);
+        g.fillRect(554, 20, (float) -(2.55 * (100 - monsterP1.getHp())), 8);
+        g.fillRect(554, 30, (float) -(2.55 * (100 - monsterP1.getHp())), 8);
+
+        g.fillRect(726, 20, (float) (2.55 * (100 - monsterP2.getHp())), 8);
+        g.fillRect(726, 30, (float) (2.55 * (100 - monsterP2.getHp())), 8);
+
+
         g.setColor(Color.white);
         g.drawString("DELTA = " + delta, 10, 30);
         g.drawString("X = " + xMouse + " Y = " + yMouse, 10, 50);
-
-        g.setColor(Color.black);
-        g.fillRect(300.0f, 10.0f, 200.0f, 20.0f);    // P1 healthbar bg
-        g.fillRect(700.0f, 10.0f, 200.0f, 20.0f);    // P2 healthbar bg
-
-        g.setColor(Color.green);
-        g.fillRect(300.0f, 10.0f, (float) monsterP1.getHp() * 2, 20.0f);     // healthbar progress p1
-        g.fillRect(700.0f, 10.0f, (float) monsterP2.getHp() * 2, 20.0f);     // healthbar progress p2
-
-        g.setColor(Color.white);
 
     }
 

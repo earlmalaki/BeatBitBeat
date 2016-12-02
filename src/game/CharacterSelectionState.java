@@ -346,6 +346,11 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
         imagesSongArt = new Image[]{
                 new Image("Songs/Rage Against The Machine/Killing In The Name/Song Art.png"),
                 new Image("Songs/Metallica/Master Of Puppets/Song Art.png"),
+
+                new Image("Songs/Sandwich/Sugod/Song Art.png"),
+                new Image("Songs/Nirvana/Smells Like Teen Spirit/Song Art.png"),
+                new Image("Songs/Animals As Leaders/The Brain Dance/Song Art.png"),
+                new Image("Songs/Motorhead/Enter Sandman/Song Art.png"),
         };
     }
 
@@ -360,11 +365,21 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             musicSongChoices = new Music[]{
                     new Music("Songs/Rage Against The Machine/Killing In The Name/Song.ogg"),
                     new Music("Songs/Metallica/Master Of Puppets/Song.ogg"),
+
+                    new Music("Songs/Sandwich/Sugod/Song.ogg"),
+                    new Music("Songs/Nirvana/Smells Like Teen Spirit/Song.ogg"),
+                    new Music("Songs/Animals As Leaders/The Brain Dance/Song.ogg"),
+                    new Music("Songs/Motorhead/Enter Sandman/Song.ogg"),
             };
 
             fileSongBeatMaps = new File[]{
                     new File("Songs/Rage Against The Machine/Killing In The Name/Beat Map.txt"),
                     new File("Songs/Metallica/Master Of Puppets/Beat Map.txt"),
+
+                    new File("Songs/Sandwich/Sugod/Beat Map.txt"),
+                    new File("Songs/Nirvana/Smells Like Teen Spirit/Beat Map.txt"),
+                    new File("Songs/Animals As Leaders/The Brain Dance/Beat Map.txt"),
+                    new File("Songs/Motorhead/Enter Sandman/Beat Map.txt"),
             };
 
         } catch (IOException e) {
