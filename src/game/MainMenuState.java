@@ -27,7 +27,6 @@
 package game;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -62,8 +61,6 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     // Audio declaration
     private static Music audioMusicMainMenu;
-    private Audio soundPressArrows;
-    private Audio soundPressEnter;
 
     private int indexOfSelectedState = 1;   // will hold the ID of the selected state. initialized to GameProperState ID
 
@@ -137,7 +134,7 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 
     @Override
     public void keyPressed(int key, char pressedKey) {
-        playSFXKeyPress(key);       // play SFX according to KEY indicated by key argument
+        BeatBitBeatMain.playKeySFX(key);
         if (key == Input.KEY_UP) {
             if (yIndicator != coordsArrows[0].getY()) {    // if indicator is inside bounds
                 indexSelection--;
@@ -199,24 +196,15 @@ public class MainMenuState extends BasicGameState implements KeyListener {
 //            audioMusicMainMenu.loop();  // play in loop the bg music
 
             // TODO: Replace correct sound effects and filename
-            soundPressArrows = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg"));
-            soundPressEnter = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg"));
+            BeatBitBeatMain.setSoundPressArrows(AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressArrowMainMenu.ogg")));
+            BeatBitBeatMain.setSoundPressEnter(AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Assets/Sound Effects/pressEnterMainMenu.ogg")));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void playSFXKeyPress(int key) {
-        if (BeatBitBeatMain.isSFXOn()) {
-            if (key == Input.KEY_UP || key == Input.KEY_DOWN || key == Input.KEY_LEFT || key == Input.KEY_RIGHT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
-            }
-            if (key == Input.KEY_ENTER) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
-            }
-        }
-    }
+
 
 
 }

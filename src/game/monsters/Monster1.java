@@ -107,6 +107,8 @@ public class Monster1 extends Monster {
     private static final int damageSkill2 = 25;
     private static final int damageSkillUlt = 35;
 
+    private Image imageFaceHealthBar;
+
 
     public Monster1(int playerNumber) throws SlickException, IOException {
         super();
@@ -131,6 +133,8 @@ public class Monster1 extends Monster {
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling P1.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P1.png", 600, 300, 0), frameDurationSkillUlt);
 
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Face Health Bar P1.png");
+
         } else if (playerNumber == 2) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
@@ -138,6 +142,8 @@ public class Monster1 extends Monster {
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 1 Blistol P2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 2 Gatling P2.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - 3 Bluezooka P2.png", 600, 300, 0), frameDurationSkillUlt);
+
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Blueffy/Blueffy - Face Health Bar P2.png");
         }
     }
 
@@ -249,4 +255,7 @@ public class Monster1 extends Monster {
         return frameDurationHumanIdle;
     }
 
+    public Image getImageFaceHealthBar() {
+        return imageFaceHealthBar;
+    }
 }

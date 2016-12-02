@@ -11,14 +11,14 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class VersusPreviewState extends BasicGameState implements KeyListener{
 
-    private Animation animateBG;
-    private Animation pressEnter;
+    private static Animation animateBG;
+    private static Animation pressEnter;
 
     private boolean pressable = false;
     private boolean enterPressed = false;
 
-    private Coordinate coordHumanP1 = new Coordinate(1000, 120);
-    private Coordinate coordHumanP2 = new Coordinate(100, 450);
+    private static Coordinate coordHumanP1 = new Coordinate(1000, 120);
+    private static Coordinate coordHumanP2 = new Coordinate(100, 450);
 
     private static final int displayWidth = BeatBitBeatMain.getDisplayWidth();
     private static final int displayHeight = BeatBitBeatMain.getDisplayHeight();
@@ -99,8 +99,12 @@ public class VersusPreviewState extends BasicGameState implements KeyListener{
 
         if (pressable){
             if (enterPressed){
+                pressable = false;
                 enterPressed = false;
+
                 sbg.enterState(BeatBitBeatMain.getGameProper(), new FadeOutTransition(), new FadeInTransition());
+
+
             }
         }
 
@@ -132,6 +136,16 @@ public class VersusPreviewState extends BasicGameState implements KeyListener{
         if (key == Input.KEY_ENTER){
             enterPressed = true;
         }
+    }
+
+    public static void resetVersusState() {
+        coordHumanP1.setX(1000);
+        coordHumanP1.setY(120);
+        coordHumanP2.setX(100);
+        coordHumanP2.setY(450);
+
+        animateBG.restart();
+        pressEnter.restart();
     }
 
 

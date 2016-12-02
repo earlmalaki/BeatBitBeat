@@ -221,7 +221,9 @@ public class Monster5 extends Monster {
 
     private static final int damageSkill1 = 15;
     private static final int damageSkill2 = 25;
-    private static final int damageSkillUlt = -20;
+    private static final int damageSkillUlt = 20;
+
+    private Image imageFaceHealthBar;
 
 
     public Monster5(int playerNumber) throws SlickException {
@@ -246,9 +248,6 @@ public class Monster5 extends Monster {
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P1.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/whip p1.png", 720, 300, 0), frameDurationSkill2);
 //            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P1.png", 600, 300, 0), frameDurationMonsterIdle);
-//            animationSkillUltP1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura1 P1.png", 833, 585, 0), frameDurationSkillUltP1);
-//            animationSkillUltP2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura2 P1.png", 833, 585, 0), frameDurationSkillUltP2);
-//            animationSkillUltP3 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 3 Sakura3 P1.png", 833, 585, 0), frameDurationSkillUltP3);
             Image[] skillUlt = new Image[]{
                     new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura00.png"),
                     new Image("Assets/Graphics/Monster and Human Sprites/Root/sakura01.png"),
@@ -316,11 +315,11 @@ public class Monster5 extends Monster {
                     100,
                     100,
                     100,
-                    100
-
-
+                    100,
             };
             animationSkillUlt = new Animation(skillUlt, duration);
+
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - Face Health Bar P1.png");
 
             // TODO uncomment when sprites for player2 (flipper player1 sprites) are done
         } else if (playerNumber == 2)
@@ -331,7 +330,9 @@ public class Monster5 extends Monster {
 
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - 1 Leaf P2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/whip p2.png", 720, 300, 0), frameDurationSkill2);
-//            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
+            animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Root/Root - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
+
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Root/Root - Face Health Bar P2.png");
 
         }
     }
@@ -453,6 +454,11 @@ public class Monster5 extends Monster {
     @Override
     public SkillCost getCostSkillUlt() {
         return costSkillUlt;
+    }
+
+    @Override
+    public Image getImageFaceHealthBar() {
+        return imageFaceHealthBar;
     }
 
 

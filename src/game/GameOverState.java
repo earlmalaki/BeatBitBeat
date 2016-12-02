@@ -103,7 +103,6 @@ public class GameOverState extends BasicGameState {
             scoreTallySFX.playAsSoundEffect(1f, 1f, false);
         }
 
-        /*  Stepper effect on stats tally */
         if (!(p1MaxCombo < GameProperState.monsterP1.getMaxCombo() ||
                 p1MaxRed < GameProperState.monsterP1.getTotalResourceRed() ||
                 p1MaxGreen < GameProperState.monsterP1.getTotalResourceGreen() ||
@@ -120,6 +119,7 @@ public class GameOverState extends BasicGameState {
             scoreTallySFX.stop();
         }
 
+        /*  Stepper effect on stats tally */
         if (p1MaxCombo < GameProperState.monsterP1.getMaxCombo())
             p1MaxCombo++;
 
@@ -164,7 +164,9 @@ public class GameOverState extends BasicGameState {
 
             CharacterSelectionState.resetCharSelStateFlags();
             GameProperState.resetGameProperState();
-            GameOverState.resetGameOverState();
+            VersusPreviewState.resetVersusState();
+            resetGameOverState();
+
 
             if (indexPosIndicator == 0) {
                 sbg.enterState(BeatBitBeatMain.getCharacterSelection(), new FadeOutTransition(), new FadeInTransition());
@@ -221,6 +223,7 @@ public class GameOverState extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char keyChar) {
+        BeatBitBeatMain.playKeySFX(key);
 
         if (key == Input.KEY_UP) {
             if (indexPosIndicator != 0) {

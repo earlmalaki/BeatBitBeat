@@ -59,7 +59,7 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     private Monster monsterP1;
     private Monster monsterP2;
 
-    private Image imageBackground;
+    private Image[] imageBackground;
     private Animation animationHumanIndicator;        // frame to emphasize hovered human selection
     private Image[] imagesSongArt;
     private Image imageBtnGame;
@@ -180,7 +180,13 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 
-        imageBackground.draw();
+        if (p1Picking) {
+            imageBackground[0].draw();
+        } else {
+            imageBackground[1].draw();
+        }
+
+
 
         if (monsterPicking) {
             renderMonsterPicking();
@@ -197,30 +203,26 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
 
     @Override
     public void keyPressed(int key, char pressedKey) {
+        BeatBitBeatMain.playKeySFX(key);
 
         if (monsterPicking) {
             if (key == Input.KEY_UP) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
                 if (indexYHumanIndicator != 0) {
                     indexYHumanIndicator--;
                 }
             } else if (key == Input.KEY_DOWN) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
                 if (indexYHumanIndicator != 1) {
                     indexYHumanIndicator++;
                 }
             } else if (key == Input.KEY_LEFT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
                 if (indexXHumanIndicator != 0) {
                     indexXHumanIndicator--;
                 }
             } else if (key == Input.KEY_RIGHT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
                 if (indexXHumanIndicator != 2) {
                     indexXHumanIndicator++;
                 }
             } else if (key == Input.KEY_ENTER) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
 
                 // disable bottom left(monster 4) and bottom right monsters(monster 6)
                 // for coming soon characters
@@ -234,23 +236,19 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
             }
         } else if (songPicking) {
             if (key == Input.KEY_LEFT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
                 if (indexImageSongArt != 0) {
                     indexImageSongArt--;
                 }
             } else if (key == Input.KEY_RIGHT) {
-                soundPressArrows.playAsSoundEffect(1.0f, 1.0f, false);
                 if (indexImageSongArt != imagesSongArt.length - 1) {
                     indexImageSongArt++;
                 }
             } else if (key == Input.KEY_ENTER) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
                 pressedEnter = true;
             }
 
         } else {
             if (key == Input.KEY_ENTER) {
-                soundPressEnter.playAsSoundEffect(1.0f, 1.0f, false);
                 pressedEnter = true;
             }
         }
@@ -282,7 +280,10 @@ public class CharacterSelectionState extends BasicGameState implements KeyListen
     }
 
     private void initializeImagesAndAnimations() throws SlickException {
-        imageBackground = new Image("Assets/Graphics/Character Selection/Character Selection BG.png");
+        imageBackground = new Image[] {
+                new Image("Assets/Graphics/Character Selection/Character Selection BG P1.png"),
+                new Image("Assets/Graphics/Character Selection/Character Selection BG P2.png"),
+        };
 
         // TODO Replace correct file names, Width & Height, adjust duration
         animateMonstersP1 = new Animation[]{
