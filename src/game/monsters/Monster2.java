@@ -25,24 +25,6 @@
  * - do this to the remaining monsters
  * <p>
  * game.Note:
- * <p>
- * Done:
- * - basic skeleton code for concrete monster
- * <p>
- * To Do:
- * - add specific identity/behaviour (skills, capabilities, etc.)
- * - do this to the remaining monsters
- * <p>
- * game.Note:
- * <p>
- * Done:
- * - basic skeleton code for concrete monster
- * <p>
- * To Do:
- * - add specific identity/behaviour (skills, capabilities, etc.)
- * - do this to the remaining monsters
- * <p>
- * game.Note:
  */
 
 /**
@@ -70,7 +52,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.IOException;
 
-public class Monster2 extends Monster {
+public class Monster2 extends Monster{
 
 
     private Animation animationIdle;
@@ -111,6 +93,9 @@ public class Monster2 extends Monster {
     private static final int damageSkill1 = 15;
     private static final int damageSkill2 = 25;
     private static final int damageSkillUlt = 35;
+
+    private Image imageFaceHealthBar;
+
 
 
     public Monster2(int playerNumber) throws SlickException {
@@ -263,6 +248,8 @@ public class Monster2 extends Monster {
             animationSkillUlt = new Animation(skillUlt, duration);
 
             animationSpikes = new Animation(skillUltSpikes, durationSpikes);
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Face Health Bar P1.png");
+
         } else if (playerNumber == 2) {
             animationIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Idle P2.png", 600, 300, 0), frameDurationMonsterIdle);
             animationHumanIdle = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Human P2.png", 150, 150, 0), frameDurationHumanIdle);
@@ -270,6 +257,8 @@ public class Monster2 extends Monster {
             animationSkill1 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 1 Claw P2.png", 600, 300, 0), frameDurationSkill1);
             animationSkill2 = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - 2 Release P2.png", 600, 300, 0), frameDurationSkill2);
             animationSkillUlt = new Animation(new SpriteSheet("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost 3Portal Out P2.png", 600, 300, 0), frameDurationSkillUlt);
+
+            imageFaceHealthBar = new Image("Assets/Graphics/Monster and Human Sprites/Ghost/Ghost - Face Health Bar P2.png");
             Image[] skillUlt = new Image[]{
                     new Image("Assets/Graphics/Monster and Human Sprites/Ghost/ghost3skillult/p2/ghost ult (1).png"),
                     new Image("Assets/Graphics/Monster and Human Sprites/Ghost/ghost3skillult/p2/ghost ult (2).png"),
@@ -498,6 +487,11 @@ public class Monster2 extends Monster {
         return costSkillUlt;
     }
 
+    @Override
+    public Image getImageFaceHealthBar() {
+        return imageFaceHealthBar;
+    }
+
     public static int getFrameDurationMonsterIdle() {
         return frameDurationMonsterIdle;
     }
@@ -505,4 +499,6 @@ public class Monster2 extends Monster {
     public static int getFrameDurationHumanIdle() {
         return frameDurationHumanIdle;
     }
+
+
 }

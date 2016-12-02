@@ -107,10 +107,10 @@ public abstract class Monster {
 
     public Monster() {
         this.hp = 100;
-        resourceBlue = 100;
-        resourceRed = 100;
-        resourceGreen = 100;
-        resourceYellow = 100;
+        resourceBlue = 0;
+        resourceRed = 0;
+        resourceGreen = 0;
+        resourceYellow = 0;
         combo = 0;
         maxCombo = 0;
     }
@@ -267,6 +267,8 @@ public abstract class Monster {
     public abstract SkillCost getCostSkill2();
 
     public abstract SkillCost getCostSkillUlt();
+
+    public abstract Image getImageFaceHealthBar();
 
 
 }

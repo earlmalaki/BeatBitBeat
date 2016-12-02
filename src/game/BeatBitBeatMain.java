@@ -19,7 +19,9 @@ package game;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -46,6 +48,9 @@ public class BeatBitBeatMain extends StateBasedGame {
 
     private static boolean menuMusicOn = true;
     private static boolean SFXOn = true;
+
+    private static Audio soundPressArrows;
+    private static Audio soundPressEnter;
 
 
     // Constructor
@@ -169,6 +174,32 @@ public class BeatBitBeatMain extends StateBasedGame {
 
     public static void setVolumeMusic(float volumeMusic) {
         BeatBitBeatMain.volumeMusic = volumeMusic;
+    }
+
+    public static Audio getSoundPressArrows() {
+        return soundPressArrows;
+    }
+
+    public static void setSoundPressArrows(Audio sound) {
+        soundPressArrows = sound;
+    }
+
+    public static Audio getSoundPressEnter() {
+        return soundPressEnter;
+    }
+
+    public static void setSoundPressEnter(Audio sound) {
+        soundPressEnter = sound;
+    }
+
+    public static void playKeySFX(int key) {
+        if (key == Input.KEY_UP || key == Input.KEY_DOWN || key == Input.KEY_LEFT || key == Input.KEY_RIGHT) {
+            soundPressArrows.playAsSoundEffect(1f, volumeSFX, false);
+        }
+
+        if (key == Input.KEY_ENTER) {
+            soundPressEnter.playAsSoundEffect(1f, volumeMusic, false);
+        }
     }
 
     /** EO Getters **/

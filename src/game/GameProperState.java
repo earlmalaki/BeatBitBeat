@@ -324,21 +324,57 @@ public class GameProperState extends BasicGameState implements KeyListener {
         }
     }
 
+
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 
         imageBG.draw();
         int xx = 0;
 
         //320, 615
-        for (Image test : monsterP1.getSkillIcons()) {
-            test.draw(319 + xx, 614);
-            xx += 100;
+        for (int i = 0; i < monsterP1.getSkillIcons().length; i++) {
+            if (timePassedSinceSkill1P1 != 0 && timePassedSinceSkill1P1 < monsterP1.getCooldownSkill1() || !monsterP1.checkResources(monsterP1.getCostSkill1())){
+                monsterP1.getSkillIcons()[0].draw(319, 614, Color.darkGray);
+            }else{
+                monsterP1.getSkillIcons()[0].draw(319, 614);
+            }
+            if (timePassedSinceSkill2P1 != 0 && timePassedSinceSkill2P1 < monsterP1.getCooldownSkill2() || !monsterP1.checkResources(monsterP1.getCostSkill2())){
+                monsterP1.getSkillIcons()[1].draw(419, 614, Color.darkGray);
+            }else{
+                monsterP1.getSkillIcons()[1].draw(419, 614);
+            }
+            if (timePassedSinceSkillUltP1 != 0 && timePassedSinceSkillUltP1 < monsterP1.getCooldownSkillUlt() || !monsterP1.checkResources(monsterP1.getCostSkillUlt())){
+                monsterP1.getSkillIcons()[2].draw(519, 614, Color.darkGray);
+            }else{
+                monsterP1.getSkillIcons()[2].draw(519, 614);
+            }
+
+
+            //test.draw(319 + xx, 614);
+            //xx += 100;
         }
+
         int xy = 0;
         for (Image test : monsterP2.getSkillIcons()) {
-            test.draw(669 + xy, 614);
-            xy += 100;
+
+            if (timePassedSinceSkill1P2 != 0 && timePassedSinceSkill1P2 < monsterP2.getCooldownSkill1() || !monsterP2.checkResources(monsterP2.getCostSkill1())){
+                monsterP2.getSkillIcons()[0].draw(669, 614, Color.darkGray);
+            }else{
+                monsterP2.getSkillIcons()[0].draw(669, 614);
+            }
+            if (timePassedSinceSkill2P2 != 0 && timePassedSinceSkill2P2 < monsterP2.getCooldownSkill2() || !monsterP2.checkResources(monsterP2.getCostSkill2())){
+                monsterP2.getSkillIcons()[1].draw(769, 614, Color.darkGray);
+            }else{
+                monsterP2.getSkillIcons()[1].draw(769, 614);
+            }
+            if (timePassedSinceSkillUltP2 != 0 && timePassedSinceSkillUltP2 < monsterP2.getCooldownSkillUlt() || !monsterP2.checkResources(monsterP2.getCostSkillUlt())){
+                monsterP2.getSkillIcons()[2].draw(869, 614, Color.darkGray);
+            }else{
+                monsterP2.getSkillIcons()[2].draw(869, 614);
+            }
+//            test.draw(669 + xy, 614);
+//            xy += 100;
         }
+
         // render falling notes
         for (int i = 0; i < notesP1.size(); i++) {
             if (notesP1.get(i).getY() < perfectYPos) {
@@ -452,22 +488,31 @@ public class GameProperState extends BasicGameState implements KeyListener {
         if (monsterP2.getCombo() > 5) {
             fontCombo.drawString(1147, 110, "" + monsterP2.getCombo());
         }
+
+
+        // Skill cooldowns
+//        (float) (0.87 * (87 - timePassedSinceSkill1P1)
+//        (float) -(2.55 * (100 - monsterP1.getHp())),8);
+//        g.fillRect(322, 620,87f, (float) (0.87 * (87 - timePassedSinceSkill1P1)));
+
         g.drawString("" + timePassedSinceSkill1P1, 350, 700);
         g.drawString("" + timePassedSinceSkill2P1, 450, 700);
         g.drawString("" + timePassedSinceSkillUltP1, 550, 700);
         g.drawString("" + timePassedSinceSkill1P2, 700, 700);
         g.drawString("" + timePassedSinceSkill2P2, 800, 700);
         g.drawString("" + timePassedSinceSkillUltP2, 900, 700);
-        // Print resources
-        fontResources.drawString(255, 684, "" + monsterP1.getResourceRed());
-        fontResources.drawString(255, 706, "" + monsterP1.getResourceGreen());
-        fontResources.drawString(255, 729, "" + monsterP1.getResourceBlue());
-        fontResources.drawString(255, 752, "" + monsterP1.getResourceYellow());
 
-        fontResources.drawString(995, 684, "" + monsterP2.getResourceRed());
-        fontResources.drawString(995, 706, "" + monsterP2.getResourceGreen());
-        fontResources.drawString(995, 729, "" + monsterP2.getResourceBlue());
-        fontResources.drawString(995, 752, "" + monsterP2.getResourceYellow());
+
+        // Print resources
+        fontResources.drawString(262, 615, "" + monsterP1.getResourceRed());
+        fontResources.drawString(262, 638, "" + monsterP1.getResourceGreen());
+        fontResources.drawString(262, 661, "" + monsterP1.getResourceBlue());
+        fontResources.drawString(262, 684, "" + monsterP1.getResourceYellow());
+
+        fontResources.drawString(983, 615, "" + monsterP2.getResourceRed());
+        fontResources.drawString(983, 638, "" + monsterP2.getResourceGreen());
+        fontResources.drawString(983, 661, "" + monsterP2.getResourceBlue());
+        fontResources.drawString(983, 684, "" + monsterP2.getResourceYellow());
 
         // print music position / time
 
