@@ -4,10 +4,10 @@
 ###### Project is still in its early stages -- 6 out of 10
 
 ##
-#### DOWNLOAD LINKS TO BETA V2:
-#### Mac: [Click Here]()
-#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6YVZhMERhWk13RUk)
-#### Download and UNZIP. Run "BeatBitBeat Beta V2.jar".
+#### DOWNLOAD LINKS TO BEATBITBEAT V1.0:
+#### Mac: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6RTZZek5UTV80bFk)
+#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6RU9kLURMb3JIUjQ)
+#### Download and UNZIP. Run "BeatBitBeat V1.jar".
 ##
 #### DOWNLOAD LINKS TO PROTOTYPE~~2~~ 1:
 #### Mac: [Click Here](https://drive.google.com/file/d/0B0r3dLz7TnK6Wmh0SC1NQVVxeVk/view?usp=sharing)
@@ -31,6 +31,11 @@ Bedio, Aiden Justin
 Malaki, Earl Timothy
 
 Paler, Timothy River 
+
+### Special Thanks To:
+- Marynelle Charis Baysa - for designing the game UI and UX
+- John Renier Asok - for modeling the characters and sprites
+- Decelle Marie Suarez and Karina Durano - for bringing BeatBitBeat to more audience
 
 
 #### Professor in Charge:
