@@ -5,8 +5,8 @@
 
 ##
 #### DOWNLOAD LINKS TO BEATBITBEAT V1.0:
-#### Mac: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6RTZZek5UTV80bFk)
-#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6RU9kLURMb3JIUjQ)
+#### Mac: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6TnJUbVIxRWdTMG8)
+#### Windows: [Click Here](https://drive.google.com/open?id=0B0r3dLz7TnK6U3JSOFJjNkYyeXc)
 #### Download and UNZIP. Run "BeatBitBeat V1.jar".
 ##
 
